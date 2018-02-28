@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title></title>
+        <script src="js/mui.min.js"></script>
+        <script src="js/function.js" type="text/javascript" charset="utf-8"></script>
+        <link href="css/mui.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <header class="mui-bar mui-bar-nav">
+            <h1 class="mui-title">打印</h1>
+        </header>
+        <footer id="footer" class="mui-bar mui-bar-footer">
+            <h1 class="mui-title" id='search'>
+                <span class="mui-icon mui-icon-search"></span>
+                <span style="font-size:16px;">搜索蓝牙设备</span>
+            </h1>
+        </footer>
+        <div class="mui-content mui-content-padded">
+            <h5 class="mui-content-padded">点击设备开始打印</h5>
+            <ul id="list" class="mui-table-view mui-table-view-chevron">
+            </ul>
+        </div>
+
+        <script type="text/javascript" charset="utf-8">
+            mui.init();
+            mui.plusReady(function(){
+                scan();
+            })
+            //获取已配对的蓝牙设备列表
+            function scan() {
+                var main = plus.android.runtimeMainActivity();
+                var BluetoothAdapter = plus.android.importClass("android.bluetooth.BluetoothAdapter");
+                var BAdapter = BluetoothAdapter.getDefaultAdapter(); //获得本机蓝牙适配器
+
+                if (!BAdapter.isEnabled()) {
+                    console.log('检测到未打开蓝牙,尝试打开中....');
+                    //BAdapter.
+                    BAdapter.enable();
+                }
+
+                var lists = BAdapter.getBondedDevices();//获取配对的设备列表
+                plus.android.importClass(lists);
+                var iterator = lists.iterator();
+                plus.android.importClass(iterator);
+                var ul = document.getElementById('list');
+                ul.innerHTML = '';
+                while (iterator.hasNext()) {
+                    var d = iterator.next();
+                    plus.android.importClass(d);
+                    var li = document.createElement('li');
+                    li.setAttribute('id', d.getAddress());
+                    li.className = 'mui-table-view-cell';
+                    var a = document.createElement('a');
+                    a.setAttribute('class', 'mui-navigate-right')
+                    a.innerText = d.getName();
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                }
+            }
+
+            //mac_address:打印机的mac地址
+            var device = null,
+                BAdapter = null,
+                BluetoothAdapter = null,
+                uuid=null,
+                main=null,
+                bluetoothSocket=null;
+             //mac_address:打印机的mac地址
+            function print(mac_address,str) {
+                if (!mac_address) {
+                    mui.toast('请选择蓝牙打印机');
+                    return;
+                }
+
+                if (device == null) {
+                    main = plus.android.runtimeMainActivity();
+                    BluetoothAdapter = plus.android.importClass("android.bluetooth.BluetoothAdapter");
+                    UUID = plus.android.importClass("java.util.UUID");
+                    uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+                    BAdapter = BluetoothAdapter.getDefaultAdapter();
+                    device = BAdapter.getRemoteDevice(mac_address);
+                    plus.android.importClass(device);
+                    bluetoothSocket = device.createInsecureRfcommSocketToServiceRecord(uuid);
+                    //在这下面加上一句
+					plus.android.importClass(bluetoothSocket);
+                }
+
+                if (!bluetoothSocket.isConnected()) {
+                    console.log('检测到设备未连接，尝试连接....');
+                    
+                    /*bluetoothSocket.connect();*/
+			        try{
+			        	bluetoothSocket.connect()
+			        } catch(e){
+//			        		device = null;
+//					        BAdapter = null;
+//					        BluetoothAdapter = null;
+//					        uuid=null;
+//					        main=null;
+//					        bluetoothSocket=null;
+							//BAdapter.disable();
+			        	mui.toast("打印机连接出错，请确认")
+			        }
+                }
+
+                console.log('bluetoothSocket.isConnected()='+bluetoothSocket.isConnected());
+                if(bluetoothSocket.isConnected()){
+                	//
+                	/*mui.openWindow(
+							{
+								url:'taskInfo.html',
+								id:'taskInfo.html',
+								createNew:true
+							}
+						)*/
+						mui.openWindow({
+							url: 'app/main.html',
+							id: 'app/main.html',
+							createNew:true
+						});
+                }else{
+                	mui.toast("蓝牙连接失败！！！")
+                }
+            }
+
+            mui('#list').on('tap', 'li', function() {
+            	
+            	//console.log():
+            	plus.storage.setItem('mac_address',this.id);
+                print(this.id);
+                console.log(this.id);
+                //localStorage.setItem('mac_address',this.id);
+            })
+
+            document.getElementById("search").addEventListener('tap',scan);
+
+        </script>
+    </body>
+
+</html>

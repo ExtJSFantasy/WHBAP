@@ -1,0 +1,352 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" href="css/box1.css" />
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<style>
+			div.swiper-container,
+			div.swiper-wrapper,
+			div.swiper-slide,
+			#main {
+				width: 100%;
+				height: 100%;
+			}
+			
+			div.mui-slider-item a {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.floating-button {
+				position: fixed;
+				right: 15px;
+				bottom: 15px;
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				z-index: 1500;
+				background-color: #007aff;
+				color: #fff;
+				overflow: hidden;
+				-webkit-transition-duration: 300ms;
+				transition-duration: 300ms;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+			}
+			
+			.my-instructor-fontsize {
+				font-size: .7rem;
+			}
+			
+			.my-releasedate-font {
+				font-size: 2rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="main">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" v-for="(item,index) in items">
+						<div class="content">
+							<div class="floor_1">
+								<div class="floor_1_left">
+									<div>
+										<p v-text="item.no" class="my-releasedate-font"></p>
+										<p v-text="item.version" class="my-releasedate-font"></p>
+										<p v-text="item.releasedate" class="my-releasedate-font"></p>
+									</div>
+								</div>
+								<div class="floor_1_right">
+									<div class="row_1 floor_1_right_row">
+										<div>零件号</div>
+										<div v-text="item.partno"></div>
+										<div>作业指导书编号</div>
+										<div v-text="item.no"></div>
+									</div>
+									<div class="row_2 floor_1_right_row">
+										<div>零件名称</div>
+										<div v-text="item.partname"></div>
+										<div>版本</div>
+										<div v-text="item.version"></div>
+									</div>
+									<div class="row_3 floor_1_right_row">
+										<div>
+											<p>筛选/返修</p>
+											<p>内容</p>
+										</div>
+										<div v-text="item.screeningreworkcontent"></div>
+										<div>发布日期</div>
+										<div v-text="item.releasedate" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"></div>
+										<!--style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" -->
+									</div>
+									<div class="row_4 floor_1_right_row">
+										<div>筛选方法</div>
+										<div>
+											<p v-text="item.screeningtype"></p>
+										</div>
+										<div>筛选工具</div>
+										<div v-text="item.screeningtool"></div>
+									</div>
+								</div>
+							</div>
+							<div class="floor_2">
+								<div class="floor_2_left">
+									<div>图一：</div>
+									<div>图二：</div>
+									<div class="img_show">
+										<img v-bind:src="item.imgUrl1" />
+									</div>
+									<div class="img_show">
+										<img v-bind:src="item.imgUrl2" alt="" />
+									</div>
+									<div>图三：</div>
+									<div>图四：</div>
+									<div class="img_show">
+										<img v-bind:src="item.imgUrl3" alt="" />
+									</div>
+									<div class="img_show">
+										<img v-bind:src="item.imgUrl4" alt="" />
+									</div>
+								</div>
+								<div class="floor_2_right">
+									<div class="floor_2_right_row">
+										<div class="floor_2_right_row_title">序号</div>
+										<div class="floor_2_right_row_title" style="line-height: inherit;
+">主要步骤</div>
+										<div class="floor_2_right_row_title">操作内容</div>
+										<div class="floor_2_right_row_title">关键要素备注</div>
+										<div class="floor_2_right_row_title">备注</div>
+									</div>
+									<div class="floor_2_right_row context">
+										<div>1</div>
+										<div v-text="item.steps1" class="my-instructor-fontsize"></div>
+										<div id="one" @tap="open1(index)" class="my-instructor-fontsize" v-text="item.operationcontent1"></div>
+										<div v-text="item.riticalelement1" class="my-instructor-fontsize"></div>
+										<div v-text="item.remark1"></div>
+									</div>
+									<div class="floor_2_right_row context">
+										<div>2</div>
+										<div v-text="item.steps2" class="my-instructor-fontsize"></div>
+										<div id="two" @tap="open2(index)" class="my-instructor-fontsize" v-text="item.operationcontent2"></div>
+										<div v-text="item.riticalelement2" class="my-instructor-fontsize"></div>
+										<div v-text="item.remark2"></div>
+									</div>
+									<div class="floor_2_right_row context">
+										<div>3</div>
+										<div v-text="item.steps3" class="my-instructor-fontsize"></div>
+										<div id="three" @tap="open3(index)" class="my-instructor-fontsize" v-text="item.operationcontent3"></div>
+										<div v-text="item.riticalelement3" class="my-instructor-fontsize"></div>
+										<div v-text="item.remark3"></div>
+									</div>
+									<div class="floor_2_right_row context">
+										<div>4</div>
+										<div v-text="item.steps4" class="my-instructor-fontsize"></div>
+										<div id="four" @tap="open4(index)" class="my-instructor-fontsize" v-text="item.operationcontent4"></div>
+										<div v-text="item.riticalelement4" class="my-instructor-fontsize"></div>
+										<div v-text="item.remark4"></div>
+									</div>
+								</div>
+							</div>
+							<div class="floor_3">
+								<div>
+									<p>编制(提出方)：</p>
+									<p class="signit"><img v-bind:src="item.imgUrl5" alt="" /></p>
+								</div>
+								<div>
+									<p>SQ会签</p>
+									<p class="signit"><img v-bind:src="item.imgUrl6" alt="" /></p>
+								</div>
+								<div>
+									<p>SQ经理批准：</p>
+									<p class="signit"><img v-bind:src="item.imgUrl7" alt="" /></p>
+								</div>
+								<div>
+									<p>QD会签：</p>
+									<p class="signit"></p>
+								</div>
+								<div>
+									<p>其他相关部门：</p>
+									<p class="signit"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mui-content-padded" id="showScan" @click="start">
+					<p>
+						<a id="scan" class="floating-button">开始</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<script src="js/swiper-3.4.2.jquery.min.js"></script>
+		<script src="js/swiper-3.4.2.min.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/function.js"></script>
+		<script type="text/javascript" src="js/static.js"></script>
+		<script src="js/function.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			if(mui.plus) {
+				plusReady()
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+
+			function plusReady() {
+				if(mui.os.android) {
+					plus.screen.lockOrientation("landscape-primary");
+				}
+
+				var self = plus.webview.currentWebview();
+				var _response = self.response;
+				//console.log(_response);
+				new Vue({
+					el: '#main',
+					data: {
+						items: ''
+					},
+					created: function() {
+
+						_response.forEach(function(item, index) {
+							for(var key in item) {
+								if(item[key] == 'null' || item[key] == 'undefined') item[key] = '';
+							}
+						})
+						this.items = _response;
+					},
+					mounted: function() {
+						var _this = this;
+						//console.log(JSON.stringify(_this.items));
+
+					},
+					beforeMount: function() {
+						//console.log("beforeMount");
+					},
+					methods: {
+						start: function() {
+							mui.openWindow({
+								url: 'app/main.html',
+								id: 'main'
+							})
+							//clicked("app/main.html", true, true,{},{});
+						},
+						open1: function(index) {
+							//console.log(index);
+							//mui.toast(document.getElementById("one").innerText);
+						},
+						open2: function(index) {
+							//console.log(index);
+							//mui.toast(document.getElementById("two").innerText);
+						},
+						open3: function(index) {
+							//console.log(index);
+							//mui.toast(document.getElementById("three").innerText);
+						},
+						open4: function(index) {
+							//console.log(index);
+							//mui.toast(document.getElementById("four").innerText);
+						}
+					}
+				});
+
+				var timer = null;
+				timer = setTimeout(function() {
+					new Swiper('.swiper-container', {
+						//autoplay: 5000,
+						direction: 'horizontal',
+						//loop: true
+					});
+					timer = null;
+				}, 0);
+
+			};
+			window.onload = function() {
+				var app2 = new Vue({
+					el: '#main',
+					data: {
+						items: [],
+						isShow: false,
+						taskInfo: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.taskInfo,
+					},
+					mounted: function() {
+						var _this = this;
+						var timer = null;
+						mui.ajax(urlxds + "getInstrutor", {
+							data: {
+								rwdid: _this.taskInfo.a
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'get', //HTTP请求类型
+							timeout: 60000, //超时时间设置为10秒；	              
+							success: function(data) {
+								data.data.forEach(function(item, index) {
+									item.imgUrl1 = imgurl + item.imgUrl1;
+									item.imgUrl2 = imgurl + item.imgUrl2;
+									item.imgUrl3 = imgurl + item.imgUrl3;
+									item.imgUrl4 = imgurl + item.imgUrl4;
+									item.imgUrl5 = imgurl + item.imgUrl5;
+									item.imgUrl6 = imgurl + item.imgUrl6;
+									item.imgUrl7 = imgurl + item.imgUrl7;
+									for(var key in item) {
+										if(item[key] == 'null' || item[key] == 'undefined') item[key] = '';
+									}
+								})
+								_this.items = data.data;
+
+								console.log(_this.items);
+								if(_this.items != '') {
+									timer = setTimeout(function() {
+										new Swiper('.swiper-container', {
+											//autoplay: 5000,
+											direction: 'horizontal',
+											//loop: true
+										});
+										timer = null;
+									}, 0);
+								}
+
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
+							}
+						});
+					},
+					methods: {
+						start: function() {
+							console.log(12345678);
+							mui.openWindow({
+								url: 'app/main.html',
+								id: 'app/main.html',
+								createNew: true
+							});
+						}
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

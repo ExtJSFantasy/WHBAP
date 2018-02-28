@@ -1,0 +1,429 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" href="../css/box1.css" />
+		<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/swiper-3.4.2.jquery.min.js"></script>
+		<script src="../js/swiper-3.4.2.min.js"></script>
+		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/function.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/static.js" ></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<style>
+			div.swiper-container,
+			div.swiper-wrapper,
+			div.swiper-slide {
+				width: 100%;
+				height: 100%;
+			}
+			
+			div.mui-slider-item a {
+				width: 100%;
+				height: 100%;
+			}
+			.floating-button {
+			    position: fixed;
+			    right: 15px;
+			    bottom: 15px;
+			    width: 70px;
+			    height: 70px;
+			    border-radius: 50%;
+			    z-index: 1500;
+			    background-color: #007aff;
+			    color: #fff;
+			    overflow: hidden;
+			    -webkit-transition-duration: 300ms;
+			    transition-duration: 300ms;
+			    display: -webkit-box;
+			    display: -ms-flexbox;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -ms-flex-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    -webkit-box-pack: center;
+			    -ms-flex-pack: center;
+			    -webkit-justify-content: center;
+			    justify-content: center;
+			}
+			.my-instructor-fontsize{
+				font-size: .7rem;
+			}
+			.my-releasedate-font{
+				font-size: 1.5rem;
+			}
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="swiper-container" id="main" >
+			<div class="swiper-wrapper" >
+				<div class="swiper-slide" v-for="(item,index) in items">
+					<div class="content" >
+						<div class="floor_1">
+							<div class="floor_1_left">
+								<div>
+									<p>{{item.no}}</p>
+									<p>{{item.version}}</p>
+									<p>{{item.releasedate}}</p>
+								</div>
+							</div>
+							<div class="floor_1_right">
+								<div class="row_1 floor_1_right_row" style=" line-height: 3;">
+									<div>零件号</div>
+									<div>{{item.partno}}</div>
+									<div>作业指导书编号</div>
+									<div>{{item.no}}</div>
+								</div>
+								<div class="row_2 floor_1_right_row" style=" line-height: 3;">
+									<div>零件名称</div>
+									<div>{{item.partname}}</div>
+									<div>版本</div>
+									<div>{{item.version}}</div>
+								</div>
+								<div class="row_3 floor_1_right_row" style=" line-height: 3;">
+									<div>
+										<p>筛选/返修</p>
+										<p>内容</p>
+									</div>
+									<div>{{item.screeningreworkcontent}}</div>
+									<div >发布日期</div>
+									<div style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">{{item.releasedate}}</div>
+								</div>
+								<div class="row_4 floor_1_right_row" style=" line-height: 3;">
+									<div>筛选方法</div>
+									<div>
+										<p>{{item.screeningtype}}</p>
+									</div>
+									<div>筛选工具</div>
+									<div>{{item.screeningtool}}</div>
+								</div>
+							</div>
+						</div>
+						<div class="floor_2">
+							<div class="floor_2_left">
+								<div style="font-size: x-small;">图一：</div>
+								<div style="font-size: x-small;">图二：</div>
+								<div class="img_show">
+									<img v-bind:src = item.imgUrl1 data-preview-src="" data-preview-group="1"/>
+								</div>
+								<div class="img_show">
+									<img v-bind:src = item.imgUrl2 alt="" data-preview-src="" data-preview-group="1"/>
+								</div>
+								<div style="font-size: x-small;">图三：</div>
+								<div style="font-size: x-small;">图四：</div>
+								<div class="img_show">
+									<img v-bind:src = item.imgUrl3 alt="" data-preview-src="" data-preview-group="1"/>
+								</div>
+								<div class="img_show">
+									<img v-bind:src = item.imgUrl4 alt="" data-preview-src="" data-preview-group="1"/>
+								</div>
+							</div>
+							<div class="floor_2_right">
+								<div class="floor_2_right_row" style="line-height:1;">
+									<div class="floor_2_right_row_title">序号</div>
+									<div class="floor_2_right_row_title" style="line-height: inherit;">主要步骤</div>
+									<div class="floor_2_right_row_title">操作内容</div>
+									<div class="floor_2_right_row_title" style="line-height: inherit;">关键要素备注</div>
+									<div class="floor_2_right_row_title">备注</div>
+								</div>
+								<div class="floor_2_right_row context">
+									<div>1</div>
+									<div class="my-instructor-fontsize">{{item.steps1}}</div>
+									<div id="one" class="my-instructor-fontsize">{{item.operationcontent1}}</div>
+									<div class="my-instructor-fontsize">{{item.riticalelement1}}</div>
+									<div >{{item.remark1}}</div>
+								</div>
+								<div class="floor_2_right_row context">
+									<div>2</div>
+									<div class="my-instructor-fontsize">{{item.steps2}}</div>
+									<div id="two" class="my-instructor-fontsize">{{item.operationcontent2}}</div>
+									<div class="my-instructor-fontsize">{{item.riticalelement2}}</div>
+									<div>{{item.remark2}}</div>
+								</div>
+								<div class="floor_2_right_row context">
+									<div>3</div>
+									<div class="my-instructor-fontsize">{{item.steps3}}</div>
+									<div id="three" class="my-instructor-fontsize">{{item.operationcontent3}}</div>
+									<div class="my-instructor-fontsize">{{item.riticalelement3}}</div>
+									<div >{{item.remark3}}</div>
+								</div>
+								<div class="floor_2_right_row context">
+									<div>4</div>
+									<div class="my-instructor-fontsize">{{item.steps4}}</div>
+									<div id="four" class="my-instructor-fontsize">{{item.operationcontent4}}</div>
+									<div class="my-instructor-fontsize">{{item.riticalelement4}}</div>
+									<div>{{item.remark4}}</div>
+								</div>
+							</div>
+						</div>
+						<div class="floor_3">
+							<div>
+								<p style="line-height: 2;">编制(提出方)：</p>
+								<p class="signit" style="height: 20px;"><img v-bind:src = item.imgUrl5 alt="" /></p>
+							</div>
+							<div>
+								<p style="line-height: 2;">SQ会签</p>
+								<p class="signit" style="height: 20px;"><img v-bind:src = item.imgUrl6  alt="" /></p>
+							</div>
+							<div>
+								<p style="line-height: 2;">SQ经理批准：</p>
+								<p class="signit" style="height: 20px;"><img v-bind:src = item.imgUrl7 alt="" /></p>
+							</div>
+							<div>
+								<p style="line-height: 2;">QD会签：</p>
+								<p class="signit"></p>
+							</div>
+							<div>
+								<p style="line-height: 2;">其他相关部门：</p>
+								<p class="signit"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			mui.init({
+				swipeBack:false, //启用右滑关闭功能
+			});
+			var old_back = mui.back;
+			mui.previewImage();
+			mui.back = function(){
+			 /* var btn = ["确定"];
+			  mui.confirm('正在筛选中不可返回','GF9',btn,function(e){
+			    if(e.index==0){
+			    	//执行mui封装好的窗口关闭逻辑；
+			    	//old_back();
+			    }
+			  });*/
+			}
+			if(mui.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			function plusReady(){
+				if (mui.os.android) {
+					plus.screen.lockOrientation("landscape-primary");
+				}
+			}
+			window.onload = function() {
+				var app2 = new Vue({
+					el: '#main',
+					data: {
+						items:'',
+						taskInfo:JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))).data.taskInfo,
+					},
+					mounted: function() {
+						var _this = this;
+						var timer = null;
+						var _rwdid = _this.taskInfo.a;
+						mui.ajax(urlxds+"getInstrutor", {
+							data: {
+								rwdid: _rwdid
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'get', //HTTP请求类型
+							timeout: 60000, //超时时间设置为10秒；	              
+							success: function(data) {
+								var _data = data.data;
+								_data.forEach(function(item,index){
+									item.imgUrl1 = imgurl + item.imgUrl1;
+									item.imgUrl2 = imgurl + item.imgUrl2;
+									item.imgUrl3 = imgurl + item.imgUrl3;
+									item.imgUrl4 = imgurl + item.imgUrl4;
+									item.imgUrl5 = imgurl + item.imgUrl5;
+									item.imgUrl6 = imgurl + item.imgUrl6;
+									item.imgUrl7 = imgurl + item.imgUrl7;
+									for(var key in item){
+										if(item[key] == 'null' || item[key] == 'null') item[key] = '';
+									}
+								})
+								_this.items = _data;
+								//console.log(_this.items);
+									timer = setTimeout(function(){
+										new Swiper('.swiper-container', {
+											//autoplay: 5000,
+											direction: 'horizontal',
+											//loop: true
+										});
+										timer = null;
+									},0);
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								mui.toast("请确认该任务单的作业指导书！联系SQE");
+								//console.log(type);
+							}
+						});
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

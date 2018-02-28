@@ -1,0 +1,727 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/sc.css" rel="stylesheet" />
+		<link href="../css/icon.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/vue.min.js"></script>
+		<script type="text/javascript" src="../js/function.js"></script>
+		<script type="text/javascript" src="../js/static.js"></script>
+		<script type="text/javascript" src="../js/cfprint.min.js"></script>
+		<script type="text/javascript" src="../js/cfprint_ext.js"></script>
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			
+			#app {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.flex {
+				display: flex;
+				justify-content: center;
+			}
+			
+			.flex1 {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			
+			.topContent {
+				display: flex;
+				height: 14%;
+				width: 100%;
+				text-align: center;
+				font-size: 2rem;
+				background: #ccc;
+			}
+			
+			.bottomContent {
+				display: flex;
+				height: 50%;
+				width: 100%;
+			}
+			
+			.topLeftContent {
+				margin: auto;
+			}
+			
+			.topRightContent {
+				margin: auto;
+			}
+			
+			.bottomLeftContent {
+				width: 70%;
+				height: 80%;
+				margin: 15px;
+				overflow: auto;
+				/*background: red;*/
+			}
+			
+			.bottomRightContent {
+				width: 30%;
+				margin: 5px 0;
+			}
+			
+			.bottomBhgBox {
+				margin: 1rem;
+				background: #CCCCCC;
+				height: 30%;
+			}
+			
+			.mui-card-header {
+				background: #cccccc;
+			}
+			
+			#defectInfo {
+				position: absolute;
+				left: 5%;
+				top: 5%;
+				width: 90%;
+				height: 90%;
+			}
+			
+			#zzxInfo {
+				position: absolute;
+				left: 20%;
+				top: 20%;
+				width: 40%;
+				height: 40%;
+			}
+			
+			.class-b-tru {
+				float: right;
+				width: 0;
+				height: 0;
+				border-top: 30px solid #d65252;
+				border-left: 30px solid transparent;
+			}
+			
+			.class-a-tru {
+				float: right;
+				width: 0;
+				height: 0;
+				border-top: 30px solid #4cd964;
+				border-left: 30px solid transparent;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div id="defectInfo" class="mui-popover">
+				<ul class="mui-table-view flex1">
+					<li class="mui-table-view-cell mui-col-sm-4" v-for="item in defectInfo">
+						<div class="mui-card">
+							<div class="mui-card-content">
+								<div class="mui-card-content-inner flex" v-text="item.defect">
+
+								</div>
+							</div>
+							<div class="mui-card-footer flex">
+								<button type="button" class="mui-btn mui-btn-red" style="border-radius: 50%;" @click="minusNum(item)">-</button>
+								<!--<span style="font-size: 2rem; margin: .3rem 2rem 0 2rem;">{{item.num}}</span>-->
+								<input class="mui-text-center" style="margin-left: .5rem;margin-right: .5rem;padding-top: .5rem;padding-bottom: .5rem;" v-model="item.num" onkeyup="if(event.keyCode !=37 && event.keyCode != 39)value=value.replace(/\D/g,'')" />
+								<button type="button" class="mui-btn mui-btn-blue" style="border-radius: 50%;" @click="plusNum(item)">+</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="width: 96%; margin: 0 2%;" @click="closeDefectInfo">确认</button>
+			</div>
+			<div class="topContent" style="height: 9%;">
+				<div class="topLeftContent">
+					<span style="color: #333333;" v-text="loginData.ljbm"></span>
+				</div>
+				<div class="topRightContent">
+					<span style="color: #333333;" v-text="loginData.ljname"></span>
+				</div>
+				<div class="topRightContent">
+					<div style="display: flex; flex-direction: column;">
+						<div class="" style="">
+							<span style="color: #333333;font-size: 1.7rem;">已筛选:{{lsxsl}}</span>
+							<span style="color: #333333;margin-left: 1rem;font-size: 1.7rem;">筛选中:{{nowlsxsl}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bottomContent">
+				<marquee scrollamount=5 style="z-index: 999;position: absolute;color: red;font-weight: 600;" v-show="isPC">批次追溯，不要换箱！！！</marquee>
+				<div class="bottomLeftContent">
+					<div class="btm-left-title" style="display: block;text-align: -webkit-center;">
+						<p>不合格品报交明细:</p>
+					</div>
+					<div class="btm-left-list">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell div-flex-row btm-list-li color3" style="margin-right: 30px;">
+								<div>
+									<p>序号</p>
+								</div>
+								<div>
+									<p>报交时间</p>
+								</div>
+								<div>
+									<p>箱条码</p>
+								</div>
+								<div>
+									<p>数量</p>
+								</div>
+								<div>
+									<p>筛选人员</p>
+								</div>
+							</li>
+							<div id="" v-for="(item2,index) in nokDatas" @tap="bdhgpXtm(index,item2)" style="border: solid #c8c7cc 1px;border-color: transparent transparent rgb(200, 199, 204);">
+								<div class="" style="width: auto;" v-bind:class="[item2.bprintok ? 'class-a-tru' : 'class-b-tru']">
+								</div>
+								<li class="mui-table-view-cell div-flex-row btm-list-li color3">
+									<div>
+										<p>{{(index+1)}}</p>
+									</div>
+									<div>
+										<p v-text="item2.endDate1"></p>
+									</div>
+									<div>
+										<p v-text="item2.bxtm"></p>
+									</div>
+									<div>
+										<p v-text="item2.nokNum"></p>
+									</div>
+									<div>
+										<p v-text="item2.ygname"></p>
+									</div>
+								</li>
+							</div>
+
+						</ul>
+					</div>
+
+				</div>
+
+				<div class="bottomRightContent">
+					<div class="mui-card">
+						<div class="mui-card-header mui-text-center">未报交不合格</div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner flex">
+								<button type="button" class="mui-btn mui-btn-red" style="border-radius: 50%;" @click="minusNowNokNum">-</button>
+								<span style="font-size: 2rem; margin: .3rem 2rem 0 2rem;" v-text="nowNokNum"></span>
+								<button type="button" class="mui-btn mui-btn-blue" style="border-radius: 50%;" @click="plusNowNokNum">+</button>
+							</div>
+						</div>
+						<div class="mui-card-footer">
+							<button type="button" v-bind:disabled="dis" class="mui-btn mui-btn-green mui-btn-block" style="border: 1px solid #f0ad4e;background-color: #f0ad4e;" @click="submitNowNokNum">不合格品报交</button>
+							<!--<button type="button" class="mui-btn mui-btn-green mui-btn-block" style="border: 1px solid #f0ad4e;background-color: #f0ad4e;margin-left: 2vh;" @click="onClickChangePrinter">切换打印机</button>-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="display: -webkit-box;margin-bottom: .5rem;">
+				<p style="font-size: 1.5rem;">累计报交不合格数：</p><span style="font-size: 1.5rem;" v-text="nokNum"></span></div>
+			<div class="mui-content" style="height: auto;width: 100%;">
+				<ul class="mui-table-view flex1">
+					<li class="mui-table-view-cell mui-col-sm-4" v-for="item in defectInfo" style="    border: solid #ddd;">
+						<div class="">
+							<div class="mui-card-content-inner flex" v-text="item.defect"></div>
+							<div class="mui-text-center">
+								<button type="button" class="mui-btn mui-btn-red" style="border-radius: 50%;width: 3rem;height: 3rem;" @click="minusNum(item)">-</button>
+								<input class="mui-text-center" style="margin-left: .5rem;margin-right: .5rem;padding-top: .5rem;padding-bottom: .5rem;" v-model="item.num" onkeyup="if(event.keyCode !=37 && event.keyCode != 39)value=value.replace(/\D/g,'')" />
+								<button type="button" class="mui-btn mui-btn-blue" style="border-radius: 50%;width: 3rem;height: 3rem;" @click="plusNum(item)">+</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+			});
+			var old_back = mui.back;
+			mui.back = function() {
+				/*var btn = ["确定"];
+				  mui.confirm('正在筛选中不可返回','GF9',btn,function(e){
+				    if(e.index==0){
+				    	//执行mui封装好的窗口关闭逻辑；
+				    	//old_back();
+				    }
+				});*/
+			}
+			if(mui.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+
+			function plusReady() {
+				if(mui.os.android) {
+					plus.screen.lockOrientation("landscape-primary");
+				}
+			}
+			var mask = mui.createMask();
+			var app = new Vue({
+				el: "#app",
+				data: {
+					currentStation: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))),
+					loginData: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.loginData,
+					lsxsl: 0,
+					nowlsxsl: 0,
+					nowNokNum: 0,
+					nokNum: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.qualityData.nokNum,
+					nokDatas: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.qualityData.nokData,
+					//nokDatas:[],
+					defectInfo: [],
+					defectInfo2: [],
+					zzx: '',
+					isPC: false,
+					defectNum: 0,
+					nowtime: '00:00',
+					taskInfo: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.taskInfo,
+					dis: false
+				},
+				watch: {
+					defectNum: {
+						handler: function(cval, oval) {
+							this.currentStation.data.qualityData.defectNum = this.defectNum
+						},
+						deep: true
+					},
+					nowNokNum: {
+						handler: function(cval, oval) {
+							this.currentStation.data.qualityData.nowNokNum = this.nowNokNum
+						},
+						deep: true
+					},
+					defectInfo: {
+						deep: true,
+						handler: function(cval, oval) {
+							var _this = this;
+							_this.nowNokNum = 0;
+							_this.defectNum = 0;
+							cval.forEach(function(item, index) {
+								if(item.num == '' || item.num == null) {
+									_this.nowNokNum += 0;
+									_this.defectNum += 0;
+								} else {
+									_this.nowNokNum += parseInt(item.num);
+									_this.defectNum += parseInt(item.num);
+								}
+							})
+						}
+					},
+					'currentStation': {
+						handler: function(cval, oval) {
+							//this.initData();
+							setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(this.currentStation));
+						},
+						deep: true
+					}
+				},
+				created: function() {
+					var _this = this;
+				},
+				mounted: function() {
+					var _this = this;
+					var _taskInfo2 = JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.taskInfo;
+					if(_taskInfo2.e == 1) {
+						_this.isPC = true;
+					}
+
+					var _nowdate = new Date();
+					//_this.nokDatas = _this.currentStation.data.qualityData.okData;
+					_this.nowtime = _nowdate.getHours() + ":" + (_nowdate.getMinutes() < 10 ? ("0" + _nowdate.getMinutes()) : _nowdate.getMinutes());
+					if(_this.currentStation.data.qualityData.defectInfo.length == 0) {
+						_this.initDefectInfo();
+					}
+					//_this.initDefectInfo();
+					_this.initData();
+				},
+				filters: {
+					dataFormat: function(value) {
+						return value.substr(0, 10)
+					}
+				},
+				methods: {
+					initData: function() {
+						var _this = this;
+						//_this.lsxsl = _this.currentStation.data.productNum;
+						_this.lsxsl = _this.currentStation.data.productNum - parseInt(_this.loginData.ljsl);
+						_this.nowlsxsl = _this.loginData.ljsl;
+						_this.nokNum = _this.currentStation.data.qualityData.nokNum;
+						//_this.nokDatas = _this.currentStation.data.qualityData.nokData.reverse();
+						_this.nokDatas = _this.currentStation.data.qualityData.nokData;
+						_this.defectInfo = _this.currentStation.data.qualityData.defectInfo;
+						_this.defectNum = _this.currentStation.data.qualityData.defectNum;
+						_this.nowNokNum = _this.currentStation.data.qualityData.nowNokNum;
+						_this.taskInfo = _this.currentStation.data.taskInfo;
+					},
+					initDefectInfo: function() {
+						var _this = this
+						var _rwdId = _this.taskInfo.a;
+						//console.log(_rwdId);getDefectData.groovy
+						mui.ajax(urlxds + 'getDefectInfo', {
+							data: {
+								rwdid: _rwdId //_rwdId 
+							},
+							//dataType:'json',//服务器返回json格式数据
+							type: 'get', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；	              
+							success: function(data) {
+								var _data = data.data;
+								var _defectNames = _data[0].screeningReworkContent.split(",");
+								var _defectIds = _data[0].screeningReworkContentSubIds.split(",");
+								var _arr = [];
+								var _arr2 = [];
+								for(var i=0;i<_defectNames.length;i++){
+									var _obj = {};
+										_obj.defect = _defectNames[i];
+										_arr.push(_obj);
+								}
+								for(var k=0;k<_defectIds.length;k++){
+									for(var m=0;m<_arr.length;m++){
+										if(k==m){
+											_arr[m].defectId = _defectIds[k]
+											_arr[m].num = 0;
+										}
+									}	
+								}
+								_this.currentStation.data.qualityData.defectInfo = _arr
+
+								_this.defectInfo = _arr
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								mui.toast("获取缺陷信息失败！");
+								//console.log(type);
+							}
+						});
+					},
+					showDefectInfo: function() {
+						mui('#defectInfo').popover('toggle');
+					},
+					//点击确认按钮
+					closeDefectInfo: function() {
+						var _this = this;
+						_this.nowNokNum = 0;
+						_this.defectNum = 0;
+						for(var i = 0; i < _this.defectInfo.length; i++) {
+							if(_this.defectInfo[i].num == '' || _this.defectInfo[i].num == null) {
+								_this.defectInfo[i].num = 0
+							}
+							_this.nowNokNum += parseInt(_this.defectInfo[i].num);
+							_this.defectNum += parseInt(_this.defectInfo[i].num);
+						}
+					},
+					plusNum: function(item) {
+						item.num++;
+					},
+					minusNum: function(item) {
+						if(item.num > 0) {
+							item.num--
+								//this.nowNokNum--
+								//this.defectNum--
+						} else {
+							mui.toast("已经是最小数了！")
+						}
+					},
+					plusNowNokNum: function() {
+						if(this.nowNokNum < this.defectNum) {
+							this.nowNokNum++
+						} else {
+							mui.toast("已是最大值")
+						}
+					},
+					minusNowNokNum: function() {
+						if(this.nowNokNum > 0) {
+							this.nowNokNum--
+						}
+					},
+					submitNowNokNum: function() {
+						var _this = this;
+						_this.dis = true;
+						setTimeout(function() {
+							_this.ncpSub2();
+						}, 500);
+					},
+					//不合格品提交
+					ncpSub2: function() {
+						//mui("#myprogressbar").progressbar().setProgress(50);
+						console.log(getLsItem("printIp"));
+						var _this = this;
+						//判断是否是不合格品打印机
+						if(getLsItem("printIp") != '192.168.3.151') {
+							//mui.toast()
+							setLsItem("printIp",'192.168.3.151');
+							mui.alert('切换打印机', '切换打印机', '确定', function(e) {
+								if(e.index == 0) {
+									window.location.reload(true);
+								}
+							})
+						} else {
+							var btnArray = ['确定', '取消'];
+							var _myData = _this.currentStation.data.qualityData.nokData;
+							if(_this.nowNokNum <= 0) {
+								_this.dis = false;
+								mui.toast("请录入缺陷信息！！！");
+								return;
+							}
+							//判断是否已经提交过了。根据箱条码
+							if(_myData.length > 0) {
+								if(_myData[_myData.length - 1].bxtm2 == _this.loginData.xtm) {
+									_this.dis = false;
+									mui.toast("已提交！");
+									return;
+								}
+							}
+							/*if(_this.loginData.ljsl == 0){
+								mui.toast("该箱")
+							}*/
+							/*if(parseInt(_this.nowNokNum) > parseInt(_this.loginData.ljsl)){
+								mui.toast("报交的不合格数量已大于该箱剩余数量！");
+								return;
+							}*/
+							//扫描箱码app/yzzzxtm 
+							mui.confirm('确认提交？', '提交并打印', btnArray, function(e) {
+								if(e.index == 0) {
+									//更新缓存信息
+									var boxstime = new Date();
+									_this.currentStation.data.smtype = '1';
+									setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+
+									//任务单号
+									var _rwdId = _this.loginData.rwdid;
+									//零件编码
+									var _ljbm = _this.loginData.ljbm;
+									//零件名称
+									var _ljname = _this.loginData.ljname;
+									//箱条码
+									var _xtm = _this.loginData.xtm;
+									//零件数量
+									var _ljsl = _this.loginData.ljsl;
+									//包装id
+									var _pid = _this.loginData.pid;
+									//包装数量
+									var _pcount = _this.loginData.pcount;
+									//箱id
+									var _xid = _this.loginData.id;
+									//var _mac_address = plus.storage.getItem('mac_address');
+									var a = [];
+									var c = [];
+
+									//员工id
+									var _ygid = _this.loginData.ygid;
+									var _gztid = parseInt(JSON.parse(getLsItem("currentStation")));
+									//console.log(_gztid);
+
+									var _defectInfo = _this.currentStation.data.qualityData.defectInfo;
+									//console.log(JSON.stringify(_defectInfo));
+									for(var i = 0; i < _defectInfo.length; i++) {
+										if(_defectInfo[i].num > 0) {
+											c.push(new ObjStory(_defectInfo[i].defectId, _defectInfo[i].defect, _defectInfo[i].num));
+											//a.push(new ObjStory2(_rwdId, _defectInfo[i].defectId, _ljsl, _this.nowNokNum, _defectInfo[i].num, 0, 0, 0));
+										}
+									}
+
+									mui.ajax(url + "app/gettxm", {
+										data: {
+											id: '1'
+										},
+										dataType: 'text',
+										type: 'post',
+										timeout: 10000,
+										beforeSend: function() {
+											//plus.nativeUI.showWaiting("加载中。。。");
+											mask.show(); //显示遮罩层
+										},
+										complete: function() {
+											//plus.nativeUI.closeWaiting();
+											mask.close(); //关闭遮罩层
+										},
+										success: function(data2) {
+											//localStorage.setItem("bhg", data2);
+											mui.ajax(url + "app/addhold", {
+												data: {
+													sxxid: _rwdId, //任务id
+													holds: _this.nowNokNum, //hold数
+													xtm: data2, //箱条码
+													zzxid: 0, //周转箱id
+													holdmx: JSON.stringify(c), //hold明细--json数组格式（qxid，qxname，qxs）
+													gztid: _gztid, //工作台id
+													ygid: _ygid
+												},
+												dataType: 'json', //服务器返回json格式数据
+												type: 'post', //HTTP请求类型
+												timeout: 10000, //超时时间设置为10秒；
+												//headers:{'Content-Type':'application/json'},	
+												beforeSend: function() {
+													//plus.nativeUI.showWaiting("加载中。。。");
+													mask.show(); //显示遮罩层
+												},
+												complete: function() {
+													//plus.nativeUI.closeWaiting();
+													mask.close(); //关闭遮罩层
+												},
+												success: function(data) {
+													//提交之后，数据清零
+													data.forEach(function(item, index) {
+														if(item.mage == 0) {
+
+															setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+
+															{
+																localStorage.setItem("bhg", data2);
+																var _boxsdate = boxstime.getFullYear() + "-" + ((boxstime.getMonth() < 10 ? ("0" + (boxstime.getMonth() + 1)) : (boxstime.getMonth() + 1))) + "-" + boxstime.getDate() + "  " + boxstime.getHours() + ":" + (boxstime.getMinutes() < 10 ? ("0" + boxstime.getMinutes()) : boxstime.getMinutes());
+																_this.nokNum += parseInt(_this.nowNokNum);
+																//剩余数减去提交的不合格数
+																_this.currentStation.data.loginData.ljsl = parseInt(_this.nowlsxsl) - parseInt(_this.nowNokNum);
+																/*if(parseInt(_this.nowNokNum) >= parseInt(_ljsl)){
+																	_this.currentStation.data.loginData.ljsl = 0;
+																}*/
+																_this.currentStation.data.qualityData.nokNum = _this.nokNum;
+																_this.currentStation.data.qualityData.defectNum = _this.defectNum;
+
+																var _tt = {};
+																_tt.ljname = _this.currentStation.data.loginData.ljname;
+																_tt.nokNum = _this.nowNokNum;
+																_tt.endDate1 = _boxsdate;
+																_tt.bxtm = data2;
+																_tt.bxtm2 = _this.currentStation.data.loginData.xtm;
+																_tt.bprintok = false;
+																_tt.ygname = _this.currentStation.data.loginData.ygname;
+																_tt.bddefectInfo = _this.currentStation.data.qualityData.defectInfo;
+																//将打印用到的信息插入进去只是不展示
+																_this.currentStation.data.qualityData.nokData.push(_tt);
+																//_this.nokDatas = quickSort(_this.currentStation.data.qualityData.nokData,"endDate1",true)
+															}
+															setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+															windowsPrinterNOK(function(datax) {
+																for(var i = 0; i < _this.currentStation.data.qualityData.nokData.length; i++) {
+																	if(_this.currentStation.data.qualityData.nokData[i].bxtm == datax) {
+																		_this.currentStation.data.qualityData.nokData[i].bprintok = true;
+																		setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+																	}
+																}
+
+																//清除数据
+																_this.nowNokNum = 0
+																_this.defectNum = 0
+																var _defectInfo = _this.currentStation.data.qualityData.defectInfo;
+																_defectInfo.forEach(function(item, index) {
+																	item.num = 0
+																})
+
+																_this.defectInfo = _defectInfo
+																_this.currentStation.data.qualityData.defectInfo = _defectInfo;
+																_this.dis = false;
+																window.parent.frames.location.reload();
+																//window.location.reload(true);
+															})
+														} else if(item.mage == 1) {
+															_this.dis = false;
+															mask.close(); //关闭遮罩层
+															mui.toast("箱条码重复");
+														} else if(item.mage == 2) {
+															_this.dis = false;
+															mask.close(); //关闭遮罩层
+															mui.toast("提交数量大于筛选数量")
+														}
+													})
+												},
+												error: function(xhr, type, errorThrown) {
+													_this.dis = false;
+													//异常处理；
+													mui.toast("提交不合格品失败！");
+													mask.close(); //关闭遮罩层
+												}
+											})
+											//服务器返回响应，根据响应结果，分析是否登录成功；
+										},
+										error: function(xhr, type, errorThrown) {
+											_this.dis = false;
+											//异常处理；
+											mui.toast("获取箱条码失败！");
+											mask.close(); //关闭遮罩层
+										}
+									});
+
+								}
+							})
+						}
+					},
+					//补打不合格品条码
+					bdhgpXtm: function(index, data) {
+						var _this = this;
+						//判断是否是不合格品打印机
+						if(getLsItem("printIp") != '192.168.3.151') {
+							//mui.toast()
+							setLsItem("printIp",'192.168.3.151');
+							mui.alert('切换打印机', '切换打印机', '确定', function(e) {
+								if(e.index == 0) {
+									window.location.reload(true);
+								}
+							})
+						} else {
+							//零件编码
+							var _ljbm = _this.loginData.ljbm;
+							//零件名称
+							var _ljname = _this.loginData.ljname;
+							//箱条码
+							var _xtm = _this.loginData.xtm;
+							//零件数量
+							var _ljsl = _this.loginData.ljsl;
+							//员工姓名
+							var _userName = _this.loginData.ygname;
+
+							var btnArray = ['确定', '取消'];
+							mui.confirm("确定补打条码？", "补打条码", btnArray, function(e) {
+								if(e.index == 0) {
+									var _data = {};
+									_data.ljname = _ljname;
+									_data.ljbm = _ljbm;
+									_data.bxtm = data.bxtm;
+									_data.bhgsl = data.nokNum;
+									_data.bygname = _userName;
+									_data.bdefectDatas = data.bddefectInfo;
+									windowsNOkReprint(_data, function(bxtm) {
+										for(var i = 0; i < _this.currentStation.data.qualityData.nokData.length; i++) {
+											if(_this.currentStation.data.qualityData.nokData[i].bxtm == bxtm) {
+												_this.currentStation.data.qualityData.nokData[i].bprintok = true;
+												setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+											}
+										}
+										//清除数据
+										_this.nowNokNum = 0;
+										_this.defectNum = 0;
+										var _defectInfo = _this.currentStation.data.qualityData.defectInfo;
+										_defectInfo.forEach(function(item, index) {
+											item.num = 0
+										})
+										_this.defectInfo = _defectInfo
+										_this.currentStation.data.qualityData.defectInfo = _defectInfo;
+										window.parent.frames.location.reload();
+										//window.location.reload(true);
+									})
+								}
+							})
+						}
+					},
+					onClickChangePrinter: function() {
+
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>

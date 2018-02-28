@@ -1,0 +1,79 @@
+.renyuan{
+	height: 30rem;
+	width: 100%;
+	//background: #222222;
+}
+.top-box{
+	height: 15%;
+	width: 100%;
+	border-bottom: solid #000000 0.15rem;
+}
+.btn-box{
+	height: 85%;
+	width: 100%;
+}
+
+.top-title{
+	width: 15%;
+	//background: #007AFF;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+.top-title p{
+	color: #333333;
+	font-size: 1.3rem;
+}
+.top-namebtn{
+	height: 60%;
+	width: 30%;
+	font-size:1.5rem;
+	color: #666666;
+}
+.top-content{
+	width: 85%;
+	//background: #2AC845;
+	height: 100%;
+	padding-right: 2rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+
+
+
+.div-flex-row{
+	display: flex;
+	flex-direction: row;
+}
+.div-flex-column{
+	display: flex;
+	flex-direction: column;
+}
+.ftsz{
+	font-size: 3rem;
+	color:#666666;
+}
+
+
+.btn-scroll{
+	top: 15%;
+	bottom: 2.5%;
+	//  background: #007AFF;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	overflow: scroll;
+}
+.btm-name{
+	justify-content: center;
+	align-items: center;
+	font-size:1.3rem;
+	color: #666666;
+	padding-left: 4rem;
+	padding-right: 4rem;
+	margin: 0.3rem 0.5rem;
+}

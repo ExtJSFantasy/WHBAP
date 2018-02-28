@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/vue.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/login.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/icon.css" />
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+		<style type="text/css">
+			#loading-mask{
+		        position:absolute;
+		        left:0;
+		        top:0;
+		        width:100%;
+		        height:100%;
+		        z-index:20000;
+		        background-color: rgba(0,0,0,.15);
+		    }
+		    .span-ljbh{
+		    	text-align: -webkit-center;
+    			font-size: 2rem;
+		    }
+		    .my-start-product{
+		    	width: 80%;
+		    	margin-left: 4.5rem; 
+		    	margin-top: 3rem;
+		    	padding-bottom: 1rem;
+		    	padding-top: 1rem;
+		    	border-radius: .6rem;
+		    }
+		    .my-flex{
+		    	display: flex;
+		    }
+		    .my-item-flex{
+		    	flex: 1;
+		    }
+		</style>
+	</head>
+
+	<body onresize="document.activeElement.scrollIntoView(true);">
+		<div id="box" >
+			<div class="mui-content-padded">
+				<div class="span-ljbh">零件编号:<span v-text="taskInfo.b"></span></div>
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>
+							<span class="mui-icon mui-icon-contact"></span>
+						</label>
+						<input type="text" id="inputid" placeholder="请扫入员工码" v-model='val' @keydown.enter="testval"  autofocus/>
+						<div class="mui-switch mui-switch-blue" @tap="clearperson">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>
+							<span class="icon-truck"></span>
+						</label>
+						<input type="text" class="mui-input-clear" id="mterialid" v-model="val2" onkeyup="if(event.keyCode !=37 && event.keyCode != 39)value=value.replace(/[^\w\.\/]/ig,'')"  placeholder="请扫入物料码" />
+						<!--<div class="mui-switch mui-switch-blue" @tap="clearmaterial">
+							<div class="mui-switch-handle"></div>
+						</div>-->
+					</div>
+					<button id="register"  @tap="begining" type="button" class="mui-btn mui-btn-green my-start-product" >开始生产</button>
+				</form>
+				<div class="mui-content">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell my-flex" v-for="invalidinfo in invalidinfos" @tap="endBox(invalidinfo)">
+							<div class="my-item-flex">零件编号:<p v-text="invalidinfo.ljbm"></p></div>
+							<div class="my-item-flex">入库时间:<p v-text="invalidinfo.rkdate"></p></div>
+							<div class="my-item-flex">筛选开始时间:<p v-text="invalidinfo.sxksdate"></p></div>
+					    	<div class="my-item-flex">筛选人:<p v-text="invalidinfo.ygxm"></p></div>
+					    	<div class="my-item-flex">筛选结束时间:<p v-text="invalidinfo.sxwcdate"></p></div>
+					    	<div class="my-item-flex">箱条码:<p v-text="invalidinfo.xtm"></p></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/function.js" ></script>
+		<script type="text/javascript" src="js/common.js" ></script>
+		<script src="js/static.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			mui.init({
+				
+			});
+			if(mui.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			function plusReady() {
+				
+				if (mui.os.android) {
+					plus.screen.lockOrientation("landscape-primary");
+				}
+			}
+			var mask = mui.createMask();//遮罩层
+			var urlbacktrack = url + "app/sxbeginbybm";
+			var urlinstrutor = urlxds+"getInstrutor";
+			var vm = new Vue({
+				el: '#box',
+				data: {
+					currentStation:JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))),
+					taskInfo:JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))).data.taskInfo,
+					personId: '',
+					materialBoxId: '',
+					passBoxId: '',
+					val: '',
+					val2: '',
+					pass1: false,
+					pass2: false,
+					timer: null,
+					arrWrong: [],
+					invalidinfos:[]
+				},
+				watch:{
+					'currentStation':{
+						handler: function(cval,oval){
+							setLsItem('station_'+JSON.parse(getLsItem('currentStation')), JSON.stringify(this.currentStation));
+						},
+						deep:true
+					}
+				},
+				mounted:function(){
+					setLsItem('printIp','192.168.11.11');
+				},
+				methods: {
+					testval: function() { //人员码
+						var _this = this;
+						//自动跳转到物料码的输入框
+						setTimeout(function() {
+							mui('#mterialid')[0].focus();
+						}, 0);
+					},
+					begining: function() {
+						var ptxm = document.getElementById("inputid").value;
+						var wxtm = document.getElementById("mterialid").value;
+						this.backtrack(ptxm,wxtm);
+					},
+					clearperson: function() {
+						this.val = '';
+						setTimeout(function() {
+					       //此处可写具体逻辑设置获取焦点的input
+					       var inputElem2 = document.querySelector('input');
+								inputElem2.focus();
+					    }, 200);
+					},
+					clearmaterial: function() {
+						this.val2 = '';
+						setTimeout(function() {
+					       //此处可写具体逻辑设置获取焦点的input
+					       var inputElem3 = document.getElementById('mterialid');
+								inputElem3.focus();
+					    }, 200);
+					},
+					backtrack: function(pm,xtm) { //返回数据
+						var _this = this;
+						var _rwdid = _this.taskInfo.a;
+						
+						//先验证作业指导书是否正常
+						mui.ajax(urlinstrutor,{
+							data:{
+								rwdid:_this.taskInfo.a,//_id
+							},
+							//dataType:'script',//服务器返回json格式数据
+							type:'get',			//HTTP请求类型
+							timeout:60000,		//超时时间设置为30秒；
+							beforeSend: function() {
+						        //plus.nativeUI.showWaiting("加载中。。。");
+						        mask.show();//显示遮罩层
+						    },
+						    complete: function() {
+						        //plus.nativeUI.closeWaiting();
+						        mask.close();//关闭遮罩层
+						    },
+							success:function(data,textStatus,xhr){
+								//采用一键验证
+								mui.ajax(urlbacktrack, {
+									data: {
+										'ygtm': pm,					//人员keys
+										'xtm': xtm,					//箱条码xtm
+										'rwdid':_rwdid			//任务单id
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒;
+									beforeSend: function() {
+								       // plus.nativeUI.showWaiting("加载中。。。");
+								        mask.show();//显示遮罩层
+								    },
+								    complete: function() {
+								        //plus.nativeUI.closeWaiting();
+								        mask.close();//关闭遮罩层
+								    },
+									success: function(data2) {
+										//缓存登陆成功后返回的数据
+										data2.forEach(function(item, index) {
+											//console.log(item.mage);
+											if(item.mage == "0") {
+												document.getElementById("inputid").value = '';
+												document.getElementById("mterialid").value = '';
+												
+												_this.currentStation.data.loginData = data2[0];
+									
+												_this.currentStation.status = '1';
+												_this.currentStation.data.productNum = parseInt(data2[0].ljsl);
+												_this.currentStation.data.ygtm = pm;
+												
+												//记录该箱子的开始时间
+												var boxstime = new Date();
+												var _boxsdate = boxstime.getFullYear()+"-"+((boxstime.getMonth() < 10 ? ("0"+(boxstime.getMonth()+1)) : (boxstime.getMonth()+1)))+"-"+boxstime.getDate()+"  "+boxstime.getHours()+":"+(boxstime.getMinutes() < 10 ? ("0"+boxstime.getMinutes()) : boxstime.getMinutes());
+												//当前箱开始的时间boxcsdate
+												_this.currentStation.data.boxcsdate = _boxsdate;
+												var _mdetails = data2[0];
+												_mdetails.startDate = _boxsdate;
+												_mdetails.endDate = null;
+												_this.currentStation.data.material.mdetails.push(_mdetails);
+													//跳转到作业指导书界面
+													var _data = eval(data);
+													mui.openWindow(
+														{
+															url:'instructor.html',
+															id:'instructor.html',
+															extras: {  
+												                response: _data
+												            } 
+														}
+													)
+											}else if(item.mage == '1') {
+												mui.toast('人员条形码无效');
+												mask.close();
+											} else if(item.mage == '2'){
+												//跳转要生产的清单
+												mui.toast('该员工已被删除');//箱条码未结束。可能忘记点击下一箱了
+												mask.close();
+											} else if(item.mage == '3'){
+												//打开正在生产的清单。点击该清单进入生产界面。
+												mui.toast("该员工有正在生产的任务");
+												mask.close();
+												mui.ajax(urlxds+"getNowXtmInvalidInfo",{
+													data:{
+														ygbh:pm
+													},
+													dataType:'json',
+													timeout:10000,
+													type:'post',
+													success:function(data){
+														data.data[0].rkdate = FormatDate(data.data[0].rkdate);
+														data.data[0].sxksdate = FormatDate(data.data[0].sxksdate);
+														data.data[0].sxwcdate = '';
+														_this.invalidinfos = data.data;
+													},
+													error:function(){
+														mui.toast("获取信息失败！")
+													}
+												})
+											} else if(item.mage == '4'){
+												
+												mask.close();
+												mui.ajax(urlxds+"getXtmInvalidInfo",{
+													data:{
+														xtm:xtm
+													},
+													dataType:'json',
+													timeout:10000,
+													type:'post',
+													success:function(data){
+														//console.log(data.data);
+														if(data.data.length > 0){
+															mui.toast("箱条码无效");
+															data.data[0].rkdate = FormatDate(data.data[0].rkdate);
+															if(data.data[0].sxksdate == '' || data.data[0].sxksdate == null){
+																data.data[0].sxksdate = '';
+															}else{
+																data.data[0].sxksdate = FormatDate(data.data[0].sxksdate);
+															}
+															if(data.data[0].sxwcdate == '' || data.data[0].sxwcdate == null){
+																data.data[0].sxwcdate = '';
+															}else{
+																data.data[0].sxwcdate = FormatDate(data.data[0].sxwcdate);
+															}
+															
+															_this.invalidinfos = data.data;
+														}else{
+															mui.toast("该条码未入库！！！！")
+														}
+													},
+													error:function(){
+														mui.toast("获取该箱信息失败！");
+													}
+												})
+											} else if(item.mage == '5' ){
+												mui.toast("该箱条码不在该任务单中！");
+												mask.close();
+											} else if(item.mage == '6'){
+												mui.toast("有更早的零件需要生产");
+												mask.close();
+											}
+										});
+									},
+									error: function(xhr, type, errorThrown){
+										mui.toast('网络请求失败');
+										mask.close();
+										var _arr = ["确定","取消"];
+										mui.confirm("再次请求网络","再次请求网络",_arr,function(e){
+					    					if(e.index == 0){
+					    						_this.begining();
+					    					}
+						    			})
+									}
+								});
+							},
+							error:function(xhr,type,errorThrown){
+								mui.toast("确认指导书正常时检测网络！！！！");
+								mask.close();
+							}
+						});
+					},
+					endBox:function(data){
+						//将sxwcdate置为当前时间
+						var _this = this;
+						//箱条码
+						var _xtm = data.xtm;
+						//零件编码
+						var _ljbm = data.ljbm;
+						var _pcount = parseInt(data.ljsl);
+						console.log(data.sxwcdate);
+						if(data.sxwcdate != ''){
+							mui.toast("已完成，不可重置！");
+							return;
+						}
+						var _arr = ["确定","取消"];
+						mui.confirm("确定重置?","重置该箱",_arr,function(e){
+							if(e.index == 0){
+								mui.ajax(urlxds+"cancelBox",{
+									data:{
+										xtm:_xtm,
+										ljbm:_ljbm,
+										pcount:_pcount
+									},
+									dataType:'json',
+									timeout:10000,
+									type:'post',
+									success:function(data){
+										//刷新当前界面
+										setTimeout(function(){
+											/*var wobj = plus.webview.currentWebview(); 
+				                    			wobj.reload(true);
+				                    			wobj.show()*/
+				                    			window.location.reload(true);
+										}, 200)
+									},
+									error:function(e){
+										mui.toast("重置失败！")
+									}
+								})
+							}
+						})
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

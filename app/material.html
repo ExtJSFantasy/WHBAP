@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/icon.css" />
+		<link href="../css/sc.css" rel="stylesheet"/>
+    	<link href="../css/icon.css" rel="stylesheet"/>
+		<style>
+	    	html,body{ 
+				margin:0px; 
+				height:100%; 
+				width:100%;
+			}  
+			.mui-wuliao {
+				width:100%;
+				height:100%;
+			}
+			.mui-wuliao1 {
+				width:50%;
+				height:100%;
+			}
+			.mui-wuliao-border {
+				border-left:1px solid #ddd;
+			}
+			.top-height{
+				height:10% !important;
+				width: 100%;
+				margin-top:15%;
+				background: #F3F3F3 !important;
+				display:block;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+			}
+			.btm-height{
+				height: 20%;
+				/*background: #FFFFFF;*/
+				width: 100%;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-around;
+				margin:0 auto;
+			}
+			.btm_btn{
+				display: flex;
+				height: 10rem;
+				width: 10rem;
+				font-size: 26px;
+				color: #666666;
+				border: #666666 solid 1px;
+				border-radius: 5px;
+				justify-content: center;
+				align-items: center;
+				flex-direction:column;
+				background: #f0f0f0;
+			}
+			.topttbox{
+				width: 80%;
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: row;
+				margin:auto;
+			}
+			.topBtitle{
+				display: block;
+				width: 30%;
+				height: auto;
+				font-size: 14px;
+				color: #666666;
+				font-weight: 400;
+			}
+			.toptextbox{
+				display: block;
+				widh:70%;
+			}
+			#defectInfo2 {
+				position: absolute;
+			    left: 25%;
+			    top: 25%;
+			    width: 50%;
+			    height: 60%;
+			}
+			.ensure-window{
+				width: 80%;
+			    height: 80%;
+			    margin: auto;
+			    background-color: transparent;
+			}
+	    </style>
+	</head>
+	<body>
+		<div id="wuliao" class="mui-content" style="height: 100%;width: 100%;">
+			<div id="defectInfo2" class="mui-popover">
+				<div class="mui-content ensure-window">
+					<form id='login-form' class="mui-input-group" style="margin-top: 2rem;">
+						<div class="mui-input-row">
+							<label>管理员账号</label>
+							<input style="border: solid #ddd;" id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号" autofocus>
+						</div>
+						<div class="mui-input-row">
+							<label>密码</label>
+							<input style="border: solid #ddd;"  id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+						</div>
+					</form>
+					<div style="width: 100%;">
+						<div style="right: 0;position: absolute;margin-right: 6rem;margin-top: 1rem;">
+							<button type="button" style="margin-right: 2rem;    width: 6rem; " @tap="cancle">取消</button>
+							<button type="button" style="width: 6rem;" @tap="ensure">确定</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		    <div  class="mui-control-content mui-active" style="width:100%;height:100%;display:flex;">
+		    	<p style="font-size: 20px;height:2rem;line-height: 2rem;margin-left:0.5rem;margin-top: 1rem;">物料明细: </p>
+		    	<div class="mui-scroll-wrapper" style="width:60%;height:100%;margin-top: 2rem;">
+					<div class="mui-scroll">
+						<!--这里放置真实显示的DOM内容-->
+						<div class="mui-wuliao" id="wuliaoList">
+							<ul class="mui-table-view" style="margin:2rem 0.5rem 2rem 0.5rem;">
+						        <li class="mui-table-view-cell div-flex-row btm-list-li color3" style="margin-right: 30px;"><div><p>序号</p></div><div><p>开始时间</p></div><div><p>结束时间</p></div><div><p>零件名称</p></div><div><p>数量</p></div><div><p>筛选人员</p></div></li>
+							    	<li class="mui-table-view-cell div-flex-row btm-list-li color3" v-for="(table,index) in tableData" style="font-size: .8rem;margin-right: 2rem;border: solid #c8c7cc 1px;border-color: transparent transparent rgb(200, 199, 204);">
+							    		<div><p >{{(index+1)}}</p></div>
+								    	<div style="">{{table.startDate}}</div>
+							            <div style="">{{table.endDate}}</div>
+							            <div style="">{{table.ljname}}</div>
+							            <div style="">{{table.ljsl}}</div>
+							            <div style="">{{table.ygname}}</div>
+							    	</li>
+						    </ul>
+						</div>
+					</div>
+				</div>
+				
+	            <div class="mui-wuliao1 mui-wuliao-border" id="wuliaoSao" style="width:40%;display:flex;flex-wrap: wrap;position:absolute;top:0;right:0;">
+	            	<div class="top-height">
+            			<div class="topttbox">
+	            			<span class="topBtitle"style="font-size: .7rem;">当前箱条码：</span>
+	            			<input id="nxtm" class="toptextbox" type="text" v-model="loginData.xtm" readonly="readonly"/>
+	            			<button type="button" style="margin-bottom: 1rem;margin-left: 0.5rem; font-size: .5rem;padding-right: 1.5rem;" @tap="cancelNowBox">取消当前箱</button>
+	            		</div>
+            		</div>
+            		<div class="btm-height" style="height: 60%;">
+            			<button class="btm_btn" @tap="nextBox"><div class="icon icon-btn" style="font-size:81px;"></div><span>下一箱</span></button>
+            			<!--<button class="btm_btn"><div class="icon-btn"></div><span>变更</span></button>-->
+            		</div>
+	            </div>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+    	<script type="text/javascript" src="../js/vue.min.js" ></script>
+    	<script type="text/javascript" src="../js/function.js" ></script>
+    	<script type="text/javascript" src="../js/static.js" ></script>
+    	<script type="text/javascript" src="../js/common.js" ></script>
+    	<script>
+    		mui.init({
+				swipeBack:false, //启用右滑关闭功能
+			});
+			var old_back = mui.back;
+			mui.back = function(){
+			  /*var btn = ["确定"];
+			  mui.confirm('正在筛选中不可返回','GF9',btn,function(e){
+			    if(e.index==0){
+			    	//执行mui封装好的窗口关闭逻辑；
+			    	//old_back();
+			    }
+			  });*/
+			}
+			if(mui.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			
+			function plusReady(){
+//				initNativeObjects();
+//				showSoftInput();
+				if (mui.os.android) {
+					plus.screen.lockOrientation("landscape-primary");
+				}
+			}
+    		var mask = mui.createMask();
+    		var _wuliao = new Vue({
+    			el:"#wuliao",
+    			data:{
+    				currentStation:JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))),
+    				loginData:JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))).data.loginData,
+    				tableData:[]
+    			},
+    			watch:{
+					'currentStation':{
+						handler: function(cval,oval){
+							//console.log("---------", this.currentStation);
+							setLsItem('station_'+JSON.parse(getLsItem('currentStation')), JSON.stringify(this.currentStation));
+						},
+						deep:true
+					}
+				},
+				mounted:function(){
+					var _this = this;
+					_this.tableData = _this.currentStation.data.material.mdetails;
+				},
+    			methods:{
+    				nextBox:function(){
+	    				//结束当前箱
+	    				var _this = this;
+	    				//优先判断该箱是否已提交
+	    				//console.log(_this.loginData.ljsl);
+	    				var _sl = _this.loginData.ljsl;
+	    				if(_sl > 0){
+	    					mui.toast("当前箱未报交！！！");
+	    					return;
+	    				}
+	    				//记录结束时间
+	    				var date3 = new Date();
+						var _enddate = date3.getFullYear()+"-"+((date3.getMonth() < 10 ? ("0"+(date3.getMonth()+1)) : (date3.getMonth()+1)))+"-"+date3.getDate()+"  "+date3.getHours()+":"+(date3.getMinutes() < 10 ? ("0"+date3.getMinutes()) : date3.getMinutes());
+							
+						//箱id
+						var _xid = _this.loginData.id;
+						
+						var _arr = ["确定","取消"];
+    					mui.confirm(" 下一箱?","下一箱",_arr,function(e){
+    						//console.log(e.index);
+	    					if(e.index == 0){
+	    						mui.ajax(url+'app/getsxjxxendbyid',{
+									data:{
+										id:_xid
+									},
+									dataType:'json',//服务器返回json格式数据
+									type:'post',//HTTP请求类型
+									timeout:10000,//超时时间设置为10秒；      
+									beforeSend: function() {
+								        //plus.nativeUI.showWaiting("加载中。。。");
+								        mask.show();//显示遮罩层
+								    },
+								    complete: function() {
+								        //plus.nativeUI.closeWaiting();
+								        mask.close();//关闭遮罩层
+								    },
+									success:function(data){
+										_this.currentStation.data.material.mdetails[_this.currentStation.data.material.mdetails.length - 1].endDate = _enddate;
+			    						//只扫箱条码
+			    						clicked("../loginsecond.html", true, true,{},{});
+									},
+									error:function(xhr,type,errorThrown){
+										//console.log("===========失败");
+										mui.toast("连接网络失败！");
+										 mask.close();//关闭遮罩层
+										//异常处理；
+										//console.log(type);
+									}
+								});
+	    					}else{
+	    						
+	    					}
+	    				})
+	    			},
+	    			//取消当前箱操作
+	    			cancelNowBox:function(){
+	    				mui('#defectInfo2').popover('toggle');
+	    			},
+	    			cancle:function(){
+	    				mui('#defectInfo2').popover('toggle');
+	    			},
+	    			ensure:function(){
+	    				var _this = this;
+	    				//零件编码
+						var _ljbm = _this.loginData.ljbm;
+						//箱条码
+						var _xtm = _this.loginData.xtm;
+						
+						//包装数量
+						var _pcount = parseInt(_this.loginData.pcount);
+						var _ljsl = parseInt(_this.loginData.ljsl);
+						var _account = document.getElementById("account").value;
+						var _password = document.getElementById("password").value;
+						
+						mui.ajax(urlxds+"ensurLogin",{
+							data:{
+								account:_account,
+								pwd:_password
+							},
+							dataType:'json',
+							timeout:10000,
+							type:'post',
+							beforeSend: function() {
+						        //plus.nativeUI.showWaiting("取消中。。。");
+						        mask.show();//显示遮罩层
+						    },
+						    complete: function() {
+						        //plus.nativeUI.closeWaiting();
+						        mask.close();//关闭遮罩层
+						    },
+							success:function(data){
+								//console.log(JSON.stringify(data));
+								//刷新当前界面
+								if(data.success == 1){
+									mui.ajax(urlxds+"cancelBox",{
+									data:{
+										xtm:_xtm,
+										ljbm:_ljbm,
+										pcount:_ljsl
+									},
+									dataType:'json',
+									timeout:10000,
+									type:'post',
+									beforeSend: function() {
+								        //plus.nativeUI.showWaiting("取消中。。。");
+								        mask.show();//显示遮罩层
+								    },
+								    complete: function() {
+								        //plus.nativeUI.closeWaiting();
+								        mask.close();//关闭遮罩层
+								    },
+									success:function(data){
+										//刷新当前界面
+										if(data.success == 1){
+											{
+												var _stationLsData = {
+														status: '0',
+														data: {
+															taskInfo:null,			//任务单返回的信息
+															loginData:null,			//登陆返回的信息
+															boxcsdate:null,			//hold箱的开始时间
+															smtype:null,				//类型 1不合格，2合格
+															productNum:0,			//累计箱数量
+															productData:{
+																okNum:0,			//
+																okData:[]				//合格品历史数据
+															},
+															qualityData:{
+																nokNum:0,				//累计不合格数
+																nokData:[],				//合格品历史数据
+																nowNokNum:0,			//未报交的不合格数
+																defectInfo:[],			//缺陷信息
+																defectNum:0				//缺陷总数
+															},
+															material:{
+																mdetails:[]				//明细
+															},
+															ygtm:null,					//员工条码
+															fsxHoldData:{				//非筛选hold
+																fHoldData:[]
+															}
+														}
+													}
+											
+													setLsItem("station_"+JSON.parse(getLsItem("currentStation")), JSON.stringify(_stationLsData));
+												}
+														mui.openWindow({
+															url:'../index.html',
+															id:'index'
+														})
+													}else{
+														mui.toast("服务器异常")
+													}
+												},
+												error:function(e){
+													mui.toast("取消失败")
+												}
+											})
+										}
+							},
+							error:function(e){
+								//console.log(JSON.stringify(e));
+								mui.toast(e)
+							}
+						})
+	    			}
+    			}
+    		});
+    		mui('.mui-scroll-wrapper').scroll({
+				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+			});
+    	</script>
+	</body>
+</html>

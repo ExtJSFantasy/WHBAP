@@ -1,0 +1,99 @@
+html,
+body {
+	width: 100%;
+	height: 100%;
+}
+
+.img1 {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	filter: url(blur.svg#blur);
+	/* FireFox, Chrome, Opera */
+	-webkit-filter: blur(15px);
+	/* Chrome, Opera */
+	-moz-filter: blur(15px);
+	-ms-filter: blur(15px);
+	filter: blur(15px);
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=15, MakeShadow=false);
+	/* IE6~IE9 */
+}
+
+div.mui-content-padded {
+	margin: 0 auto;
+	position: absolute;
+	top: 15%;
+	width: 100%;
+	background: none;
+}
+
+form.mui-input-group {
+	background: none;
+	width: 60%;
+	margin: auto;
+}
+
+form.mui-input-group:before,
+form.mui-input-group:after,
+.mui-input-group .mui-input-row:after {
+	background: none;
+}
+
+form.mui-input-group div.mui-input-row {
+	margin-top: 60px;
+	background: rgba(255, 255, 255, 0.4);
+	border-radius: 10px;
+	height: 90px;
+}
+
+form.mui-input-group label {
+	text-align: center;
+	width: 20%;
+	height: 90px;
+}
+
+form.mui-input-group label span {
+	font-size: 65px;
+}
+
+/*.mui-input-row .mui-input-clear~.mui-icon-clear,
+.mui-input-row .mui-input-password~.mui-icon-eye,
+.mui-input-row .mui-input-speech~.mui-icon-speech {
+	top: 35px;
+	color: #000000;
+	font-size: 25px;
+}*/
+
+form.mui-input-group input {
+	font-size: 25px;
+	float: none;
+	width: 55%;
+	line-height: 60px;
+	margin-top:10px;
+	height: 70px;
+}
+input::-webkit-input-placeholder{
+	color: #666;
+	line-height: 55px;
+	font-size: 30px;
+	height: 70px;
+}
+
+.mui-input-row .mui-switch{
+	margin-top:30px;
+}
+.mui-switch.mui-active:before,.mui-switch:before{
+	content: '重置';
+}
+.mui-switch.mui-active:before{
+	left:10px;
+}
+.mui-switch-blue.mui-active{
+	background: #c68959;
+	border: 2px solid #c68959;
+}
+
+.mui-toast-message{
+	font-size: 25px;
+	padding:20px 25px;
+}

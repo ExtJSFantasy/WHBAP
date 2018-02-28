@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/vue.min.js"></script>
+		<script type="text/javascript" src="js/function.js" ></script>
+		<script src="js/static.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/common.js" ></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/login.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/icon.css" />
+	</head>
+
+	<body>
+		<div id="box">
+			<div class="mui-content-padded">
+				<form class="mui-input-group">
+					<div class="mui-input-row mui-hidden">
+						<label>
+							<span class="icon-truck"></span>
+						</label>
+						<input type="text" id="mterialid2" placeholder="请扫入物料码" />
+						<div class="mui-switch mui-switch-blue" >
+							<div class="mui-switch-handle"></div>
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>
+							<span class="icon-truck"></span>
+						</label>
+						<input type="text" class="mui-input-clear" id="mterialid" v-model="val2" @keydown.enter='testmaterial' placeholder="请扫入物料码" autofocus/>
+						<!--<div class="mui-switch mui-switch-blue" @tap="clearmaterial">
+							<div class="mui-switch-handle"></div>
+						</div>-->
+					</div>
+					<button id="register"  @tap="begining" type="button" class="mui-btn mui-btn-green" style="width: 80%;margin-left: 4.5rem; margin-top: 3rem;padding-bottom: 1rem;padding-top: 1rem;border-radius: .6rem;">开始生产</button>
+				</form>
+				<div class="mui-content">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell" style="display: flex;" v-for="invalidinfo in invalidinfos" @tap="resetNowBox(invalidinfo)">
+							<div style="flex: 1;">零件编号:<p v-text="invalidinfo.ljbm"></p></div>
+							<div style="flex: 1;">入库时间:<p v-text="invalidinfo.rkdate"></p></div>
+							<div style="flex: 1;">筛选开始时间:<p v-text="invalidinfo.sxksdate"></p></div>
+					    	<div style="flex: 1;">筛选人:<p v-text="invalidinfo.ygxm"></p></div>
+					    	<div style="flex: 1;">筛选结束时间:<p v-text="invalidinfo.sxwcdate"></p></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			mui.init({});
+			if(mui.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			function plusReady() {
+				var old_back = mui.back;
+				mui.back = function(){
+				  var btn = ["确定"];
+				  mui.confirm('已结束上一箱','GF9',btn,function(e){
+				    if(e.index==0){
+				    	//执行mui封装好的窗口关闭逻辑；
+				    	//var _wms = plus.webview.getWebviewById('app/main.html');
+						//  	  _wms.reload(true);
+				    	//old_back();
+				    }
+				});
+				}
+				if (mui.os.android) {
+					plus.screen.lockOrientation("landscape-primary");
+				}
+			}
+			var urlbacktrack = url + "app/sxbeginbybm";
+			var mask = mui.createMask();
+			var vm = new Vue({
+				el: '#box',
+				data: {
+					currentStation:JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))),
+					loginData:JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))).data.loginData,
+					taskInfo:JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))).data.taskInfo,
+					val2: '',
+					arrWrong: [],
+					invalidinfos:[]
+				},
+				watch:{
+					'currentStation':{
+						handler: function(cval,oval){
+							//console.log("111111111");
+							setLsItem('station_'+JSON.parse(getLsItem('currentStation')), JSON.stringify(this.currentStation));
+						},
+						deep:true
+					}
+				},
+				methods: {
+					testmaterial: function() { //箱条码.扫描箱条码之后自动开始 验证
+						//console.log(1111111);
+					},
+					begining: function() {
+						//console.log(document.getElementById("mterialid").value);
+						var wxtm = document.getElementById("mterialid").value;
+						this.backtrack(wxtm);
+					},
+					clearmaterial: function() {
+						this.val2 = '';
+						setTimeout(function() {
+					       //此处可写具体逻辑设置获取焦点的input
+					       var inputElem3 = document.getElementById('mterialid');
+								inputElem3.focus();
+					    }, 200);
+					},
+					backtrack: function(wxtm) { //返回数据
+						//console.log(22222);
+						if(wxtm == ''){
+							mui.toast("请先扫入人员码");
+							return;
+						}
+						
+						var _this = this;
+						//任务单id
+						var _rwdId = _this.taskInfo.a;
+						//console.log(_this.taskInfo.a);
+						//人员条码
+						var _ygtm = _this.currentStation.data.ygtm;
+						//console.log(_ygtm);
+						//ygtm员工条码
+						//console.log(getLsItem("personId"));
+						//console.log(getLsItem("materialBoxId"));
+						//采用一键验证
+						mui.ajax(urlbacktrack, {
+							data: {
+								'ygtm': _ygtm,					//人员
+								'xtm': wxtm,					//箱条码xtm
+								'rwdid':_rwdId
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							/*beforeSend: function() {
+						        plus.nativeUI.showWaiting("请求中。。。");
+						        mask.show();//显示遮罩层
+						    },
+						    complete: function() {
+						        plus.nativeUI.closeWaiting();
+						        mask.close();//关闭遮罩层
+						    },*/
+							success: function(data2) {
+								document.getElementById("mterialid").value = '';
+								data2.forEach(function(item, index) {
+									//console.log(item.mage);
+									if(item.mage == "0") {
+										//缓存登陆成功后返回的数据
+										_this.currentStation.data.loginData = data2[0]
+										
+										_this.currentStation.data.productNum += parseInt(data2[0].ljsl)
+										var boxstime = new Date();
+										var _boxsdate = boxstime.getFullYear()+"-"+((boxstime.getMonth() < 10 ? ("0"+(boxstime.getMonth()+1)) : (boxstime.getMonth()+1)))+"-"+boxstime.getDate()+"  "+boxstime.getHours()+":"+(boxstime.getMinutes() < 10 ? ("0"+boxstime.getMinutes()) : boxstime.getMinutes());
+										
+										var _obj = {}
+										_obj.startDate = _boxsdate;
+										_obj.endDate = null;
+										_obj.ljname = data2[0].ljname;
+										_obj.ljsl = data2[0].ljsl;
+										_obj.ygname = data2[0].ygname;
+										_this.currentStation.data.material.mdetails.push(_obj);
+										mui.openWindow(
+											{
+												url:'app/main.html',
+												id:'main'
+											}
+										)
+										//clicked("app/main.html", true, true,{},{});
+									}else if(item.mage == '1') {
+										mui.toast('人员码无效');
+										mask.close();
+									} else if(item.mage == '2'){
+										//跳转要生产的清单
+										mui.toast('该员工已被删除');//箱条码未结束。可能忘记点击下一箱了
+										mask.close();
+									} else if(item.mage == '3'){
+										mask.close();
+										//打开正在生产的清单。点击该清单进入生产界面。
+										mui.toast("该员工有正在生产的任务");
+										mui.ajax(urlxds+"getNowXtmInvalidInfo",{
+											data:{
+												ygbh:_ygtm
+											},
+											dataType:'json',
+											timeout:10000,
+											type:'post',
+											success:function(data){
+												data.data[0].rkdate = FormatDate(data.data[0].rkdate);
+												data.data[0].sxksdate = FormatDate(data.data[0].sxksdate);
+												data.data[0].sxwcdate = '';
+												_this.invalidinfos = data.data;
+											},
+											error:function(){
+												mui.toast("请求失败！")
+											}
+										})
+									} else if(item.mage == '4'){
+										mask.close();
+										mui.ajax(urlxds+"getXtmInvalidInfo",{
+											data:{
+												xtm:wxtm
+											},
+											dataType:'json',
+											timeout:10000,
+											type:'post',
+											success:function(data){
+												if(data.data.length > 0){
+													mui.toast("箱条码无效");
+													data.data[0].rkdate = FormatDate(data.data[0].rkdate);
+													if(data.data[0].sxksdate == '' || data.data[0].sxksdate == null){
+														data.data[0].sxksdate = '';
+													}else{
+														data.data[0].sxksdate = FormatDate(data.data[0].sxksdate);
+													}
+													//data.data[0].sxksdate = FormatDate(data.data[0].sxksdate);
+													//data.data[0].sxwcdate = FormatDate(data.data[0].sxwcdate);
+													if(data.data[0].sxwcdate == '' || data.data[0].sxwcdate == null){
+														data.data[0].sxwcdate = '';
+													}else{
+														data.data[0].sxwcdate = FormatDate(data.data[0].sxwcdate);
+													}
+													_this.invalidinfos = data.data;
+												}else{
+													mui.toast("此箱条码未入库！！！");
+												}
+											},
+											error:function(){
+												
+											}
+										})
+									} else if(item.mage == '5' ){
+										mask.close();
+										//mui.toast("任务单id不符合");
+										mui.toast("该箱条码不在该任务单中！");
+									} else if(item.mage == '6'){
+										mask.close();
+										mui.toast("有更早的零件需要生产");
+									}
+								});
+							},
+							error: function(xhr, type, errorThrown) {
+								mask.close();
+								mui.toast('网络请求失败');
+								var _arr = ["确定","取消"];
+								mui.confirm("再次请求网络","再次请求网络",_arr,function(e){
+			    					if(e.index == 0){
+			    						_this.begining();
+			    					}
+				    			})
+							}
+						});
+					},
+					resetNowBox:function(data){
+						var _this = this;
+						//var _xid = _this.loginData.id;
+						//箱条码
+						var _xtm = data.xtm;
+						//var wxtm = document.getElementById("mterialid").value;
+						//零件编码
+						var _ljbm = data.ljbm;
+						var _pcount = parseInt(data.ljsl);
+						if(data.sxwcdate != '' || data.sxwcdate == null){
+							mui.toast("已完成，不可重置！");
+							return;
+						}
+						var _arr = ["确定","取消"];
+						mui.confirm("确定重置?","重置该箱",_arr,function(e){
+							if(e.index == 0){
+								mui.ajax(urlxds+"cancelBox",{
+									data:{
+										xtm:_xtm,
+										ljbm:_ljbm,
+										pcount:_pcount
+									},
+									dataType:'json',
+									timeout:10000,
+									type:'post',
+									success:function(data){
+										//刷新当前界面
+										/*setTimeout(function(){
+											var wobj = plus.webview.currentWebview(); 
+				                    			wobj.reload(true);
+				                    			wobj.show()
+										}, 200)*/
+										window.location.reload(true);
+									},
+									error:function(e){
+										mui.toast("重置失败！")
+									}
+								})
+							}
+						})
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>

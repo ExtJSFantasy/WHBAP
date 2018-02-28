@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>BAP</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script src="../js/mui.min.js"></script>
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/icon.css"/>
+		
+		<script type="text/javascript" src="../js/vue.min.js" ></script>
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<style>
+			html,body{
+				width: 100%;
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			
+			.mui-bar-tab .mui-tab-item .mui-icon{
+				font-size: 2.5rem;
+			    width: auto;
+			    height: auto;
+			    padding-top: 10px;
+			    padding-bottom: 10px;
+			}
+			
+			.mui-bar-tab .mui-tab-item .mui-icon~.mui-tab-label{
+				font-size: 1.5rem;
+				padding-bottom: 5px;
+			}
+			
+			.mui-content, .mui-control-content{
+				height: 100%;
+			}
+			/*.mui-backdrop {
+			    position: relative;
+			    z-index: 0;
+			    top: 0;
+			    right: 0;
+			    bottom: 0;
+			    left: 0;
+			    background-color: rgba(0,0,0,.3);
+			}*/
+			.my-popover-backgroud-color{
+				background-color: #ddd;
+			}
+			/*.mui-bar-tab~.mui-content {
+			    padding-bottom: 100px;
+			}*/
+			/* style="z-index: -1;"*/
+		</style>
+	</head>
+
+	<body >
+		<header class="mui-bar mui-bar-nav" style="height: 3.2rem;">
+			<h1 class="mui-title" style="color: rgb(51, 51, 51);font-size: 2rem;"></h1>
+			<a href="" class="mui-pull-left"><img style="height: 2.5rem;margin-top:.3rem;margin-left: .2rem;" src="../images/logotwo.png"/></a>
+			<span id="setting" class="mui-icon mui-icon-gear mui-pull-right"></span>
+		</header>
+		
+		<div class="mui-content" id="app">
+			<nav class="mui-bar mui-bar-tab">
+			<!--<a class="mui-tab-item" @click="refreshWindow" href="#home">
+				<span class="mui-icon icon-home"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>-->
+			<a class="mui-tab-item" href="#product">
+				<span class="mui-icon icon-production"></span>
+				<span class="mui-tab-label">生产</span>
+			</a>
+			<a class="mui-tab-item mui-active" href="#quality">
+				<span class="mui-icon icon-quality"></span>
+				<span class="mui-tab-label">质量</span>
+			</a>
+			<a class="mui-tab-item" href="#material">
+				<span class="mui-icon icon-materiel"></span>
+				<span class="mui-tab-label">物料</span>
+			</a>
+			<a class="mui-tab-item" href="#personal">
+				<span class="mui-icon icon-personnel"></span>
+				<span class="mui-tab-label">人员</span>
+			</a>
+			<a class="mui-tab-item" href="#process"><!--href="#process"-->
+				<span class="mui-icon icon-Process"></span>
+				<span class="mui-tab-label">工艺</span>
+			</a>
+			<!--<a class="mui-tab-item" href="#nholdinput">
+				<span class="mui-icon icon-Process"></span>
+				<span class="mui-tab-label">非筛选hold</span>
+			</a>-->
+		</nav>
+		<div class="mui-content">
+			<div id="home"  class="mui-control-content ">
+				<iframe src="home.html" width="100%" height="100%"></iframe>
+			</div>
+			<div id="product" class="mui-control-content">
+				<iframe src="product.html" width="100%" height="100%"></iframe>
+			</div>
+			<div id="quality" class="mui-control-content mui-active">
+				<iframe src="quality.html" width="100%" height="100%"></iframe>
+			</div>
+			<div id="material" class="mui-control-content">
+				<iframe src="material.html" width="100%" height="100%"></iframe>
+			</div>
+			<div id="personal" class="mui-control-content">
+				<iframe src="personal.html" width="100%" height="100%"></iframe>
+			</div>
+			<div id="process" class="mui-control-content">
+				<iframe src="process.html" width="100%" height="100%"></iframe>
+			</div>
+		</div>
+	</div>
+		
+	</body>
+	<script type="text/javascript" src="../js/function.js" ></script>
+	<script type="text/javascript" src="../js/static.js" ></script>
+	<script>
+		mui.init({
+			swipeBack:false, //启用右滑关闭功能
+		});
+		if(mui.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		
+		function plusReady(){
+			var old_back = mui.back;
+			mui.back = function(){
+				  var btn = ["确定"];
+				  mui.confirm('正在筛选中不可返回','GF9',btn,function(e){
+				    if(e.index==0){
+				    }
+				});
+			}
+		}
+		document.getElementsByClassName('mui-title')[0].innerHTML = "该零件来自:&nbsp"+"麦特达因(苏州)汽车部件有限公司";
+		var _taskInfo1 = JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))).data.taskInfo;
+		var _rwdid1 = _taskInfo1.a;
+		mAjax(urlxds+"getVNameByRwdId",{rwdid:_rwdid1},function(data){
+			if(data.success == 1){
+				document.getElementsByClassName('mui-title')[0].innerHTML = "该零件来自:&nbsp" + data.data[0].gys;
+			}
+		})
+	</script>
+</html>

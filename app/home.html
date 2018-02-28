@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+			<!--定时刷新界面-->
+		<!--<meta http-equiv="refresh" content="20">-->
+		<title></title>
+		<link rel="stylesheet" href="../css/mui.min.css" />
+	    <link rel="stylesheet" href="../css/style.css" />
+	    <style>
+	    	html,body{ 
+				margin:0px; 
+				height:100%; 
+			}  
+			.chart {
+				height:50%;
+				width: 100%;
+				margin: 0rem;
+				padding: 0rem;
+				font-family: "微软雅黑";  
+			    font-size: 0.86rem;
+			}
+			
+	    </style>
+	</head>
+	<body>
+		<div class="mui-content" style="height: 100%;width: 100%;">
+		    <div id="homechart" style="height:100%;background:#5F86A7;">
+				<div class="chart" id="jphBarChart"></div>
+	            <div class="chart" id="nppDayBarChart"></div>
+			</div>
+		</div>
+		<!--引入需要的js-->
+	    <script src="../js/mui.min.js"></script>
+    	<script type="text/javascript" src="../js/echarts.min.js" ></script>
+    	<script type="text/javascript" src="../js/function.js" ></script>
+    	<script>
+    		mui.init({
+				swipeBack:false, //启用右滑关闭功能
+			});
+			var old_back = mui.back;
+			mui.back = function(){
+				 /* var btn = ["确定"];
+				  mui.confirm('正在筛选中不可返回','GF9',btn,function(e){
+				    if(e.index==0){
+				    	//执行mui封装好的窗口关闭逻辑；
+				    	//old_back();
+				    }
+				});*/
+			}
+			if(mui.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			function plusReady(){
+				if (mui.os.android) {
+					plus.screen.lockOrientation("landscape-primary");
+				}
+			}
+			//document.getElementById("")
+    		var jphBarChart = echarts.init(byId('jphBarChart'));
+    		var nppDayBarChart = echartsInit(byId('nppDayBarChart'));
+    		var _data1 = [
+    			{seriesName:"JPH",label:"8:00",value:123},
+    			{seriesName:"JPH",label:"9:00",value:225},
+    			{seriesName:"JPH",label:"10:00",value:254},
+    			{seriesName:"JPH",label:"11:00",value:567},
+    			{seriesName:"JPH",label:"12:00",value:233},
+    			{seriesName:"JPH",label:"13:00",value:363},
+    			{seriesName:"JPH",label:"14:00",value:424},
+    			{seriesName:"JPH",label:"15:00",value:554},
+    			{seriesName:"JPH",label:"16:00",value:353},
+    			{seriesName:"JPH",label:"17:00",value:555},
+    			{seriesName:"JPH",label:"18:00",value:234}   			
+    		];
+    		var _data2 = [
+    			{seriesName:"缺陷数量",label:"内配NG数",value:335},
+    			{seriesName:"缺陷数量",label:"PCB不良数",value:310},
+    			{seriesName:"缺陷数量",label:"壳体不到位",value:234},
+    			{seriesName:"缺陷数量",label:"铆点NG",value:135},
+    			{seriesName:"缺陷数量",label:"PCB装不到位",value:1548}  			
+    		];
+    		
+    		//setTimeout(function(){
+    			setBarOrLineCharts("bar",jphBarChart,_data1,"");
+    			setBarOrLineCharts("bar",nppDayBarChart,_data2,"");
+    		//},100)
+    		
+    		
+    		
+    		function setBarOrLineCharts(type, chart, data, option) {
+			    var legendData = [];
+			    var xAxisData = [];
+			    // 处理重复的数据
+			    for (var i = 0; i < data.length; i++) {
+			        if (legendData.indexOf(data[i].seriesName) == -1) legendData.push(data[i].seriesName);
+			        if (xAxisData.indexOf(data[i].label) == -1) xAxisData.push(data[i].label);
+			    }
+			    var mychartoption = {
+			        title: {
+			            //left:'center',
+			            //text:option.title,
+			            //textStyle:{
+			            //    color:'#000'
+			            //}
+			        },
+			        tooltip: {
+			            trigger: 'axis'
+			        },
+			        toolbox: {
+			            feature: {
+			                //dataView: {show: true, readOnly: false},
+			                //magicType: {show: true, type: ['line', 'bar']},
+			                //restore: {show: true},
+			                //saveAsImage: {show: true}
+			            }
+			        },
+			        legend: {
+			            textStyle: {
+			                color: '#fff',
+			                fontFamily: 'sans-serif',
+			                fontSize: 14
+			            },
+			            data: legendData
+			        },
+			        color: ['#27BCC4'],
+			        xAxis: [
+			            {
+			                type: 'category',
+			                //nameRotate:30,
+			                axisLabel: {
+			                    show: true,
+			                    interval: '0',
+			                    inside: false,
+			                    //rotate: -90,
+			                    fontSize: 24,
+			                    textStyle: {
+			                        color: "#fff"
+			                    },
+			                },
+			                axisLine: {
+			                    lineStyle: {
+			                        color: "#fff"
+			                    }
+			
+			                },
+			                data: xAxisData
+			            }
+			
+			        ],
+			        yAxis: [
+			            {
+			                type: 'value',
+			                name: '',
+			                //splitLine : { show : false },
+			                axisLabel: {
+			                    textStyle: {
+			                        color: "#fff"
+			                    }
+			                },
+			                nameTextStyle: {
+			                    color: "#fff"
+			                },
+			                axisLine: {
+			                    lineStyle: {
+			                        color: "#fff"
+			                    }
+			
+			                }
+			            }
+			        ],
+			        series: (function () {
+			            var series = [];
+			            for (var i = 0; i < legendData.length; i++) {
+			                series.push({
+			                    name: legendData[i],
+			                    type: type,
+			                    label: {
+			                        normal: {
+			                            show: true,
+			                            position: 'top',
+			                            textStyle: {
+			                                color: '#fff'
+			                            }
+			                        }
+			                    },
+			                    data: (function () {
+			                        var res = [];
+			                        for (var j = 0; j < data.length; j++) {
+			                            if (data[j].seriesName == legendData[i]) {
+			                                res.push(data[j].value);
+			                            }
+			                        }
+			                        return res;
+			                    }())
+			                })
+			            }
+			            return series;
+			        }())
+			    };
+			    chart.setOption(mychartoption, true);
+			}
+    	</script>
+	</body>
+</html>

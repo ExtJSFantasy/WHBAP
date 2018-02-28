@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="../js/mui.min.js"></script>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+    <link href="../css/icon.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../js/vue.min.js" ></script>
+    <script type="text/javascript" src="../js/function.js" ></script>
+    <script type="text/javascript" src="../js/static.js" ></script>
+    <style type="text/css">
+    	html,body{
+    		width: 100%;
+    		height: 100%;
+    		margin: 0;
+    		padding: 0;
+    	}
+    	
+    	#app{
+    		width: 100%;
+    		height: 100%;
+    	}
+    	
+    	
+    	.content{
+    		width: 100%;
+    		height: 50%;
+    		display: flex;
+    		flex-wrap: wrap;
+    	}
+    	
+    	.topContent{
+    		display: flex;
+    		justify-content: center;
+    		border-bottom: 2px solid #000000;
+    		height: 20%;
+    	}
+    	
+    </style>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+    </script>
+</head>
+<body>
+	<div id="app">
+		<div class="topContent">
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="width: 30%; height: 40%;margin: auto;">{{currentPerson.ygname}}</button>
+			<div class="icon-chj" style="width: 30%; height: 40%;margin: auto; font-size: 3rem;text-align: center;"></div>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="width: 30%; height: 40%;margin: auto;">{{toPerson.ygxm}}</button>
+		</div>
+		<div class="content">
+			<button class="mui-btn" style="width: 15%; height: 4rem; margin: auto;" v-for="item in personnalData" @click="selectUser(item)">{{item.ygxm}}</button>
+		</div>
+		<button type="button" class="mui-btn mui-btn-blue mui-btn-block" @click="changeUser">确认变更生产人员</button>
+	</div>
+	
+	<script>
+		mui('.mui-scroll-wrapper').scroll({
+			deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+		});
+		
+		mui.init({
+			swipeBack:false, //启用右滑关闭功能
+		});
+		var old_back = mui.back;
+		mui.back = function(){
+			  /*var btn = ["确定"];
+			  mui.confirm('正在筛选中不可返回','GF9',btn,function(e){
+			    if(e.index==0){
+			    	//执行mui封装好的窗口关闭逻辑；
+			    	//old_back();
+			    }
+			});*/
+		}
+		if(mui.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		function plusReady(){
+			if (mui.os.android) {
+				plus.screen.lockOrientation("landscape-primary");
+			}
+		}
+		
+		var app = new Vue({
+				el: "#app",
+				data: {
+					currentStation:JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))),
+					personnalData: [],
+					currentPerson: JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation")))).data.loginData,
+					toPerson: {}
+				},
+				watch:{
+					'currentStation':{
+						handler: function(cval,oval){
+							//console.log("---------", this.currentStation);
+							setLsItem('station_'+JSON.parse(getLsItem('currentStation')), JSON.stringify(this.currentStation));
+						},
+						deep:true
+					},
+					currentPerson: {
+						handler: function(){
+							this.currentStation.data.loginData = this.currentPerson
+						},
+						deep: true
+					}
+				},
+				mounted: function () {
+					var _this = this;
+					//console.log(_this.currentStation.data.productNum);
+					this.initPersonInfo();
+				},
+				methods:{
+					changeUser: function (){
+						//console.log(11111111111);
+						this.currentPerson.ygname = this.toPerson.ygxm;
+						this.currentPerson.ygtm = this.toPerson.ygbh
+						this.currentPerson.ygid = this.ygid
+						
+						this.currentStation.data.loginData.ygname = this.toPerson.ygxm;
+						this.currentStation.data.ygtm = this.toPerson.ygbh;
+						this.currentStation.data.loginData.ygid = this.ygid;
+						
+						window.parent.location.reload();
+//						mui.openWindow({
+//							url: 'main.html',
+//							id: 'main.html',
+//							createNew: true
+//						})
+					},
+					selectUser: function(item){
+						this.toPerson = item
+					},
+					initPersonInfo: function (){
+						var _this = this
+						mui.ajax(urlxds+"getAllYg",{
+							dataType:'json',
+							type:'post',
+							timeout:10000,
+							success:function(data){
+								//console.log(data.data);
+								_this.personnalData = data.data;
+							},
+							error:function(xhr,type,errorThrown){
+								mui.toast("网络错误")
+							}
+						})
+					}
+				}
+			});
+	</script>
+</body>
+</html>

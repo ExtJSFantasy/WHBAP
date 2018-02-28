@@ -1,0 +1,225 @@
+{
+  "index.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "fonts/icomoon.ttf",
+      "css/icon.css",
+      "app/home.html",
+      "app/product.html",
+      "css/box1.css",
+      "js/vue.min.js",
+      "css/swiper-3.4.2.min.css",
+      "app/process.html",
+      "js/swiper-3.4.2.jquery.min.js",
+      "js/swiper-3.4.2.min.js",
+      "js/function.js",
+      "css/style.css",
+      "js/echarts.min.js",
+      "app/quality.html",
+      "images/other.png",
+      "js/static.js",
+      "js/common.js",
+      "manifest.json"
+    ],
+    "refer": [
+      "taskInfo.html",
+      "app/main.html",
+      "printerone.html",
+      "FHolePrint.html"
+    ]
+  },
+  "taskInfo.html": {
+    "resources": [
+      "js/static.js",
+      "css/style.css",
+      "css/icon.css",
+      "fonts/icomoon.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "js/function.js",
+      "fonts/mui.ttf",
+      "js/common.js"
+    ],
+    "refer": [
+      "login.html"
+    ]
+  },
+  "login.html": {
+    "resources": [
+      "css/login.css",
+      "js/static.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "fonts/icomoon.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/vue.min.js",
+      "css/icon.css",
+      "js/function.js",
+      "js/common.js"
+    ],
+    "refer": [
+      "instructor.html",
+      "app/main.html"
+    ]
+  },
+  "app/main.html": {
+    "resources": [
+      "app/quality.html",
+      "app/product.html",
+      "css/ry.css",
+      "css/box1.css",
+      "app/home.html",
+      "css/swiper-3.4.2.min.css",
+      "app/personal.html",
+      "images/other.png",
+      "js/echarts.min.js",
+      "app/material.html",
+      "app/process.html",
+      "css/sc.css",
+      "js/swiper-3.4.2.min.js",
+      "js/swiper-3.4.2.jquery.min.js",
+      "fonts/mui.ttf",
+      "js/static.js",
+      "fonts/icomoon.ttf",
+      "css/style.css",
+      "css/icon.css",
+      "js/vue.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/function.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "images/logo.png",
+      "images/logotwo.png",
+      "app/nholdinput.html",
+      "js/common.js",
+      "js/jquery-3.2.1.min.js"
+    ],
+    "refer": [
+      "printer.html",
+      "loginsecond.html",
+      "login.html",
+      "index.html",
+      "printertwo.html"
+    ]
+  },
+  "instructor.html": {
+    "resources": [
+      "css/box1.css",
+      "js/swiper-3.4.2.min.js",
+      "js/swiper-3.4.2.jquery.min.js",
+      "css/swiper-3.4.2.min.css",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "js/function.js",
+      "js/common.js"
+    ],
+    "refer": [
+      "app/main.html",
+      "printerone.html"
+    ]
+  },
+  "printer.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/function.js"
+    ],
+    "refer": []
+  },
+  "loginsecond.html": {
+    "resources": [
+      "js/static.js",
+      "css/login.css",
+      "js/mui.min.js",
+      "fonts/icomoon.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/vue.min.js",
+      "css/icon.css",
+      "js/function.js",
+      "js/common.js"
+    ],
+    "refer": [
+      "app/main.html"
+    ]
+  },
+  "app/quality.html": {
+    "resources": [
+      "js/static.js",
+      "images/other.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "js/function.js"
+    ],
+    "refer": []
+  },
+  "printertwo.html": {
+    "refer": [
+      "app/main.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/function.js"
+    ]
+  },
+  "app/process.html": {
+    "resources": [
+      "css/box1.css",
+      "js/swiper-3.4.2.min.js",
+      "js/swiper-3.4.2.jquery.min.js",
+      "css/swiper-3.4.2.min.css"
+    ],
+    "refer": []
+  },
+  "app/product.html": {
+    "resources": [
+      "js/static.js",
+      "css/sc.css"
+    ],
+    "refer": []
+  },
+  "app/home.html": {
+    "resources": [
+      "js/echarts.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/function.js"
+    ],
+    "refer": []
+  },
+  "printerone.html": {
+    "refer": [
+      "taskInfo.html",
+      "app/main.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/function.js"
+    ]
+  },
+  "FHolePrint.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "js/function.js",
+      "css/sc.css",
+      "js/static.js"
+    ],
+    "refer": []
+  }
+}

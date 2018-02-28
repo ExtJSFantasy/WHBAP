@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.min.js" ></script>
+		<script type="text/javascript" src="js/function.js"></script>
+		<link rel="stylesheet" href="css/icon.css" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<style type="text/css">
+			.flexbox{
+				display: flex;
+				flex-wrap: wrap;
+			}
+			h1,h2,h3,h4,h5,h6{
+				color: #575858;
+			}
+			
+			.mui-card:active {
+			    background: #CCCCCC;
+			}
+			.floating-button {
+			    position: fixed;
+			    right: 15px;
+			    bottom: 15px;
+			    width: 70px;
+			    height: 70px;
+			    border-radius: 50%;
+			    z-index: 1500;
+			    background-color: #007aff;
+			    color: #fff;
+			    overflow: hidden;
+			    -webkit-transition-duration: 300ms;
+			    transition-duration: 300ms;
+			    display: -webkit-box;
+			    display: -ms-flexbox;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -ms-flex-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    -webkit-box-pack: center;
+			    -ms-flex-pack: center;
+			    -webkit-justify-content: center;
+			    justify-content: center;
+			}
+			
+			#scan:before{
+				font-family: 'icomoon';
+				content: "\eaef";
+				font-size: 1.8rem;
+				margin-right: 1.2rem;
+			}
+			.mui-plus .plus{
+				display: inline;
+			}
+			
+			.plus{
+				display: none;
+			}
+			
+			#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
+			}
+			p {
+				text-indent: 22px;
+			}
+			span.mui-icon {
+				font-size: 14px;
+				color: #007aff;
+				margin-left: -15px;
+				padding-right: 10px;
+			}
+			.mui-popover {
+				height: 300px;
+			}
+			.mui-content {
+				padding: 10px;
+			}
+			.mui-popover .mui-popover-arrow {
+			    position: absolute;
+			    z-index: 1000;
+			    top: -25px;
+			    left: 0;
+			    overflow: hidden;
+			    width: 0px;
+			    height: 0px;
+			}
+			.mui-popover.mui-active {
+			    display: block !important;
+			    top: 33% !important;
+			    left: 37% !important;
+			    opacity: 1;
+			}
+			.mui-popover {
+			    display: none !important;
+			    top: 33% !important;
+			    height: 9rem;
+			    left: 37% !important;
+			}
+			.card{
+				position: relative;
+			    font-weight: bold;
+			    font-size: 1rem;
+			    margin: .5rem;
+			    display: -webkit-inline-box;
+			    border-radius: 20px;
+			    width: 97%;
+			    /*height: 11rem;*/
+			    background-color: #f7f7f7;
+			    border: solid #adaaaa;
+			}
+			a {
+			    text-decoration: none;
+			    /*color: #999;*/
+			}
+			.xds:before {
+				content: attr(letter);
+				font-weight: 900;
+			}
+			.avatar.firstletter {
+			}
+			.avatar {
+				position: relative;
+				line-height: 2.4em;
+				text-align: center;
+				color: #909090;
+			}
+			.avatar.firstletter:before {
+				content: attr(letter);
+				font-weight: 900;
+			}
+			.class-a{
+				color: #f7f7f7;
+				background-color: #4cd964;
+				border-top-left-radius: 0rem;
+			    border-top-right-radius: 0rem;
+			    border-bottom-left-radius: 1rem;
+			    border-bottom-right-radius: 1rem;
+				padding-top: .6rem;
+				padding-bottom: .4rem;
+			}
+			.class-a-tru{
+				float: right; 
+				width: 0;
+				height: 0;
+				border-top: 50px solid #4cd964;
+				border-left: 50px solid transparent; 
+			}
+			.class-b{
+				color: #f7f7f7;
+				background-color: #d65252;
+				border-top-left-radius: 0rem;
+			    border-top-right-radius: 0rem;
+			    border-bottom-left-radius: 1rem;
+			    border-bottom-right-radius: 1rem;
+				padding-top: .6rem;
+				padding-bottom: .4rem;
+			}
+			.class-b-tru{
+				float: right; 
+				width: 0;
+				height: 0;
+				border-top: 50px solid #d65252;
+				border-left: 50px solid transparent; 
+			}
+			.class-c{
+				color: #f7f7f7;
+				background-color: #007aff;
+				border-top-left-radius: 0rem;
+			    border-top-right-radius: 0rem;
+			    border-bottom-left-radius: 1rem;
+			    border-bottom-right-radius: 1rem;
+				padding-top: .6rem;
+				padding-bottom: .4rem;
+			}
+			.class-c-tru{
+				float: right; 
+				width: 0;
+				height: 0;
+				border-top: 50px solid #007aff;
+				border-left: 50px solid transparent; 
+			}
+			.mui-card-content-inner {
+			    position: relative;
+			    padding-left: 0px;
+			    padding-right: 0px;
+			    padding-bottom: 0px;
+			    /*padding-top: 0px;*/
+			    padding-top: 15px;
+			}
+			.my-row-margin-top{
+				margin-top: 2rem;
+			}
+			.my-card-width{
+				width: 100%;
+			}
+			.my-left{
+				margin-left: 1rem
+			}
+			.my-fontsize{
+				font-size: 2rem;
+			}
+			#defectInfo3 {
+				position: absolute;
+			    left: 10% !important;
+			    top: 10% !important;
+			    width: 80%;
+			    height: 80%;
+			}
+			.my-li-cell{
+				display: flex;flex-direction: row;
+				justify-content: space-around;align-items: center;    				
+				/*border-bottom-color: #ccc;
+			    border-bottom-style: solid;
+			    border-bottom-right-radius: 0px !important;
+			    border-bottom-left-radius: 0px !important;
+			    margin-left: 1rem;
+			    margin-right: 1rem;*/
+			}
+			.mui-table-view-cell>.mui-slider-handle {
+			    position: relative;
+			    background-color: transparent;
+			}
+			.my-slider{
+				border-bottom-color: #ccc;
+			    border-bottom-style: solid;
+			    border-bottom-right-radius: 0px !important;
+			    border-bottom-left-radius: 0px !important;
+			    margin-left: 1rem;
+			    margin-right: 1rem;
+			}
+			.my-delete-btn{
+				position: absolute;
+				right: 2rem;
+				top: 1rem;
+				width: 3rem;
+				height: 3rem;
+				font-size: 2rem;
+			}
+			.mui-popup-title+.mui-popup-text {
+			    font-family: inherit;
+			    font-size: 14px;
+			    margin: 5px 0 0;
+			    color: red;
+			}
+		</style>
+	</head>
+<!--绿色三角生产中		红色未生产     		蓝色 生产完成-->
+	<body>
+		<div class="mui-content" id="app">
+			<header class="mui-bar mui-bar-nav">
+				<h1 class="mui-title">任务单</h1>
+				<a href="" class="mui-icon mui-icon-refresh mui-pull-right"></a>
+			</header>
+			<div id="defectInfo3" class="mui-popover" >
+				<span class="icon-delete my-delete-btn" @tap="closepopover"></span>
+				<span class="mui-title" style="font-size: 1.5rem;margin-top: 3rem;">{{ljname}}----更早的零件清单</span>
+				<ul class="mui-table-view" style="margin-top: 6rem;">
+					<li class="mui-table-view-cell div-flex-row btm-list-li color3 my-slider" style=" display: flex;
+    flex-direction: row;justify-content: space-around;align-items: center;">
+								<div><p>零件编号</p></div><div><p>零件名称</p></div><div><p>箱条码</p></div><div><p>入库时间</p></div>
+							</li>
+					<div id="" v-for="unfinishedData in unfinishedDatas" class="my-slider">
+						<li class="mui-table-view-cell">
+							<div class="mui-slider-right mui-disabled">
+							<a class="mui-btn mui-btn-red">删除</a>
+							</div>
+							<div class="mui-slider-handle mui-table">
+								<div class="my-li-cell mui-table-cell" >
+									<div><p v-text="unfinishedData.ljbm"></p></div>
+							    	<div><p v-text="unfinishedData.ljname"></p></div>
+							    	<div><p v-text="unfinishedData.xtm"></p></div>
+							    	<div><p v-text="unfinishedData.rkdate"></p></div>
+								</div>
+							</div>
+						</li>
+					</div>
+
+				</ul>
+				<div class="" style="text-align: -webkit-center;" @click="goOn">
+					<button class="mui-btn-blue mui-text-center" style="position: relative;width: 5rem;height: 2rem;margin -4rem auto 0 auto;clear: both;font-size: 1rem;" >继续</button>
+				</div>
+			</div>
+			<div class="mui-row flexbox my-row-margin-top">
+				<div class="mui-col-sm-5 mui-col-xs-12" v-for="task in tasks" @click="taskClick(task)">
+					<div class="mui-card card" >
+						<div class="mui-card-content my-card-width">
+							<div class="avatar firstletter class-b-tru">
+							</div>
+							<div class="mui-card-content-inner mui-row">
+								
+								<div id="" class="my-left my-fontsize" v-text="task.b">
+									
+								</div>
+								<div class="mui-col-xs-12 my-left">
+									<h4 v-text="task.c" style="1.5rem;"></h4>
+								</div>
+							</div>
+							<div id="btnStatus" class="mui-text-center class-b">
+								未生产
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--<div id="middlePopover" class="mui-popover" style="display: block !important;top: 33% !important;left: 37% !important;">
+		                <div class="mui-input-row">  
+						    <label>工单号:</label>  
+						    <input type="text" placeholder="请扫入工单号" @keydown.enter='testval'>
+						</div>
+					    <div v-show="isOrderDetals">
+					    	<ul style="-webkit-padding-start: 0rem;">
+					    		<li>零件编号:<span id=""></span></li>
+					    		<li style="margin-top: .5rem;">零件名称:<span id=""></span></li>
+					    		<li style="margin-top: .5rem;">正在生产的任务量:<span id=""></span></li>
+					    	</ul>
+					    </div>
+				</div>-->
+			</div>
+			
+		</div>
+		<script type="text/javascript" src="js/common.js" ></script>
+		<script type="text/javascript" src="js/static.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+		mui.init({
+				swipeBack: false
+		});
+		if(mui.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		function plusReady() {
+			if (mui.os.android) {
+				plus.screen.lockOrientation("landscape-primary");
+			}
+		}
+		var _url = url+'app/getrwdbysc';
+			var app = new Vue({
+				el:"#app",
+				data:{
+					currentStation: null,
+					isOrderDetals:false,
+					tasks:'',
+					ljname:'',
+					unfinishedDatas:[],
+					tasksItem:''
+				},
+				watch:{
+					'currentStation':{
+						handler: function(cval,oval){
+							setLsItem('station_'+JSON.parse(getLsItem('currentStation')), JSON.stringify(this.currentStation));
+						},
+						deep:true
+					}
+				},
+				//el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子。
+				mounted: function () { 
+					 this.currentStation = JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation"))));
+					//这里是vue初始化完成后执行的函数
+					mui.ajax(_url,{
+						//dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；	              
+						success:function(data){
+							console.log(JSON.stringify(data));
+							var _data = eval(data);
+							if(_data.length > 0){
+								app.ljname = data[0].c;
+								app.tasks = _data;
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							mui.toast("请求异常！")
+						}
+					});
+				},
+				methods: { 
+					scan:function(){
+						var st1 = setTimeout(function() {
+						var inputElem2 = document.querySelector('input');
+								inputElem2.focus();
+						},200);
+					},
+					//点击每一项的方法
+					taskClick: function(item){
+						var _this = this;
+						app.ljname = item.c;
+						_this.tasksItem = item;
+						//1 批次追索，2精确追溯
+						if(item.e == 1){
+							mui.alert('批次追溯,不要换箱！！！', 'EQMS', function() {
+			                  mAjax(urlxds+"getAllBoxISByRwdId",{rwdid:item.a},function(data){
+									//console.log(data.data);
+									if(data.success == 1){
+										if(data.data.length >0){
+											mui('#defectInfo3').popover('toggle')
+											var _data = data.data;
+											_data.forEach(function(item,index){
+												item.rkdate = FormatDate(item.rkdate);
+											})
+											_this.unfinishedDatas = _data;
+										}else{
+											_this.currentStation.data.taskInfo = item;
+											clicked("login.html", true, true,{},{});
+										}
+									}
+								})
+			                });
+						}else{
+							 mAjax(urlxds+"getAllBoxISByRwdId",{rwdid:item.a},function(data){
+									//console.log(data.data);
+									if(data.success == 1){
+										if(data.data.length >0){
+											mui('#defectInfo3').popover('toggle')
+											var _data = data.data;
+											_data.forEach(function(item,index){
+												item.rkdate = FormatDate(item.rkdate);
+											})
+											_this.unfinishedDatas = _data;
+										}else{
+											_this.currentStation.data.taskInfo = item;
+											clicked("login.html", true, true,{},{});
+										}
+									}
+								})
+						}
+						
+					},
+					goOn:function(){
+						var _this = this;
+						_this.currentStation.data.taskInfo = _this.tasksItem;
+						clicked("login.html", true, true,{},{});
+					},
+					closepopover:function(){
+						mui('#defectInfo3').popover('toggle')
+					}
+				}	
+			});
+		</script>
+	</body>
+</html>
