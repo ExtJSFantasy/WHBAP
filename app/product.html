@@ -272,8 +272,9 @@
 				methods: {
 					//合格品报交
 					ncmSub: function() {
-						if(getLsItem("printIp") != '192.168.3.150') {
-							setLsItem("printIp",'192.168.3.150');
+						//192.168.2.180 前一个区域
+						if(getLsItem("printIp") != '192.168.2.180') {
+							setLsItem("printIp",'192.168.2.180');
 							mui.alert('切换打印机', '切换打印机', '确定', function(e) {
 								if(e.index == 0) {
 									window.location.reload(true);
@@ -295,6 +296,7 @@
 							var _xtm = _this.loginData.xtm;
 							//零件数量
 							var _ljsl = _this.loginData.ljsl;
+							var _ljsl2 = _this.loginData.ljsl;
 							//console.log(_ljsl);
 							//包装id
 							var _pid = _this.loginData.pid;
@@ -309,9 +311,11 @@
 							}*/
 							//console
 							//员工id
+							console.log(_this.loginData);
 							var _ygid = _this.loginData.ygid;
 							var _gztid = JSON.parse(getLsItem("currentStation"));
 							var _nokData = _this.currentStation.data.qualityData.nokData;
+							//var _pcount2 = _pcount == 0 ? _this.currentStation.data.productNum : _pcount;
 							timer = setTimeout(function() {
 								mui('div.mui-popup-input input')[0].type = "number";
 								if(_nokData.length > 0) {
@@ -569,8 +573,8 @@
 					//补打箱条码
 					bdhgpXtm: function(data2) {
 						var _this = this;
-						if(getLsItem("printIp") != '192.168.3.150') {
-							setLsItem("printIp",'192.168.3.150');
+						if(getLsItem("printIp") != '192.168.2.180') {
+							setLsItem("printIp",'192.168.2.180');
 							mui.alert('切换打印机', '切换打印机', '确定', function(e) {
 								if(e.index == 0) {
 									window.location.reload(true);

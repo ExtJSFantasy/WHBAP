@@ -47,6 +47,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">非筛选HOLD打印</h1>
+			<a href="" class="mui-icon mui-icon-refresh-filled mui-pull-right refresh-icon"></a>
 		</header>
 		<div class="mui-content" id='app'>
 			<div style="padding: 10px 10px;">
@@ -234,6 +235,8 @@
 		<script type="text/javascript" src="js/vue.min.js"></script>
 		<script type="text/javascript" src="js/function.js"></script>
 		<script type="text/javascript" src="js/static.js"></script>
+		<script type="text/javascript" src="js/cfprint.min.js"></script>
+		<script type="text/javascript" src="js/cfprint_ext.js"></script>
 		<script>
 			mui.init({
 				swipeBack: false
@@ -263,7 +266,7 @@
 						_data.forEach(function(item, index) {
 							item.inputdate = FormatDateYMD(item.inputdate);
 						})
-						_this.num1 = _data.length;
+						_this.num1 = _data.length == 0 ? 0 : _data.length;
 						_this.endItems = _data;
 					});
 					mAjax(urlxds + "getNotPrint", {
@@ -273,7 +276,7 @@
 						_data.forEach(function(item, index) {
 							item.inputdate = FormatDateYMD(item.inputdate);
 						})
-						_this.num2 = _data.length;
+						_this.num2 = _data.length == 0 ? 0 : _data.length;
 						_this.endItems1 = _data;
 					});
 					mAjax(urlxds + "getNotPrint", {
@@ -283,7 +286,7 @@
 						_data.forEach(function(item, index) {
 							item.inputdate = FormatDateYMD(item.inputdate);
 						})
-						_this.num3 = _data.length;
+						_this.num3 = _data.length == 0 ? 0 : _data.length;
 						_this.endItems2 = _data;
 					});
 				},
@@ -300,7 +303,7 @@
 							_data.forEach(function(item, index) {
 								item.inputdate = FormatDateYMD(item.inputdate);
 							})
-							_this.num2 = _data.length;
+							_this.num2 = _data.length == 0 ? 0 : _data.length;
 							_this.endItems1 = _data;
 						})
 					},
@@ -315,7 +318,7 @@
 							_data.forEach(function(item, index) {
 								item.inputdate = FormatDateYMD(item.inputdate);
 							})
-							_this.num1 = _data.length;
+							_this.num1 = _data.length == 0 ? 0 : _data.length;
 							_this.endItems = _data;
 						})
 					},
@@ -329,16 +332,16 @@
 							_data.forEach(function(item, index) {
 								item.inputdate = FormatDateYMD(item.inputdate);
 							})
-							_this.num3 = _data.length;
+							_this.num3 = _data.length == 0 ? 0 : _data.length;
 							_this.endItems2 = _data;
 						})
 					},
 					//点击每一项的打印
 					outPrint: function(data) {
 						//console.log(data);
-						if(getLsItem("printIp") != '192.168.3.151') {
+						if(getLsItem("printIp") != '192.168.2.181') {
 							//mui.toast()
-							setLsItem("printIp", '192.168.3.151');
+							setLsItem("printIp", '192.168.2.181');
 							mui.alert('切换打印机', '切换打印机', '确定', function(e) {
 								if(e.index == 0) {
 									window.location.reload(true);
@@ -360,9 +363,9 @@
 					},
 					//打印成功再次打条码
 					outPrintAgain: function(data) {
-						if(getLsItem("printIp") != '192.168.3.151') {
+						if(getLsItem("printIp") != '192.168.2.181') {
 							//mui.toast()
-							setLsItem("printIp", '192.168.3.151');
+							setLsItem("printIp", '192.168.2.181');
 							mui.alert('切换打印机', '切换打印机', '确定', function(e) {
 								if(e.index == 0) {
 									window.location.reload(true);
@@ -376,9 +379,9 @@
 					},
 					//补打条码
 					outPrintLatePlay: function(data) {
-						if(getLsItem("printIp") != '192.168.3.151') {
+						if(getLsItem("printIp") != '192.168.2.181') {
 							//mui.toast()
-							setLsItem("printIp", '192.168.3.151');
+							setLsItem("printIp", '192.168.2.181');
 							mui.alert('切换打印机', '切换打印机', '确定', function(e) {
 								if(e.index == 0) {
 									window.location.reload(true);

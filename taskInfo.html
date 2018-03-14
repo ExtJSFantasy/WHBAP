@@ -125,8 +125,6 @@
 				content: attr(letter);
 				font-weight: 900;
 			}
-			.avatar.firstletter {
-			}
 			.avatar {
 				position: relative;
 				line-height: 2.4em;
@@ -251,6 +249,154 @@
 			    margin: 5px 0 0;
 			    color: red;
 			}
+			#loading {
+			background-color: transparent;
+			height: 100%;
+			width: 100%;
+			position: fixed;
+			z-index: 1;
+			margin-top: 0px;
+			top: 0px;
+		}
+
+		#loading-center {
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+
+		#loading-center-absolute {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			height: 150px;
+			width: 150px;
+			margin-top: -75px;
+			margin-left: -75px;
+			-moz-border-radius: 50% 50% 50% 50%;
+			-webkit-border-radius: 50% 50% 50% 50%;
+			border-radius: 50% 50% 50% 50%;
+
+		}
+
+		.object {
+			width: 20px;
+			height: 20px;
+			background-color: #9E9E9E;
+			position: absolute;
+			-moz-border-radius: 50% 50% 50% 50%;
+			-webkit-border-radius: 50% 50% 50% 50%;
+			border-radius: 50% 50% 50% 50%;
+			-webkit-animation: animate 0.8s infinite;
+			animation: animate 0.8s infinite;
+		}
+
+
+		#object_one {
+			top: 19px;
+			left: 19px;
+
+		}
+
+		#object_two {
+			top: 0px;
+			left: 65px;
+			-webkit-animation-delay: 0.1s;
+			animation-delay: 0.1s;
+
+		}
+
+		#object_three {
+			top: 19px;
+			left: 111px;
+			-webkit-animation-delay: 0.2s;
+			animation-delay: 0.2s;
+
+		}
+
+		#object_four {
+			top: 65px;
+			left: 130px;
+			-webkit-animation-delay: 0.3s;
+			animation-delay: 0.3s;
+		}
+
+		#object_five {
+			top: 111px;
+			left: 111px;
+			-webkit-animation-delay: 0.4s;
+			animation-delay: 0.4s;
+		}
+
+		#object_six {
+			top: 130px;
+			left: 65px;
+			-webkit-animation-delay: 0.5s;
+			animation-delay: 0.5s;
+		}
+
+		#object_seven {
+			top: 111px;
+			left: 19px;
+			-webkit-animation-delay: 0.6s;
+			animation-delay: 0.6s;
+		}
+
+		#object_eight {
+			top: 65px;
+			left: 0px;
+			-webkit-animation-delay: 0.7s;
+			animation-delay: 0.7s;
+		}
+
+
+
+
+		@-webkit-keyframes animate {
+
+			25% {
+				-ms-transform: scale(1.5);
+				-webkit-transform: scale(1.5);
+				transform: scale(1.5);
+			}
+
+
+			75% {
+				-ms-transform: scale(0);
+				-webkit-transform: scale(0);
+				transform: scale(0);
+			}
+
+
+		}
+
+		@keyframes animate {
+			50% {
+				-ms-transform: scale(1.5, 1.5);
+				-webkit-transform: scale(1.5, 1.5);
+				transform: scale(1.5, 1.5);
+			}
+
+			100% {
+				-ms-transform: scale(1, 1);
+				-webkit-transform: scale(1, 1);
+				transform: scale(1, 1);
+			}
+
+		}
+		.md-before-part{
+			font-size: 1.5rem;
+			margin-top: 3rem;
+		}
+		.md-before-part-content{
+			margin-top: 6rem;
+		}
+		.md-content-title{
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			align-items: center;
+		}
 		</style>
 	</head>
 <!--绿色三角生产中		红色未生产     		蓝色 生产完成-->
@@ -258,14 +404,14 @@
 		<div class="mui-content" id="app">
 			<header class="mui-bar mui-bar-nav">
 				<h1 class="mui-title">任务单</h1>
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<a href="" class="mui-icon mui-icon-refresh mui-pull-right"></a>
 			</header>
 			<div id="defectInfo3" class="mui-popover" >
-				<span class="icon-delete my-delete-btn" @tap="closepopover"></span>
-				<span class="mui-title" style="font-size: 1.5rem;margin-top: 3rem;">{{ljname}}----更早的零件清单</span>
-				<ul class="mui-table-view" style="margin-top: 6rem;">
-					<li class="mui-table-view-cell div-flex-row btm-list-li color3 my-slider" style=" display: flex;
-    flex-direction: row;justify-content: space-around;align-items: center;">
+				<span class="icon-delete my-delete-btn"@click="closepopover"></span>
+				<span class="mui-title md-before-part">{{ljname}}----更早的零件清单</span>
+				<ul class="mui-table-view md-before-part-content">
+					<li class="mui-table-view-cell div-flex-row btm-list-li color3 my-slider md-content-title">
 								<div><p>零件编号</p></div><div><p>零件名称</p></div><div><p>箱条码</p></div><div><p>入库时间</p></div>
 							</li>
 					<div id="" v-for="unfinishedData in unfinishedDatas" class="my-slider">
@@ -286,7 +432,7 @@
 
 				</ul>
 				<div class="" style="text-align: -webkit-center;" @click="goOn">
-					<button class="mui-btn-blue mui-text-center" style="position: relative;width: 5rem;height: 2rem;margin -4rem auto 0 auto;clear: both;font-size: 1rem;" >继续</button>
+					<button class="mui-btn-blue mui-text-center" style="position: relative;width: 5rem;height: 2rem;margin: 4rem auto 0 auto;clear:both;font-size: 1rem;" >继续</button>
 				</div>
 			</div>
 			<div class="mui-row flexbox my-row-margin-top">
@@ -301,7 +447,7 @@
 									
 								</div>
 								<div class="mui-col-xs-12 my-left">
-									<h4 v-text="task.c" style="1.5rem;"></h4>
+									<h4 v-text="task.c"></h4>
 								</div>
 							</div>
 							<div id="btnStatus" class="mui-text-center class-b">
@@ -310,21 +456,22 @@
 						</div>
 					</div>
 				</div>
-				<!--<div id="middlePopover" class="mui-popover" style="display: block !important;top: 33% !important;left: 37% !important;">
-		                <div class="mui-input-row">  
-						    <label>工单号:</label>  
-						    <input type="text" placeholder="请扫入工单号" @keydown.enter='testval'>
-						</div>
-					    <div v-show="isOrderDetals">
-					    	<ul style="-webkit-padding-start: 0rem;">
-					    		<li>零件编号:<span id=""></span></li>
-					    		<li style="margin-top: .5rem;">零件名称:<span id=""></span></li>
-					    		<li style="margin-top: .5rem;">正在生产的任务量:<span id=""></span></li>
-					    	</ul>
-					    </div>
-				</div>-->
 			</div>
-			
+			<div id="loading" v-show="isShow">
+				<div id="loading-center">
+					<div id="loading-center-absolute">
+						<div class="object" id="object_one"></div>
+						<div class="object" id="object_two"></div>
+						<div class="object" id="object_three"></div>
+						<div class="object" id="object_four"></div>
+						<div class="object" id="object_five"></div>
+						<div class="object" id="object_six"></div>
+						<div class="object" id="object_seven"></div>
+						<div class="object" id="object_eight"></div>
+					</div>
+				</div>
+	
+			</div>
 		</div>
 		<script type="text/javascript" src="js/common.js" ></script>
 		<script type="text/javascript" src="js/static.js" ></script>
@@ -351,7 +498,8 @@
 					tasks:'',
 					ljname:'',
 					unfinishedDatas:[],
-					tasksItem:''
+					tasksItem:'',
+					isShow:	false
 				},
 				watch:{
 					'currentStation':{
@@ -363,26 +511,44 @@
 				},
 				//el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子。
 				mounted: function () { 
-					 this.currentStation = JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation"))));
+					var _this = this;
+					_this.currentStation = JSON.parse(getLsItem('station_'+JSON.parse(getLsItem("currentStation"))));
 					//这里是vue初始化完成后执行的函数
-					mui.ajax(_url,{
-						//dataType:'json',//服务器返回json格式数据
-						type:'get',//HTTP请求类型
-						timeout:10000,//超时时间设置为10秒；	              
-						success:function(data){
-							console.log(JSON.stringify(data));
-							var _data = eval(data);
-							if(_data.length > 0){
-								app.ljname = data[0].c;
-								app.tasks = _data;
-							}
-						},
-						error:function(xhr,type,errorThrown){
-							mui.toast("请求异常！")
-						}
-					});
+					_this.initData();
 				},
 				methods: { 
+					initData:function(){
+						var _this = this;
+						mui.ajax(_url,{
+							//dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							timeout:60000,//超时时间设置为10秒；	 
+							beforeSend: function () {
+								_this.isShow = true;
+							},
+							complete: function () {
+								_this.isShow = false;
+							},             
+							success:function(data){
+								//console.log(JSON.stringify(data));
+								var _data = eval(data);
+								if(_data.length > 0){
+									app.ljname = data[0].c;
+									app.tasks = _data;
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								var btnArray = ['取消', '再次请求'];
+								mui.confirm('', '请求数据失败', btnArray, function(e) {
+									if (e.index == 1) {
+										_this.initData();
+									} else {
+										console.log(22222);
+									}
+								})
+							}
+						});
+					},
 					scan:function(){
 						var st1 = setTimeout(function() {
 						var inputElem2 = document.querySelector('input');

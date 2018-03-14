@@ -1,206 +1,204 @@
 <!doctype html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<script type="text/javascript" src="js/function.js"></script>
-		<style type="text/css">
-			.my-radio-input-height {
-				height: 4rem !important;
-			}
-			
-			.my-label-padding {
-				padding: 1.5rem !important;
-			}
-			
-			.my-radio-input-padding {
-				padding: 0.7rem !important;
-			}
-			
-			.my-ensure-btn {
-				width: 95%;
-				margin: auto;
-				margin-top: 3rem;
-				padding-bottom: 1rem;
-				padding-top: 1rem;
-				border-radius: 0.6rem;
-			}
-			
-			.header-btn {
-				margin-top: .3rem;
-				color: green;
-			}
-			
-			.refresh-icon {
-				margin-right: 2rem;
-			}
-			
-			.card-top {
-				margin-top: 3rem;
-			}
-			
-			#popover {
-				position: absolute;
-				left: 5% !important;
-				bottom: 5% !important;
-				width: 90%;
-				height: 90%;
-			}
-			
-			.mui-checkbox label,
-			.mui-radio label {
-				display: inline-block;
-				float: none;
-				width: 35%;
-				padding-right: 58px;
-			}
-		</style>
-	</head>
-
-	<body>
-		<div class="mui-content" id="station">
-			<header class="mui-bar mui-bar-nav">
-				<h1 class="mui-title">选择工作台</h1>
-				<button @tap="entrenceFHold" type="button" class="mui-pull-right header-btn">非筛选HOLD打印</button>
-				<button @tap="lookAllProcess" type="button" class="mui-pull-right header-btn">查看作业指导书</button>
-				<a href="" class="mui-icon mui-icon-refresh-filled mui-pull-right refresh-icon"></a>
-			</header>
-			<div class="mui-card card-top">
-				<form class="mui-input-group">
-					<div class="mui-input-row mui-radio my-radio-input-height" v-for="(item,index) in stations">
-						<label v-text="item.sname" class="my-label-padding"></label>
-						<input style="    width: 65%;
-    height: 100%;
-    text-align: right;" class="rds my-radio-input-padding" name="rds" type="radio" v-bind:value="item.sid">
-					</div>
-				</form>
-			</div>
-			<div class="mui-btn-green mui-text-center my-ensure-btn" @tap="ensureBtn">确定</div>
-			<div id="popover" class="mui-popover">
-				<div class="mui-scroll-wrapper">
-					<div class="mui-scroll" style="height: 100%;">
-						<ul class="mui-table-view" style="margin: 1rem;color: red;font-size: 2rem;">
-							<li class="mui-table-view-cell">
-								<span id="">1.检测打印机是否打开</span>
-							</li>
-							<li class="mui-table-view-cell">
-								<span id="">2.碳带是否足够</span>
-							</li>
-						</ul>
-						<div class="" style="position: absolute;bottom: 1rem;right: 1rem;" @tap="onTapLook">
-							<button class="mui-btn-blue mui-text-center" style="position: relative;width: 7rem;height: 2rem;margin -4rem auto 0 auto;clear: both;font-size: 1rem;">确定</button>
-						</div>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/index.css"/>
+	<script type="text/javascript" src="js/function.js"></script>
+</head>
+<body>
+	<div class="mui-content" id="station">
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">选择工作台</h1>
+			<button @click="entrenceFHold" type="button" class="mui-pull-right header-btn">非筛选HOLD打印</button>
+			<button @click="lookAllProcess" type="button" class="mui-pull-right header-btn">查看作业指导书</button>
+			<a href="" class="mui-icon mui-icon-refresh-filled mui-pull-right refresh-icon"></a>
+		</header>
+		<div class="mui-card card-top">
+			<form class="mui-input-group">
+				<div class="mui-input-row mui-radio my-radio-input-height" v-for="(item,index) in stations">
+					<label v-text="item.sname" class="my-label-padding"></label>
+					<input  class="rds my-radio-input-padding" name="rds" type="radio" v-bind:value="item.sid">
+				</div>
+			</form>
+		</div>
+		<div class="mui-btn-green mui-text-center my-ensure-btn" @click="ensureBtn">确定</div>
+		<div id="popover" class="mui-popover">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll md-wrapper-height">
+					<ul class="mui-table-view md-wrapper-table">
+						<li class="mui-table-view-cell">
+							<span id="">1.检测打印机是否打开</span>
+						</li>
+						<li class="mui-table-view-cell">
+							<span id="">2.碳带是否足够</span>
+						</li>
+						<li class="mui-table-view-cell">
+							<span id="">3.工作期间连接打印机的pad不可以关闭！！！</span>
+						</li>
+						<li class="mui-table-view-cell">
+							<span id="">4.关闭打印机插件操作</span>
+							<img src="images/tishi.jpg"/>
+						</li>
+					</ul>
+					<div class="md-popover-ensure" @click="onTapLook">
+						<button class="mui-btn-blue mui-text-center md-popover-btn">确定</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" src="js/common.js"></script>
-		<script type="text/javascript" src="js/vue.min.js"></script>
-		<script type="text/javascript" src="js/function.js"></script>
-		<script type="text/javascript" src="js/static.js"></script>
-		<script type="text/javascript">
-			mui.init();
+		<div id="loading" v-show="isShow">
+			<div id="loading-center">
+				<div id="loading-center-absolute">
+					<div class="object" id="object_one"></div>
+					<div class="object" id="object_two"></div>
+					<div class="object" id="object_three"></div>
+					<div class="object" id="object_four"></div>
+					<div class="object" id="object_five"></div>
+					<div class="object" id="object_six"></div>
+					<div class="object" id="object_seven"></div>
+					<div class="object" id="object_eight"></div>
+				</div>
+			</div>
 
-			function plusReady() {
-				//当前客户端版本号
-				var curVer;
-				//检测版本
-			}
-			new Vue({
-				el: '#station',
-				data: {
-					stations: ''
-				},
-				mounted: function() {
-					mui('#popover').popover('toggle');
-					//初始化为合格品打印机ip
-					setLsItem('printIp', '192.168.3.150');
-					this.initStation();
-				},
-				methods: {
-					initStation: function() {
-						var _this = this;
-						mAjax(urlxds + 'getStation', {}, function(data) {
+		</div>
+	</div>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/vue.min.js"></script>
+	<script type="text/javascript" src="js/function.js"></script>
+	<script type="text/javascript" src="js/static.js"></script>
+	<script type="text/javascript">
+		mui.init();
+
+		function plusReady() {
+			//当前客户端版本号
+			var curVer;
+			//检测版本
+		}
+		new Vue({
+			el: '#station',
+			data: {
+				stations: '',
+				isShow: false
+			},
+			mounted: function () {
+				mui('#popover').popover('toggle');
+				//初始化为合格品打印机ip
+				setLsItem('printIp', '192.168.2.180');
+				
+				this.initStation();
+			},
+			methods: {
+				initStation: function () {
+					var _this = this;
+					// mAjax(urlxds + 'getStation', {}, function (data) {
+					// 	_this.stations = data.data;
+					// })
+					mui.ajax(urlxds + 'getStation', {
+						data: {
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 60000, //超时时间设置为10秒；
+						beforeSend: function () {
+							_this.isShow = true;
+						},
+						complete: function () {
+							_this.isShow = false;
+						},
+						success: function (data) {
+							//服务器返回响应，根据响应结果，分析是否登录成功；
 							_this.stations = data.data;
-						})
-					},
-					entrenceFHold: function() {
-						mui.openWindow({
-							url: 'FHolePrint.html',
-							id: 'FHolePrint'
-						})
-					},
-					ensureBtn: function() {
-						var _radioVal = getRadioRes("rds");
-						if(_radioVal != null) {
-							setLsItem("currentStation", JSON.stringify(_radioVal)); //选择的工位
-
-							var _station = JSON.parse(getLsItem("station_" + _radioVal));
-							if(_station) {
-								if(_station.status != '0') {
-									mui.openWindow({
-										url: 'app/main.html',
-										id: 'main'
-									})
+						},
+						error: function (xhr, type, errorThrown) {
+							var btnArray = ['取消', '再次请求'];
+							mui.confirm('', '请求数据失败', btnArray, function(e) {
+								if (e.index == 1) {
+									_this.initStation();
 								} else {
-									mui.openWindow({
-										url: 'taskInfo.html',
-										id: 'taskInfo'
-									})
+									console.log(22222);
 								}
+							})
+						}
+					});
+				},
+				entrenceFHold: function () {
+					mui.openWindow({
+						url: 'FHolePrint.html',
+						id: 'FHolePrint'
+					})
+				},
+				ensureBtn: function () {
+					var _radioVal = getRadioRes("rds");
+					if (_radioVal != null) {
+						setLsItem("currentStation", JSON.stringify(_radioVal)); //选择的工位
+
+						var _station = JSON.parse(getLsItem("station_" + _radioVal));
+						if (_station) {
+							if (_station.status != '0') {
+								mui.openWindow({
+									url: 'app/main.html',
+									id: 'main'
+								})
 							} else {
-								var _stationLsData = {
-									status: '0',
-									data: {
-										taskInfo: null, //任务单返回的信息
-										loginData: null, //登陆返回的信息
-										boxcsdate: null, //hold箱的开始时间
-										smtype: null, //类型 1不合格，2合格
-										productNum: 0, //累计箱数量
-										nokData2: [], //累计不合格数
-										productData: {
-											okNum: 0, //
-											okData: [] //合格品历史数据
-										},
-										qualityData: {
-											nokNum: 0, //累计不合格数
-											nokData: [], //不合格品历史数据
-											nowNokNum: 0, //未报交的不合格数
-											defectInfo: [], //缺陷信息
-											defectNum: 0 //缺陷总数
-										},
-										material: {
-											mdetails: [] //明细
-										},
-										ygtm: null, //员工条码
-										fsxHoldData: { //非筛选hold
-											fHoldData: []
-										}
-									}
-								}
-								setLsItem("station_" + _radioVal, JSON.stringify(_stationLsData)); //保存当前工位的信息
 								mui.openWindow({
 									url: 'taskInfo.html',
 									id: 'taskInfo'
 								})
 							}
 						} else {
-							mui.toast("请选择工作台！");
+							var _stationLsData = {
+								status: '0',
+								data: {
+									taskInfo: null, //任务单返回的信息
+									loginData: null, //登陆返回的信息
+									boxcsdate: null, //hold箱的开始时间
+									smtype: null, //类型 1不合格，2合格
+									productNum: 0, //累计箱数量
+									nokData2: [], //累计不合格数
+									productData: {
+										okNum: 0, //
+										okData: [] //合格品历史数据
+									},
+									qualityData: {
+										nokNum: 0, //累计不合格数
+										nokData: [], //不合格品历史数据
+										nowNokNum: 0, //未报交的不合格数
+										defectInfo: [], //缺陷信息
+										defectNum: 0 //缺陷总数
+									},
+									material: {
+										mdetails: [] //明细
+									},
+									ygtm: null, //员工条码
+									fsxHoldData: { //非筛选hold
+										fHoldData: []
+									}
+								}
+							}
+							setLsItem("station_" + _radioVal, JSON.stringify(_stationLsData)); //保存当前工位的信息
+							mui.openWindow({
+								url: 'taskInfo.html',
+								id: 'taskInfo'
+							})
 						}
-					},
-					onTapLook: function() {
-						mui('#popover').popover('toggle');
-					},
-					lookAllProcess:function(){
-						clicked("app/allProcess.html", true, true,{},{});
+					} else {
+						mui.toast("请选择工作台！");
 					}
+				},
+				onTapLook: function () {
+					mui('#popover').popover('toggle');
+				},
+				lookAllProcess: function () {
+					clicked("app/allProcess.html", true, true, {}, {});
 				}
-			});
-		</script>
-	</body>
+			}
+		});
+	</script>
+</body>
 
 </html>

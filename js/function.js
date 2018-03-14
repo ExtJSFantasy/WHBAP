@@ -23,6 +23,30 @@ function mAjax(url, params, callback) {
 		}
 	})
 }
+function commenAjax(url,params,callback1,callBack2){
+	mui.ajax(url,{
+		data:params,
+		dataType:'json',//服务器返回json格式数据
+		type:'post',//HTTP请求类型
+		timeout:60000,//超时时间设置为10秒；
+		//headers:{'Content-Type':'application/json'},	          
+		beforeSend: function() {
+			//mask.show();//显示遮罩层
+		},
+		complete: function() {
+			//mask.close();//关闭遮罩层
+		},    
+		success:function(data){
+			//服务器返回响应，根据响应结果，分析是否登录成功；
+			callback1(data)
+		},
+		error:function(xhr,type,errorThrown){
+			//异常处理；
+			callback(type)
+			console.log(type);
+		}
+	});
+}
 //改变主界面title
 function changTitle(title) {
 	return document.getElementsByClassName("mui-title")[0].innerText = title;
@@ -1171,7 +1195,7 @@ function windowsPrinterScreening(data, callback){
 	var _obj6 = {};
 	_obj6.pname = data.ljname;
 	_obj6.pno = data.ljbm;
-	_obj6.pplace = "BAP";
+	_obj6.pplace = "NGCI";
 	_obj6.pcount = data.holdsys;
 	_obj6.pusername = data.realname;
 	_obj6.defect1 = data.holdyy;
@@ -1263,7 +1287,7 @@ function windowsPrinter(callback) {
 	var _obj6 = {};
 	_obj6.pname = _ljname;
 	_obj6.pno = _ljbm;
-	_obj6.pplace = "BAP";
+	_obj6.pplace = "NGCI";
 	_obj6.pcount = _hljsl;
 	_obj6.pusername = _sxname;
 	_obj6.pclass = "早班";
@@ -1339,7 +1363,7 @@ function windowsOkReprint(data, callback) {
 	var _obj6 = {};
 	_obj6.pname = data.ljname;
 	_obj6.pno = data.ljbm;
-	_obj6.pplace = "BAP";
+	_obj6.pplace = "NGCI";
 	_obj6.pcount = data.hgsl;
 	_obj6.pusername = data.hygname;
 	_obj6.pclass = "早班";
@@ -1458,7 +1482,7 @@ function windowsPrinterNOK(callback) {
 	var _obj6 = {};
 	_obj6.pname = _ljname;
 	_obj6.pno = _ljbm;
-	_obj6.pplace = "BAP";
+	_obj6.pplace = "NGCI";
 	_obj6.pcount = _defectNum;
 	_obj6.pusername = _sxname;
 	_obj6.defect1 = _details1;
@@ -1567,7 +1591,7 @@ function windowsNOkReprint(data,callback) {
 	var _obj6 = {};
 	_obj6.pname = data.ljname;
 	_obj6.pno = data.ljbm;
-	_obj6.pplace = "BAP";
+	_obj6.pplace = "NGCI";
 	_obj6.pcount = data.bhgsl;
 	_obj6.pusername = data.bygname;
 	_obj6.defect1 = _details1;

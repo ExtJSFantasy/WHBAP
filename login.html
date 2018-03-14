@@ -47,6 +47,10 @@
 
 	<body onresize="document.activeElement.scrollIntoView(true);">
 		<div id="box" >
+			<header class="mui-bar mui-bar-nav">
+				<h1 class="mui-title">开始</h1>
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			</header>
 			<div class="mui-content-padded">
 				<div class="span-ljbh">零件编号:<span v-text="taskInfo.b"></span></div>
 				<form class="mui-input-group">
@@ -202,9 +206,19 @@
 								    },
 									success: function(data2) {
 										//缓存登陆成功后返回的数据
-										data2.forEach(function(item, index) {
+										// if(data2[0].pcount == 0){	
+										// 		var btnArray = ['取消', '再次请求'];
+										// 		mui.confirm('包装数量为0', '请前往PC端WMS仓储管理系统修改包装数！！！', btnArray, function(e) {
+										// 			if (e.index == 1) {
+										// 			} else {
+										// 				console.log(22222);
+										// 			}
+										// 		})
+										// }else{
+											data2.forEach(function(item, index) {
 											//console.log(item.mage);
 											if(item.mage == "0") {
+												
 												document.getElementById("inputid").value = '';
 												document.getElementById("mterialid").value = '';
 												
@@ -305,6 +319,8 @@
 												mask.close();
 											}
 										});
+										//}
+										
 									},
 									error: function(xhr, type, errorThrown){
 										mui.toast('网络请求失败');
