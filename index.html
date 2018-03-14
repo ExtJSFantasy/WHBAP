@@ -6,9 +6,10 @@
 	<title></title>
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<link href="css/mui.min.css" rel="stylesheet" />
-	<link rel="stylesheet" href="css/index.css"/>
+	<link rel="stylesheet" href="css/index.css" />
 	<script type="text/javascript" src="js/function.js"></script>
 </head>
+
 <body>
 	<div class="mui-content" id="station">
 		<header class="mui-bar mui-bar-nav">
@@ -21,7 +22,7 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row mui-radio my-radio-input-height" v-for="(item,index) in stations">
 					<label v-text="item.sname" class="my-label-padding"></label>
-					<input  class="rds my-radio-input-padding" name="rds" type="radio" v-bind:value="item.sid">
+					<input class="rds my-radio-input-padding" name="rds" type="radio" v-bind:value="item.sid">
 				</div>
 			</form>
 		</div>
@@ -40,8 +41,8 @@
 							<span id="">3.工作期间连接打印机的pad不可以关闭！！！</span>
 						</li>
 						<li class="mui-table-view-cell">
-							<span id="">4.关闭打印机插件操作</span>
-							<img src="images/tishi.jpg"/>
+							<span id="">4.最小化打印机插件操作</span>
+							<img src="images/tishi.jpg" />
 						</li>
 					</ul>
 					<div class="md-popover-ensure" @click="onTapLook">
@@ -99,8 +100,7 @@
 					// 	_this.stations = data.data;
 					// })
 					mui.ajax(urlxds + 'getStation', {
-						data: {
-						},
+						data: {},
 						dataType: 'json', //服务器返回json格式数据
 						type: 'post', //HTTP请求类型
 						timeout: 60000, //超时时间设置为10秒；
@@ -116,7 +116,7 @@
 						},
 						error: function (xhr, type, errorThrown) {
 							var btnArray = ['取消', '再次请求'];
-							mui.confirm('', '请求数据失败', btnArray, function(e) {
+							mui.confirm(' ', '请求数据失败', btnArray, function (e) {
 								if (e.index == 1) {
 									_this.initStation();
 								} else {
