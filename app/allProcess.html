@@ -28,7 +28,7 @@
 			height: 100%;
 		}
 
-		div.swiper-container,
+		/* div.swiper-container,
 		div.swiper-wrapper,
 		div.swiper-slide {
 			width: 100%;
@@ -38,7 +38,7 @@
 		div.mui-slider-item a {
 			width: 100%;
 			height: 100%;
-		}
+		} */
 
 		.floating-button {
 			position: fixed;
@@ -69,6 +69,7 @@
 
 		.my-instructor-fontsize {
 			font-size: .7rem;
+			text-align:left !important;
 		}
 
 		.my-releasedate-font {
@@ -252,7 +253,7 @@
 
 		.md-title-back {
 			width: 8vh;
-			font-size: 5vh;
+			font-size: 5vh !important;
 		}
 
 		.md-title-content-display {
@@ -273,6 +274,11 @@
 			top: 10%;
 			width: 80%;
 			height: 80%;
+		}
+
+		#tooltip {
+			/* height: 170px; */
+			height: 25%;
 		}
 
 		.md-titlt-lable {
@@ -415,6 +421,55 @@
 			}
 
 		}
+
+		#demo {
+			position: relative;
+			width: 200px;
+			height: 100px;
+			background-color: #fff;
+			border: 8px solid #666;
+			-webkit-border-radius: 30px;
+			-moz-border-radius: 30px;
+			border-radius: 30px;
+			-webkit-box-shadow: 2px 2px 4px #888;
+			-moz-box-shadow: 2px 2px 4px #888;
+			box-shadow: 2px 2px 4px #888;
+		}
+
+		#demo:before {
+			content: ' ';
+			position: absolute;
+			width: 0;
+			height: 0;
+			left: 30px;
+			top: 100px;
+			border: 25px solid;
+			border-color: #666 transparent transparent #666;
+		}
+
+		#demo:after {
+			content: ' ';
+			position: absolute;
+			width: 0;
+			height: 0;
+			left: 38px;
+			top: 100px;
+			border: 15px solid;
+			border-color: #fff transparent transparent #fff;
+		}
+
+		.md-p-content {
+			display: block;
+			/*内联对象需加*/
+			width: 31em;
+			/* 不换行 */
+			white-space: pre-wrap;
+			/* 不换行 */
+			overflow: hidden;
+			/* 内容超出宽度时隐藏超出部分的内容 */
+			text-overflow: ellipsis;
+			/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+		}
 	</style>
 </head>
 
@@ -437,9 +492,10 @@
 				</div>
 			</form>
 		</div>
-		<div class="swiper-container">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide" v-for="(item,index) in items">
+		<div id="slider" class="mui-slider">
+			<div class="mui-slider-group">
+				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+				<div class="mui-slider-item" v-for="(item,index) in items">
 					<div class="content">
 						<div class="floor_1">
 							<div class="floor_1_left">
@@ -487,25 +543,24 @@
 								<div>图一：</div>
 								<div>图二：</div>
 								<div class="img_show">
-									<img v-bind:src="item.imgUrl1" />
+									<img v-bind:src="item.imgUrl1" data-preview-src="" data-preview-group="1" />
 								</div>
 								<div class="img_show">
-									<img v-bind:src="item.imgUrl2" alt="" />
+									<img v-bind:src="item.imgUrl2" data-preview-src="" data-preview-group="1" alt="" />
 								</div>
 								<div>图三：</div>
 								<div>图四：</div>
 								<div class="img_show">
-									<img v-bind:src="item.imgUrl3" alt="" />
+									<img v-bind:src="item.imgUrl3" data-preview-src="" data-preview-group="1" alt="" />
 								</div>
 								<div class="img_show">
-									<img v-bind:src="item.imgUrl4" alt="" />
+									<img v-bind:src="item.imgUrl4" data-preview-src="" data-preview-group="1" alt="" />
 								</div>
 							</div>
 							<div class="floor_2_right">
 								<div class="floor_2_right_row">
 									<div class="floor_2_right_row_title">序号</div>
-									<div class="floor_2_right_row_title" style="line-height: inherit;
-">主要步骤</div>
+									<div class="floor_2_right_row_title" style="line-height: inherit;">主要步骤</div>
 									<div class="floor_2_right_row_title">操作内容</div>
 									<div class="floor_2_right_row_title">关键要素备注</div>
 									<div class="floor_2_right_row_title">备注</div>
@@ -513,28 +568,28 @@
 								<div class="floor_2_right_row context">
 									<div>1</div>
 									<div v-text="item.steps1" class="my-instructor-fontsize"></div>
-									<div id="one" @tap="open1(index)" class="my-instructor-fontsize" v-text="item.operationcontent1"></div>
+									<div :id="['one'+index]" @click="open1(item.operationcontent1,index)" class="my-instructor-fontsize md-p-content" v-text="item.operationcontent1"></div>
 									<div v-text="item.riticalelement1" class="my-instructor-fontsize"></div>
 									<div v-text="item.remark1"></div>
 								</div>
 								<div class="floor_2_right_row context">
 									<div>2</div>
 									<div v-text="item.steps2" class="my-instructor-fontsize"></div>
-									<div id="two" @tap="open2(index)" class="my-instructor-fontsize" v-text="item.operationcontent2"></div>
+									<div :id="['two'+index]" @click="open2(item.operationcontent2,index)" class="my-instructor-fontsize md-p-content" v-text="item.operationcontent2"></div>
 									<div v-text="item.riticalelement2" class="my-instructor-fontsize"></div>
 									<div v-text="item.remark2"></div>
 								</div>
 								<div class="floor_2_right_row context">
 									<div>3</div>
 									<div v-text="item.steps3" class="my-instructor-fontsize"></div>
-									<div id="three" @tap="open3(index)" class="my-instructor-fontsize" v-text="item.operationcontent3"></div>
+									<div :id="['three'+index]" @tap="open3(item.operationcontent3,index)" class="my-instructor-fontsize md-p-content" v-text="item.operationcontent3"></div>
 									<div v-text="item.riticalelement3" class="my-instructor-fontsize"></div>
 									<div v-text="item.remark3"></div>
 								</div>
 								<div class="floor_2_right_row context">
 									<div>4</div>
 									<div v-text="item.steps4" class="my-instructor-fontsize"></div>
-									<div id="four" @tap="open4(index)" class="my-instructor-fontsize" v-text="item.operationcontent4"></div>
+									<div :id="['four'+index]" @tap="open4(item.operationcontent4,index)" class="my-instructor-fontsize md-p-content" v-text="item.operationcontent4"></div>
 									<div v-text="item.riticalelement4" class="my-instructor-fontsize"></div>
 									<div v-text="item.remark4"></div>
 								</div>
@@ -570,6 +625,9 @@
 						</div>
 					</div>
 				</div>
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator" v-for="(item,index) in items"></div>
+				</div>
 			</div>
 		</div>
 		<div id="processPopover" class="mui-popover">
@@ -600,6 +658,17 @@
 				</div>
 			</div>
 		</div>
+		<div id="tooltip" class="mui-popover">
+			<div class="mui-content" style="display: flex;height: 90%;">
+				<div class="mui-content" id="refreshData" style="flex:9;height: 100%;">
+					<div class="mui-content mui-scroll-wrapper" style="height: 100%;position: relative;">
+						<div class="mui-scroll">
+							<p style="margin: 2px 2px 2px 2px;font-size:1.5rem !important;line-height:1.6rem" v-text="contentDetails"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="loading" v-show="isShow">
 			<div id="loading-center">
 				<div id="loading-center-absolute">
@@ -620,6 +689,7 @@
 		mui.init({
 			swipeBack: false, //启用右滑关闭功能
 		});
+
 		var old_back = mui.back;
 		mui.previewImage();
 		if (mui.plus) {
@@ -644,13 +714,16 @@
 				processes: [],
 				parts: [],
 				isShow: false,
-				cpData:[],
-				taskInfo: [] //JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.taskInfo,
+				cpData: [],
+				taskInfo: [], //JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.taskInfo,
+				show: false,
+				contentDetails: ''
 			},
 			mounted: function () {
 				mui('.mui-scroll-wrapper').scroll({
 					indicators: true //是否显示滚动条
 				});
+
 				this.initData();
 			},
 			methods: {
@@ -676,11 +749,10 @@
 						},
 						error: function (xhr, type, errorThrown) {
 							var btnArray = ['取消', '再次请求'];
-							mui.confirm('', '请求数据失败', btnArray, function(e) {
+							mui.confirm('', '请求数据失败', btnArray, function (e) {
 								if (e.index == 1) {
 									_this.initData();
 								} else {
-									console.log(22222);
 								}
 							})
 						}
@@ -694,7 +766,6 @@
 				},
 				searchInstructor: function () {
 					var _this = this;
-					console.log(111111);
 					var _parts = _this.cpData;
 					var _search = _this.partNo;
 					if (_search != '') {
@@ -708,7 +779,6 @@
 					}
 				},
 				onTapSelectProcessItem: function (item, index) {
-					console.log(item);
 					var _this = this;
 					_this.partNum = item.ljbm;
 					_this.partName = item.ljname;
@@ -748,14 +818,15 @@
 									}
 								})
 								_this.items = data.data;
-								timer = setTimeout(function () {
-									new Swiper('.swiper-container', {
-										//autoplay: 5000,
-										direction: 'horizontal',
-										//loop: true
+								var timer = setTimeout(function () {
+									var slider = mui("#slider");
+									slider.slider({
+										interval: 0
 									});
 									timer = null;
 								}, 0);
+
+								_this.partNo = '';
 								mui('#processPopover').popover('toggle');
 							}
 						},
@@ -767,11 +838,44 @@
 					});
 				},
 				onClickOpenPopover: function () {
+					this.initData();
 					mui('#processPopover').popover('toggle'); //mui('#processPopover').popover('toggle', document.getElementById("openPopover"));
+				},
+				open1: function (data, index) {
+					var _this = this;
+					if (data != '' && data != null) {
+						_this.contentDetails = data;
+						mui('#tooltip').popover('toggle', document.getElementById("one" + index));
+					}
+
+				},
+				open2: function (data, index) {
+					var _this = this;
+
+					if (data != '' && data != null) {
+						_this.contentDetails = data;
+						mui('#tooltip').popover('toggle', document.getElementById("two" + index));
+					}
+				},
+				open3: function (data, index) {
+					var _this = this;
+
+					if (data != '' && data != null) {
+						_this.contentDetails = data;
+						mui('#tooltip').popover('toggle', document.getElementById("three" + index));
+					}
+				},
+				open4: function (data, index) {
+					var _this = this
+					//一个\ 用\转义
+					if (data != '' && data != null && data != '\\') {
+						_this.contentDetails = data;
+						mui('#tooltip').popover('toggle', document.getElementById("four" + index));
+					}
 				}
 			}
 		});
-		//}
+		//	}
 	</script>
 </body>
 
