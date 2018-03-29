@@ -806,10 +806,77 @@
 												})
 											},
 											error: function (xhr, type, errorThrown) {
-												_this.dis = false;
+												//_this.dis = false;
 												//异常处理；
-												mui.toast("提交不合格品失败！");
+												//mui.toast("提交不合格品失败！");
 												mask.close(); //关闭遮罩层
+												mAjax(urlxds + "verifyXTM", {
+													uuid: _uuid,
+													type:'hold'
+												}, function (status) {
+													if (status.success == 1) {
+														if (status.data.length > 0) {
+															setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+
+														{
+															localStorage.setItem("bhg", status.data[0].xtm);
+															var _boxsdate = boxstime.getFullYear() + "-" + ((boxstime.getMonth() < 10 ? ("0" + (
+																	boxstime.getMonth() + 1)) : (boxstime.getMonth() + 1))) + "-" + boxstime.getDate() + "  " +
+																boxstime.getHours() + ":" + (boxstime.getMinutes() < 10 ? ("0" + boxstime.getMinutes()) :
+																	boxstime.getMinutes());
+															_this.nokNum += parseInt(_this.nowNokNum);
+															//剩余数减去提交的不合格数
+															_this.currentStation.data.loginData.ljsl = parseInt(_this.nowlsxsl) - parseInt(_this.nowNokNum);
+															/*if(parseInt(_this.nowNokNum) >= parseInt(_ljsl)){
+																_this.currentStation.data.loginData.ljsl = 0;
+															}*/
+															_this.currentStation.data.qualityData.nokNum = _this.nokNum;
+															_this.currentStation.data.qualityData.defectNum = _this.defectNum;
+
+															var _tt = {};
+															_tt.ljname = _this.currentStation.data.loginData.ljname;
+															_tt.nokNum = _this.nowNokNum;
+															_tt.endDate1 = _boxsdate;
+															_tt.bxtm = status.data[0].xtm;
+															_tt.bxtm2 = _this.currentStation.data.loginData.xtm;
+															_tt.bprintok = false;
+															_tt.ygname = _this.currentStation.data.loginData.ygname;
+															_tt.bddefectInfo = _this.currentStation.data.qualityData.defectInfo;
+															//将打印用到的信息插入进去只是不展示
+															_this.currentStation.data.qualityData.nokData.push(_tt);
+															//_this.nokDatas = quickSort(_this.currentStation.data.qualityData.nokData,"endDate1",true)
+														}
+														setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+														windowsPrinterNOK(function (datax) {
+															for (var i = 0; i < _this.currentStation.data.qualityData.nokData.length; i++) {
+																if (_this.currentStation.data.qualityData.nokData[i].bxtm == datax) {
+																	_this.currentStation.data.qualityData.nokData[i].bprintok = true;
+																	setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+																}
+															}
+
+															//清除数据
+															_this.nowNokNum = 0
+															_this.defectNum = 0
+															var _defectInfo = _this.currentStation.data.qualityData.defectInfo;
+															_defectInfo.forEach(function (item, index) {
+																item.num = 0
+															})
+
+															_this.defectInfo = _defectInfo
+															_this.currentStation.data.qualityData.defectInfo = _defectInfo;
+															_this.dis = false;
+															window.parent.frames.location.reload();
+															//window.location.reload(true);
+														})
+														_this.dis = false;
+														} else {
+															mui.toast("网络错误！！！");
+														}
+													} else if (status.success == 0) {
+														mui.toast(status.message)
+													}
+												})
 											}
 										})
 										//服务器返回响应，根据响应结果，分析是否登录成功；
