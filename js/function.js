@@ -1192,8 +1192,11 @@ function windowsPrinterScreening(data, callback){
 	_obj.Cols.push(_obj9);
 	_obj.Cols.push(_obj10);
 	_obj.Cols.push(_obj11);
+	var _pname = data.ljname+'';
 	var _obj6 = {};
-	_obj6.pname = data.ljname;
+	// _obj6.pname1 = _pname.substring(0,5);
+	// _obj6.pname2 = _pname.substring(5);
+	_obj6.pname = _pname;
 	_obj6.pno = data.ljbm;
 	_obj6.pplace = "NGCI";
 	_obj6.pcount = data.holdsys;
@@ -1223,7 +1226,7 @@ function windowsPrinter(callback) {
 	//零件编码
 	var _ljbm = _data.ljbm;
 	//零件名称
-	var _ljname = _data.ljname;
+	var _ljname = _data.ljname+'';
 	var _sxname = _data.ygname;
 	var hxtm = localStorage.getItem("hgp");
 	var bxtm = localStorage.getItem("bhg");
@@ -1285,6 +1288,8 @@ function windowsPrinter(callback) {
 	_obj.Cols.push(_obj8);
 	_obj.Cols.push(_obj9);
 	var _obj6 = {};
+	// _obj6.pname1 = _ljname.substring(0,5);
+	// _obj6.pname2 = _ljname.substring(5);
 	_obj6.pname = _ljname;
 	_obj6.pno = _ljbm;
 	_obj6.pplace = "NGCI";
@@ -1360,8 +1365,12 @@ function windowsOkReprint(data, callback) {
 	_obj.Cols.push(_obj7);
 	_obj.Cols.push(_obj8);
 	_obj.Cols.push(_obj9);
+
+	var _pname = data.ljname+'';
 	var _obj6 = {};
-	_obj6.pname = data.ljname;
+	// _obj6.pname1 = _pname.substring(0,5);
+	// _obj6.pname2 = _pname.substring(5);
+	_obj6.pname = _pname;
 	_obj6.pno = data.ljbm;
 	_obj6.pplace = "NGCI";
 	_obj6.pcount = data.hgsl;
@@ -1480,6 +1489,8 @@ function windowsPrinterNOK(callback) {
 	_obj.Cols.push(_obj10);
 	_obj.Cols.push(_obj11);
 	var _obj6 = {};
+	// _obj6.pname1 = _ljname.substring(0,5);
+	// _obj6.pname2 = _ljname.substring(5);
 	_obj6.pname = _ljname;
 	_obj6.pno = _ljbm;
 	_obj6.pplace = "NGCI";
@@ -1588,8 +1599,11 @@ function windowsNOkReprint(data,callback) {
 	_obj.Cols.push(_obj9);
 	_obj.Cols.push(_obj10);
 	_obj.Cols.push(_obj11);
+	var _pname = data.ljname+'';
 	var _obj6 = {};
-	_obj6.pname = data.ljname;
+	// _obj6.pname1 = _pname.substring(0,5);
+	// _obj6.pname2 = _pname.substring(5);
+	_obj6.pname = _pname;
 	_obj6.pno = data.ljbm;
 	_obj6.pplace = "NGCI";
 	_obj6.pcount = data.bhgsl;

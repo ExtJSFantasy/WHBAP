@@ -1,621 +1,635 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
-		<script src="../js/mui.min.js"></script>
-		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link href="../css/sc.css" rel="stylesheet" />
-		<link href="../css/icon.css" rel="stylesheet" />
-		<script type="text/javascript" charset="utf-8">
-			mui.init();
-		</script>
-		<style type="text/css">
-			.avatar.firstletter {}
-			
-			.avatar {
-				position: relative;
-				line-height: 2.4em;
-				text-align: center;
-				color: #909090;
-			}
-			
-			.avatar.firstletter:before {
-				content: attr(letter);
-				font-weight: 900;
-			}
-			
-			.class-b-tru {
-				float: right;
-				width: 0;
-				height: 0;
-				border-top: 30px solid #d65252;
-				border-left: 30px solid transparent;
-			}
-			
-			.class-a-tru {
-				float: right;
-				width: 0;
-				height: 0;
-				border-top: 30px solid #4cd964;
-				border-left: 30px solid transparent;
-			}
-			
-			.mui-popup-title {
-				color: red;
-				font-size: 18px;
-				font-weight: 500;
-				text-align: -webkit-left;
-			}
-			
-			.bottomLeftContent {
-				width: 70%;
-				height: 95%;
-				margin: 15px;
-				overflow: auto;
-				/*background: red;*/
-			}
-			
-			.mui-popup-title+.mui-popup-text {
-				color: red;
-				font-family: inherit;
-				font-size: 18px;
-				margin: 5px 0 0;
-				text-align: -webkit-left;
-			}
-			
-			#DoNotGoMesLists {
-				position: absolute;
-				left: 10% !important;
-				top: 10% !important;
-				bottom: 13% !important;
-				width: 80%;
-				height: 80%;
-			}
-		</style>
-	</head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<script src="../js/mui.min.js"></script>
+	<link href="../css/mui.min.css" rel="stylesheet" />
+	<link href="../css/sc.css" rel="stylesheet" />
+	<link href="../css/icon.css" rel="stylesheet" />
+	<script type="text/javascript" charset="utf-8">
+		mui.init();
+	</script>
+	<style type="text/css">
+		.avatar.firstletter {}
 
-	<body>
-		<div class="productbox" id="product">
-			<div class="top-height" style="height: 15%;">
-				<div class="top-text div-flex-row"><span style="color: #333333;" v-text="loginData.ljbm"></span></div>
-				<div class="top-text div-flex-row"><span style="color: #333333;" v-text="loginData.ljname"></span></div>
-				<!--<div class="top-text div-flex-row"><span style="color: #333333;" >麦特达因(苏州)汽车部件有限公司</span></div>-->
-				<div class="top-text div-flex-row">
-					<div id="" style="display: flex; flex-direction: column;">
-						<!--<span style="color: #333333;font-size: 1.7rem;" >当前时间:&nbsp;&nbsp;{{nowtime}}</span>-->
-						<div class="" style="margin-top: .5rem;">
-							<span style="color: #333333;font-size: 1.7rem;">已筛选:{{lsxsl}}</span>
-							<span style="color: #333333;margin-left: 1rem;font-size: 1.7rem;">筛选中:{{nowlsxsl}}</span>
-						</div>
-					</div>
-				</div>
+		.avatar {
+			position: relative;
+			line-height: 2.4em;
+			text-align: center;
+			color: #909090;
+		}
+
+		.avatar.firstletter:before {
+			content: attr(letter);
+			font-weight: 900;
+		}
+
+		.class-b-tru {
+			float: right;
+			width: 0;
+			height: 0;
+			border-top: 30px solid #d65252;
+			border-left: 30px solid transparent;
+		}
+
+		.class-a-tru {
+			float: right;
+			width: 0;
+			height: 0;
+			border-top: 30px solid #4cd964;
+			border-left: 30px solid transparent;
+		}
+
+		.mui-popup-title {
+			color: red;
+			font-size: 18px;
+			font-weight: 500;
+			text-align: -webkit-left;
+		}
+
+		.bottomLeftContent {
+			width: 70%;
+			height: 95%;
+			margin: 15px;
+			overflow: auto;
+			/*background: red;*/
+		}
+
+		.mui-popup-title+.mui-popup-text {
+			color: red;
+			font-family: inherit;
+			font-size: 18px;
+			margin: 5px 0 0;
+			text-align: -webkit-left;
+		}
+
+		#DoNotGoMesLists {
+			position: absolute;
+			left: 10% !important;
+			top: 10% !important;
+			bottom: 13% !important;
+			width: 80%;
+			height: 80%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="productbox" id="product">
+		<div class="top-height" style="height: 15%;">
+			<div class="top-text div-flex-row">
+				<span style="color: #333333;" v-text="loginData.ljbm"></span>
 			</div>
-
-			<div class="" style="display: flex;">
+			<div class="top-text div-flex-row">
+				<span style="color: #333333;" v-text="loginData.ljname"></span>
 			</div>
-			<div class="btm-height" style="background: #EFEFF4;">
-				<marquee scrollamount=5 style="z-index: 999;position: absolute;color: red;font-weight: 600;" v-show="isPC">批次追溯，不要换箱！！！</marquee>
-				<div class="bottomLeftContent">
-					<div class="btm-left-title" style="display: block;margin-top: 1rem;text-align: -webkit-center;">
-						<p>合格品报交明细:</p>
-					</div>
-					<div class="btm-left-list">
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell div-flex-row btm-list-li color3" style="margin-right: 30px;">
-								<div>
-									<p>序号</p>
-								</div>
-								<div>
-									<p>报交时间</p>
-								</div>
-								<div>
-									<p>箱条码</p>
-								</div>
-								<div>
-									<p>数量</p>
-								</div>
-								<div>
-									<p>筛选人员</p>
-								</div>
-							</li>
-							<div id="" v-for="(okData,index) in okDatas" @tap="bdhgpXtm(okData)" style="border: solid #c8c7cc 1px;border-color: transparent transparent rgb(200, 199, 204);">
-								<div class="" style="width: auto;" v-bind:class="[okData.printok ? 'class-a-tru' : 'class-b-tru']">
-								</div>
-								<li class="mui-table-view-cell div-flex-row btm-list-li color3">
-									<div>
-										<p>{{(index+1)}}</p>
-									</div>
-									<div>
-										<p v-text="okData.nowdate"></p>
-									</div>
-									<div>
-										<p v-text="okData.txm"></p>
-									</div>
-									<div>
-										<p v-text="okData.okNum"></p>
-									</div>
-									<div>
-										<p v-text="okData.ygname"></p>
-									</div>
-								</li>
-							</div>
-						</ul>
-					</div>
-
-				</div>
-				<div class="btm-right div-flex-column">
-					<button type="button" v-bind:disabled="dis" class="mui-btn brbtn" @tap="ncmSub" style="background: #4cd964;"><div class="icon-zl ftsz" ></div>合格品报交</button>
-					<button type="button" class="mui-btn brbtn" @tap="endProduct" style="background: #e64b46;"><div class="icon-stop ftsz"></div>结束生产</button>
-					<!--<button type="button" style="background: #e64b46;color: white;">切换打印机</button>-->
-				</div>
-
-			</div>
-			<div style="position: relative; display: -webkit-box;margin-bottom: 1rem;">
-				<p style="font-size: 2rem;">累计报交合格数：</p><span style="font-size: 2rem;" v-text="okNum"></span></div>
-			<div id="DoNotGoMesLists" class="mui-popover">
-				<div class="mui-scroll-wrapper" style="height: 90%;">
-					<div class="mui-scroll">
-						<ul class="mui-table-view" style="margin-top: 1rem;">
-							<li class="mui-table-view-cell div-flex-row btm-list-li color3">
-								<div>
-									<p>零件编号</p>
-								</div>
-								<div>
-									<p>零件名称</p>
-								</div>
-								<div>
-									<p>箱条码</p>
-								</div>
-								<div>
-									<p>入库时间</p>
-								</div>
-							</li>
-							<div id="" v-for="DNGMESData in DNGMESDatas">
-								<li class="mui-table-view-cell div-flex-row btm-list-li color3">
-									<div>
-										<p v-text="DNGMESData.ljbm"></p>
-									</div>
-									<div>
-										<p v-text="DNGMESData.ljname"></p>
-									</div>
-									<div>
-										<p v-text="DNGMESData.xtm"></p>
-									</div>
-									<div>
-										<p v-text="DNGMESData.rkdate"></p>
-									</div>
-								</li>
-							</div>
-						</ul>
-						<div class="mui-button-row" style="margin-top: 1rem;">
-							<button @tap="cancelOperate" class="mui-btn  mui-text-center " style="padding-left:1rem;padding-right:1rem;margin-right: 2rem;background-color: #ccc;">取消</button>
-							<button @tap="ensureOperate" class="mui-btn mui-btn-blue mui-text-center" style="padding-left:1rem;padding-right:1rem;margin-left: 2rem;">确定</button>
-						</div>
+			<!--<div class="top-text div-flex-row"><span style="color: #333333;" >麦特达因(苏州)汽车部件有限公司</span></div>-->
+			<div class="top-text div-flex-row">
+				<div id="" style="display: flex; flex-direction: column;">
+					<!--<span style="color: #333333;font-size: 1.7rem;" >当前时间:&nbsp;&nbsp;{{nowtime}}</span>-->
+					<div class="" style="margin-top: .5rem;">
+						<span style="color: #333333;font-size: 1.7rem;">已筛选:{{lsxsl}}</span>
+						<span style="color: #333333;margin-left: 1rem;font-size: 1.7rem;">筛选中:{{nowlsxsl}}</span>
 					</div>
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" src="../js/vue.min.js"></script>
-		<script type="text/javascript" src="../js/function.js"></script>
-		<script type="text/javascript" src="../js/static.js"></script>
-		<script type="text/javascript" src="../js/cfprint.min.js"></script>
-		<script type="text/javascript" src="../js/cfprint_ext.js"></script>
-		<script>
-			mui.init();
-			var old_back = mui.back;
 
-			mui.back = function() {}
-			var mask = mui.createMask();
-			if(mui.plus) {
-				plusReady();
-			} else {
-				document.addEventListener('plusready', plusReady, false);
+		<div class="" style="display: flex;">
+		</div>
+		<div class="btm-height" style="background: #EFEFF4;">
+			<marquee scrollamount=5 style="z-index: 999;position: absolute;color: red;font-weight: 600;" v-show="isPC">批次追溯，不要换箱！！！</marquee>
+			<div class="bottomLeftContent">
+				<div class="btm-left-title" style="display: block;margin-top: 1rem;text-align: -webkit-center;">
+					<p>合格品报交明细:</p>
+				</div>
+				<div class="btm-left-list">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell div-flex-row btm-list-li color3" style="margin-right: 30px;">
+							<div>
+								<p>序号</p>
+							</div>
+							<div>
+								<p>报交时间</p>
+							</div>
+							<div>
+								<p>箱条码</p>
+							</div>
+							<div>
+								<p>数量</p>
+							</div>
+							<div>
+								<p>筛选人员</p>
+							</div>
+						</li>
+						<div id="" v-for="(okData,index) in okDatas" @tap="bdhgpXtm(okData)" style="border: solid #c8c7cc 1px;border-color: transparent transparent rgb(200, 199, 204);">
+							<div class="" style="width: auto;" v-bind:class="[okData.printok ? 'class-a-tru' : 'class-b-tru']">
+							</div>
+							<li class="mui-table-view-cell div-flex-row btm-list-li color3">
+								<div>
+									<p>{{(index+1)}}</p>
+								</div>
+								<div>
+									<p v-text="okData.nowdate"></p>
+								</div>
+								<div>
+									<p v-text="okData.txm"></p>
+								</div>
+								<div>
+									<p v-text="okData.okNum"></p>
+								</div>
+								<div>
+									<p v-text="okData.ygname"></p>
+								</div>
+							</li>
+						</div>
+					</ul>
+				</div>
+
+			</div>
+			<div class="btm-right div-flex-column">
+				<button type="button" v-bind:disabled="dis" class="mui-btn brbtn" @tap="ncmSub" style="background: #4cd964;">
+					<div class="icon-zl ftsz"></div>合格品报交</button>
+				<button type="button" class="mui-btn brbtn" @tap="endProduct" style="background: #e64b46;">
+					<div class="icon-stop ftsz"></div>结束生产</button>
+				<!--<button type="button" style="background: #e64b46;color: white;">切换打印机</button>-->
+			</div>
+
+		</div>
+		<div style="position: relative; display: -webkit-box;margin-bottom: 1rem;">
+			<p style="font-size: 2rem;">累计报交合格数：</p>
+			<span style="font-size: 2rem;" v-text="okNum"></span>
+		</div>
+		<div id="DoNotGoMesLists" class="mui-popover">
+			<div class="mui-scroll-wrapper" style="height: 90%;">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" style="margin-top: 1rem;">
+						<li class="mui-table-view-cell div-flex-row btm-list-li color3">
+							<div>
+								<p>零件编号</p>
+							</div>
+							<div>
+								<p>零件名称</p>
+							</div>
+							<div>
+								<p>箱条码</p>
+							</div>
+							<div>
+								<p>入库时间</p>
+							</div>
+						</li>
+						<div id="" v-for="DNGMESData in DNGMESDatas">
+							<li class="mui-table-view-cell div-flex-row btm-list-li color3">
+								<div>
+									<p v-text="DNGMESData.ljbm"></p>
+								</div>
+								<div>
+									<p v-text="DNGMESData.ljname"></p>
+								</div>
+								<div>
+									<p v-text="DNGMESData.xtm"></p>
+								</div>
+								<div>
+									<p v-text="DNGMESData.rkdate"></p>
+								</div>
+							</li>
+						</div>
+					</ul>
+					<div class="mui-button-row" style="margin-top: 1rem;">
+						<button @tap="cancelOperate" class="mui-btn  mui-text-center " style="padding-left:1rem;padding-right:1rem;margin-right: 2rem;background-color: #ccc;">取消</button>
+						<button @tap="ensureOperate" class="mui-btn mui-btn-blue mui-text-center" style="padding-left:1rem;padding-right:1rem;margin-left: 2rem;">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/function.js"></script>
+	<script type="text/javascript" src="../js/static.js"></script>
+	<script type="text/javascript" src="../js/cfprint.min.js"></script>
+	<script type="text/javascript" src="../js/cfprint_ext.js"></script>
+	<script>
+		mui.init();
+		var old_back = mui.back;
+
+		mui.back = function () {}
+		var mask = mui.createMask();
+		if (mui.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+
+		function plusReady() {
+
+			if (mui.os.android) {
+				plus.screen.lockOrientation("landscape-primary");
 			}
-
-			function plusReady() {
-
-				if(mui.os.android) {
-					plus.screen.lockOrientation("landscape-primary");
+		}
+		var app = new Vue({
+			el: '#product',
+			data: {
+				currentStation: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))),
+				loginData: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.loginData,
+				stationId: JSON.parse(getLsItem("currentStation")),
+				lsxsl: 0,
+				nowlsxsl: 0,
+				okNum: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.productData.okNum,
+				nowDate: 0,
+				ljmc: '',
+				ygName: '',
+				okDatas: [],
+				nowtime: '00:00',
+				DNGMESDatas: [],
+				isPC: false,
+				dis: false
+			},
+			watch: {
+				'currentStation': {
+					handler: function (cval, oval) {
+						//console.log("---------");
+						setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(this.currentStation));
+					},
+					deep: true
 				}
-			}
-			var app = new Vue({
-				el: '#product',
-				data: {
-					currentStation: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))),
-					loginData: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.loginData,
-					stationId: JSON.parse(getLsItem("currentStation")),
-					lsxsl: 0,
-					nowlsxsl: 0,
-					okNum: JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.productData.okNum,
-					nowDate: 0,
-					ljmc: '',
-					ygName: '',
-					okDatas: [],
-					nowtime: '00:00',
-					DNGMESDatas: [],
-					isPC: false,
-					dis: false
-				},
-				watch: {
-					'currentStation': {
-						handler: function(cval, oval) {
-							//console.log("---------");
-							setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(this.currentStation));
-						},
-						deep: true
-					}
-				},
-				mounted: function() {
-					mui.init();
-					
-					mui('.mui-scroll-wrapper').scroll({
-						indicators: true //是否显示滚动条
-					});
-					var _this = this;
-					var _taskInfo2 = JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.taskInfo;
-					//批次追溯提醒
-					if(_taskInfo2.e == 1) {
-						_this.isPC = true;
-					}
+			},
+			mounted: function () {
+				mui.init();
 
-					var _nowdate = new Date();
-					_this.nowtime = _nowdate.getHours() + ":" + (_nowdate.getMinutes() < 10 ? ("0" + _nowdate.getMinutes()) : _nowdate.getMinutes())
+				mui('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
+				var _this = this;
+				var _taskInfo2 = JSON.parse(getLsItem('station_' + JSON.parse(getLsItem("currentStation")))).data.taskInfo;
+				//批次追溯提醒
+				if (_taskInfo2.e == 1) {
+					_this.isPC = true;
+				}
 
-					_this.lsxsl = _this.currentStation.data.productNum - parseInt(_this.loginData.ljsl);
-					_this.nowlsxsl = _this.loginData.ljsl;
-					_this.okNum = _this.currentStation.data.productData.okNum;
-					_this.okDatas = _this.currentStation.data.productData.okData;
-				},
-				methods: {
-					//合格品报交
-					ncmSub: function() {
-						//192.168.2.180 前一个区域
-						if(getLsItem("printIp") != '192.168.2.180') {
-							setLsItem("printIp",'192.168.2.180');
-							mui.alert('切换打印机', '切换打印机', '确定', function(e) {
-								if(e.index == 0) {
-									window.location.reload(true);
-								}
-							})
-						} else {
-							var btnArray = ['取消', '确定/打印'];
-							var timer = null;
-							var _this = this;
-							_this.dis = true;
-							//console.log(_this.loginData);
-							//任务单号
-							var _rwdId = _this.loginData.rwdid;
-							//零件编码
-							var _ljbm = _this.loginData.ljbm;
-							//零件名称
-							var _ljname = _this.loginData.ljname;
-							//箱条码
-							var _xtm = _this.loginData.xtm;
-							//零件数量
-							var _ljsl = _this.loginData.ljsl;
-							var _ljsl2 = _this.loginData.ljsl;
-							//console.log(_ljsl);
-							//包装id
-							var _pid = _this.loginData.pid;
-							//包装数量
-							var _pcount = _this.loginData.pcount;
-							//console.log(_pcount);
-							//箱id
-							var _xid = _this.loginData.id;
-							/*if(_ljsl > 0){
-								mui.toast("当前箱未报交！！！");
-								return;
-							}*/
-							//console
-							//员工id
-							console.log(_this.loginData);
-							var _ygid = _this.loginData.ygid;
-							var _gztid = JSON.parse(getLsItem("currentStation"));
-							var _nokData = _this.currentStation.data.qualityData.nokData;
-							//var _pcount2 = _pcount == 0 ? _this.currentStation.data.productNum : _pcount;
-							timer = setTimeout(function() {
-								mui('div.mui-popup-input input')[0].type = "number";
-								if(_nokData.length > 0) {
-									if(_nokData[_nokData.length - 1].bxtm2 == _this.currentStation.data.loginData.xtm) {
-										mui('div.mui-popup-input input')[0].value = _pcount - parseInt(_nokData[_nokData.length - 1].nokNum);
-									} else {
-										mui('div.mui-popup-input input')[0].value = _pcount
-									}
+				var _nowdate = new Date();
+				_this.nowtime = _nowdate.getHours() + ":" + (_nowdate.getMinutes() < 10 ? ("0" + _nowdate.getMinutes()) :
+					_nowdate.getMinutes())
 
+				_this.lsxsl = _this.currentStation.data.productNum - parseInt(_this.loginData.ljsl);
+				_this.nowlsxsl = _this.loginData.ljsl;
+				_this.okNum = _this.currentStation.data.productData.okNum;
+				_this.okDatas = _this.currentStation.data.productData.okData;
+			},
+			methods: {
+				//合格品报交
+				ncmSub: function () {
+					//192.168.2.182 前一个区域
+					if (getLsItem("printIp") != '192.168.2.182') {
+						setLsItem("printIp", '192.168.2.182');
+						mui.alert('切换打印机', '切换打印机', '确定', function (e) {
+							if (e.index == 0) {
+								window.location.reload(true);
+							}
+						})
+					} else {
+						var btnArray = ['取消', '确定/打印'];
+						var timer = null;
+						var _this = this;
+						_this.dis = true;
+						//console.log(_this.loginData);
+						//任务单号
+						var _rwdId = _this.loginData.rwdid;
+						//零件编码
+						var _ljbm = _this.loginData.ljbm;
+						//零件名称
+						var _ljname = _this.loginData.ljname;
+						//箱条码
+						var _xtm = _this.loginData.xtm;
+						//零件数量
+						var _ljsl = _this.loginData.ljsl;
+						var _ljsl2 = _this.loginData.ljsl;
+						//console.log(_ljsl);
+						//包装id
+						var _pid = _this.loginData.pid;
+						//包装数量
+						var _pcount = _this.loginData.pcount;
+						//console.log(_pcount);
+						//箱id
+						var _xid = _this.loginData.id;
+						/*if(_ljsl > 0){
+							mui.toast("当前箱未报交！！！");
+							return;
+						}*/
+						//console
+						//员工id
+						console.log(_this.loginData);
+						var _ygid = _this.loginData.ygid;
+						var _gztid = JSON.parse(getLsItem("currentStation"));
+						var _nokData = _this.currentStation.data.qualityData.nokData;
+						//var _pcount2 = _pcount == 0 ? _this.currentStation.data.productNum : _pcount;
+						timer = setTimeout(function () {
+							mui('div.mui-popup-input input')[0].type = "number";
+							if (_nokData.length > 0) {
+								if (_nokData[_nokData.length - 1].bxtm2 == _this.currentStation.data.loginData.xtm) {
+									mui('div.mui-popup-input input')[0].value = _pcount - parseInt(_nokData[_nokData.length - 1].nokNum);
 								} else {
 									mui('div.mui-popup-input input')[0].value = _pcount
 								}
 
-								timer = null;
-							}, 0);
-							//console.log(_ljbm);
-							mui.prompt("当前零件表编号:" + _ljbm, '请输入最小包装数', '请先在质量里报交不合格品', btnArray, function(e) {
-								if(e.index == 1) {
-									//console.log( e.value);
-									//小于某个值时不可以打包
-									mui.ajax(url + "app/gettxm", {
-										data: {
-											id: '2'
-										},
-										dataType: 'text',
-										type: 'post',
-										timeout: 10000,
-										beforeSend: function() {
-											//plus.nativeUI.showWaiting("加载中。。。");
-											mask.show(); //显示遮罩层
-										},
-										complete: function() {
-											//plus.nativeUI.closeWaiting();
-											mask.close(); //关闭遮罩层
-										},
-										success: function(data) {
-											mui.ajax(url + "app/addhgp", {
-												data: {
-													rwdid: _rwdId,
-													ljsl: e.value,
-													xtm: data,
-													pid: _pid,
-													ygid: _ygid,
-													gztid: _gztid
-												},
-												type: 'post',
-												dataType: 'json',
-												timeout: 10000,
-												beforeSend: function() {
-													//plus.nativeUI.showWaiting("加载中。。。");
-													mask.show(); //显示遮罩层
-												},
-												complete: function() {
-													//plus.nativeUI.closeWaiting();
-													mask.close(); //关闭遮罩层
-												},
-												success: function(data2) {
-													data2.forEach(function(item, index) {
-														if(item.mage == 0) {
-
-															{
-																_this.currentStation.data.smtype = '2';
-																localStorage.setItem("hgp", data);
-																localStorage.setItem("xhljsl", e.value);
-																var date3 = new Date();
-																var _nowdate = date3.getFullYear() + "-" + ((date3.getMonth() < 10 ? ("0" + (date3.getMonth() + 1)) : (date3.getMonth() + 1))) + "-" + date3.getDate() + "  " + date3.getHours() + ":" + (date3.getMinutes() < 10 ? ("0" + date3.getMinutes()) : date3.getMinutes());
-																var _obj = _this.currentStation.data.loginData;
-																_obj.okNum = e.value;
-																_obj.nowdate = _nowdate;
-																_obj.txm = data;
-																_obj.printok = false;
-																_this.currentStation.data.productData.okData.push(_obj);
-																_this.okNum += parseInt(e.value)
-																_this.currentStation.data.productData.okNum += parseInt(e.value);
-																//将已提交的箱子数量置为剩余数
-																_this.currentStation.data.loginData.ljsl = parseInt(_this.nowlsxsl) - parseInt(e.value);
-																_this.currentStation.data.productData.okData = quickSort(_this.currentStation.data.productData.okData, "nowdate", false);
-																_this.okDatas = _this.currentStation.data.productData.okData
-															}
-															setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
-
-															windowsPrinter(function(datax) {
-																for(var i = 0; i < _this.currentStation.data.productData.okData.length; i++) {
-																	if(_this.currentStation.data.productData.okData[i].txm == datax) {
-																		_this.currentStation.data.productData.okData[i].printok = true;
-																		_this.okDatas = _this.currentStation.data.productData.okData
-																		setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
-																	}
-																}
-																window.parent.frames.location.reload();
-																//window.location.reload(true);
-															})
-															_this.dis = false;
-														} else if(item.mage == 1) {
-															_this.dis = false;
-															mui.toast("箱条码重复");
-															mask.close(); //关闭遮罩层
-														} else if(item.mage == 2) {
-															_this.dis = false;
-															mask.close(); //关闭遮罩层
-															mui.toast("提交数量大于筛选数量")
-														}
-													})
-												},
-												error: function(xhr, type, errorThrown) {
-													_this.dis = false;
-													mask.close(); //关闭遮罩层
-													mui.toast("提交合格品失败！")
-												}
-											})
-										},
-										error: function(xhr, type, errorThrown) {
-											_this.dis = false;
-											mask.close(); //关闭遮罩层
-											mui.toast("获取箱条码失败！")
-										}
-									})
-								} else {
-									_this.dis = false;
-									mui.toast('请输入有效的最小包装数');
-								}
-							}, 'div')
-						}
-					},
-					//结束生产
-					endProduct: function() {
-						var _this = this;
-						var _sl = _this.loginData.ljsl;
-						if(_sl > 0) {
-							mui.toast("当前箱未报交！！！");
-							return;
-						}
-						//检索该零件的所有箱子是否已走MES系统筛选
-						var _rwdId = _this.loginData.rwdid;
-						mAjax(urlxds + "getAllNotGoMesBoxByRwdid", {
-							rwdid: _rwdId
-						}, function(status) {
-							if(status.success == 1) {
-								if(status.data.length > 0) {
-									//弹出未走MES系统的箱子
-									mui('#DoNotGoMesLists').popover('toggle');
-									var _data = status.data;
-									//console.log(_data);
-									_data.forEach(function(item, index) {
-										item.rkdate = FormatDate(item.rkdate);
-									})
-									_this.DNGMESDatas = _data;
-								} else {
-									//正常结束生产
-									_this.commentFuncion();
-								}
-							} else if(status.success == 0) {
-								mui.toast(status.message)
+							} else {
+								mui('div.mui-popup-input input')[0].value = _pcount
 							}
-						})
 
-					},
-					cancelOperate: function() {
-						mui('#DoNotGoMesLists').popover('toggle');
-					},
-					ensureOperate: function() {
-						var _this = this;
-						mui('#DoNotGoMesLists').popover('toggle');
-						_this.commentFuncion();
-					},
-					commentFuncion: function() {
-						var _this = this;
-						var _rwdId = _this.loginData.rwdid;
-						//记录结束时间
-						var date3 = new Date();
-						var _enddate = date3.getFullYear() + "-" + ((date3.getMonth() < 10 ? ("0" + (date3.getMonth() + 1)) : (date3.getMonth() + 1))) + "-" + date3.getDate() + "  " + date3.getHours() + ":" + (date3.getMinutes() < 10 ? ("0" + date3.getMinutes()) : date3.getMinutes());
-
-						//箱id
-						var _xid = _this.loginData.id;
-						var _okData2 = _this.currentStation.data.productData.okData;
-						var _sumOkNum = 0;
-						_okData2.forEach(function(item, index) {
-							_sumOkNum = _sumOkNum + parseInt(item.okNum)
-						})
-						var _nokData2 = _this.currentStation.data.qualityData.nokData;
-						var _sumOkNum2 = 0;
-						_nokData2.forEach(function(item, index) {
-							_sumOkNum2 = _sumOkNum2 + parseInt(item.nokNum)
-						})
-						var _arr = ["确定", "取消"];
-						mui.confirm("累计报交不合格数：" + _sumOkNum2, "累计报交合格总数：" + _sumOkNum, _arr, function(e) {
-							//console.log(e.index);
-							if(e.index == 0) {
-								mui.ajax(url + 'app/getsxjxxendbyid', {
+							timer = null;
+						}, 0);
+						//console.log(_ljbm);
+						mui.prompt("当前零件表编号:" + _ljbm, '请输入最小包装数', '请先在质量里报交不合格品', btnArray, function (e) {
+							if (e.index == 1) {
+								//console.log( e.value);
+								//小于某个值时不可以打包
+								mui.ajax(url + "app/gettxm", {
 									data: {
-										id: _xid
+										id: '2'
 									},
-									dataType: 'json', //服务器返回json格式数据
-									type: 'post', //HTTP请求类型
-									timeout: 10000, //超时时间设置为10秒；      
-									beforeSend: function() {
+									dataType: 'text',
+									type: 'post',
+									timeout: 10000,
+									beforeSend: function () {
 										//plus.nativeUI.showWaiting("加载中。。。");
 										mask.show(); //显示遮罩层
 									},
-									complete: function() {
-										// plus.nativeUI.closeWaiting();
+									complete: function () {
+										//plus.nativeUI.closeWaiting();
 										mask.close(); //关闭遮罩层
 									},
-									success: function(data) {
-										//保存缓存信息
-										{
-											var _stationLsData = {
-												status: '0',
-												data: {
-													taskInfo: null, //任务单返回的信息
-													loginData: null, //登陆返回的信息
-													boxcsdate: null, //hold箱的开始时间
-													smtype: null, //类型 1不合格，2合格
-													productNum: 0, //累计箱数量
-													productData: {
-														okNum: 0, //
-														okData: [] //合格品历史数据
-													},
-													qualityData: {
-														nokNum: 0, //累计不合格数
-														nokData: [], //合格品历史数据
-														nowNokNum: 0, //未报交的不合格数
-														defectInfo: [], //缺陷信息
-														defectNum: 0 //缺陷总数
-													},
-													material: {
-														mdetails: [] //明细
-													},
-													ygtm: null, //员工条码
-													fsxHoldData: { //非筛选hold
-														fHoldData: []
+									success: function (data) {
+										mui.ajax(url + "app/addhgp", {
+											data: {
+												rwdid: _rwdId,
+												ljsl: e.value,
+												xtm: data,
+												pid: _pid,
+												ygid: _ygid,
+												gztid: _gztid
+											},
+											type: 'post',
+											dataType: 'json',
+											timeout: 10000,
+											beforeSend: function () {
+												//plus.nativeUI.showWaiting("加载中。。。");
+												mask.show(); //显示遮罩层
+											},
+											complete: function () {
+												//plus.nativeUI.closeWaiting();
+												mask.close(); //关闭遮罩层
+											},
+											success: function (data2) {
+												data2.forEach(function (item, index) {
+													if (item.mage == 0) {
+
+														{
+															_this.currentStation.data.smtype = '2';
+															localStorage.setItem("hgp", data);
+															localStorage.setItem("xhljsl", e.value);
+															var date3 = new Date();
+															var _nowdate = date3.getFullYear() + "-" + ((date3.getMonth() < 10 ? ("0" + (date3.getMonth() +
+																	1)) : (date3.getMonth() + 1))) + "-" + date3.getDate() + "  " + date3.getHours() + ":" +
+																(date3.getMinutes() < 10 ? ("0" + date3.getMinutes()) : date3.getMinutes());
+															var _obj = _this.currentStation.data.loginData;
+															_obj.okNum = e.value;
+															_obj.nowdate = _nowdate;
+															_obj.txm = data;
+															_obj.printok = false;
+															_this.currentStation.data.productData.okData.push(_obj);
+															_this.okNum += parseInt(e.value)
+															_this.currentStation.data.productData.okNum += parseInt(e.value);
+															//将已提交的箱子数量置为剩余数
+															_this.currentStation.data.loginData.ljsl = parseInt(_this.nowlsxsl) - parseInt(e.value);
+															_this.currentStation.data.productData.okData = quickSort(_this.currentStation.data.productData
+																.okData, "nowdate", false);
+															_this.okDatas = _this.currentStation.data.productData.okData
+														}
+														setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+
+														windowsPrinter(function (datax) {
+															for (var i = 0; i < _this.currentStation.data.productData.okData.length; i++) {
+																if (_this.currentStation.data.productData.okData[i].txm == datax) {
+																	_this.currentStation.data.productData.okData[i].printok = true;
+																	_this.okDatas = _this.currentStation.data.productData.okData
+																	setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+																}
+															}
+															window.parent.frames.location.reload();
+															//window.location.reload(true);
+														})
+														_this.dis = false;
+													} else if (item.mage == 1) {
+														_this.dis = false;
+														mui.toast("箱条码重复");
+														mask.close(); //关闭遮罩层
+													} else if (item.mage == 2) {
+														_this.dis = false;
+														mask.close(); //关闭遮罩层
+														mui.toast("提交数量大于筛选数量")
 													}
-												}
+												})
+											},
+											error: function (xhr, type, errorThrown) {
+												_this.dis = false;
+												mask.close(); //关闭遮罩层
+												mui.toast("提交合格品失败！")
 											}
-											setLsItem("station_" + JSON.parse(getLsItem("currentStation")), JSON.stringify(_stationLsData));
-										}
-										//打开index界面
-										mui.openWindow({
-											url: '../index.html',
-											id: 'index'
 										})
 									},
-									error: function(xhr, type, errorThrown) {
-										//console.log("===========失败");
+									error: function (xhr, type, errorThrown) {
+										_this.dis = false;
 										mask.close(); //关闭遮罩层
-										mui.toast("连接网络失败！");
-
+										mui.toast("获取箱条码失败！")
 									}
-								});
+								})
 							} else {
-
+								_this.dis = false;
+								mui.toast('请输入有效的最小包装数');
 							}
-						})
-					},
-					//补打箱条码
-					bdhgpXtm: function(data2) {
-						var _this = this;
-						if(getLsItem("printIp") != '192.168.2.180') {
-							setLsItem("printIp",'192.168.2.180');
-							mui.alert('切换打印机', '切换打印机', '确定', function(e) {
-								if(e.index == 0) {
-									window.location.reload(true);
-								}
-							})
-						} else {
-							//任务单号
-							var _rwdId = _this.loginData.rwdid;
-							//零件编码
-							var _ljbm = _this.loginData.ljbm;
-							//零件名称
-							var _ljname = _this.loginData.ljname;
-							//员工姓名
-							var _husername = _this.loginData.ygname;
-							var btnArray = ['确定', '取消'];
-							mui.confirm("确定补打条码？", "补打条码", btnArray, function(e) {
-								if(e.index == 0) {
-									var _data = {};
-									_this.currentStation.data.smtype = '2';
-									_data.ljname = _ljname;
-									_data.ljbm = _ljbm;
-									_data.hxtm = data2.txm;
-									_data.hgsl = data2.okNum;
-									_data.hygname = _husername;
-									windowsOkReprint(_data, function(data) {
-										for(var i = 0; i < _this.currentStation.data.productData.okData.length; i++) {
-											if(_this.currentStation.data.productData.okData[i].txm == data) {
-												_this.currentStation.data.productData.okData[i].printok = true;
-												setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
-												window.parent.frames.location.reload();
-												//window.location.reload(true);
+						}, 'div')
+					}
+				},
+				//结束生产
+				endProduct: function () {
+					var _this = this;
+					var _sl = _this.loginData.ljsl;
+					if (_sl > 0) {
+						mui.toast("当前箱未报交！！！");
+						return;
+					}
+					//检索该零件的所有箱子是否已走MES系统筛选
+					var _rwdId = _this.loginData.rwdid;
+					mAjax(urlxds + "getAllNotGoMesBoxByRwdid", {
+						rwdid: _rwdId
+					}, function (status) {
+						if (status.success == 1) {
+							if (status.data.length > 0) {
+								//弹出未走MES系统的箱子
+								mui('#DoNotGoMesLists').popover('toggle');
+								var _data = status.data;
+								//console.log(_data);
+								_data.forEach(function (item, index) {
+									item.rkdate = FormatDate(item.rkdate);
+								})
+								_this.DNGMESDatas = _data;
+							} else {
+								//正常结束生产
+								_this.commentFuncion();
+							}
+						} else if (status.success == 0) {
+							mui.toast(status.message)
+						}
+					})
+
+				},
+				cancelOperate: function () {
+					mui('#DoNotGoMesLists').popover('toggle');
+				},
+				ensureOperate: function () {
+					var _this = this;
+					mui('#DoNotGoMesLists').popover('toggle');
+					_this.commentFuncion();
+				},
+				commentFuncion: function () {
+					var _this = this;
+					var _rwdId = _this.loginData.rwdid;
+					//记录结束时间
+					var date3 = new Date();
+					var _enddate = date3.getFullYear() + "-" + ((date3.getMonth() < 10 ? ("0" + (date3.getMonth() + 1)) : (date3.getMonth() +
+						1))) + "-" + date3.getDate() + "  " + date3.getHours() + ":" + (date3.getMinutes() < 10 ? ("0" + date3.getMinutes()) :
+						date3.getMinutes());
+
+					//箱id
+					var _xid = _this.loginData.id;
+					var _okData2 = _this.currentStation.data.productData.okData;
+					var _sumOkNum = 0;
+					_okData2.forEach(function (item, index) {
+						_sumOkNum = _sumOkNum + parseInt(item.okNum)
+					})
+					var _nokData2 = _this.currentStation.data.qualityData.nokData;
+					var _sumOkNum2 = 0;
+					_nokData2.forEach(function (item, index) {
+						_sumOkNum2 = _sumOkNum2 + parseInt(item.nokNum)
+					})
+					var _arr = ["确定", "取消"];
+					mui.confirm("累计报交不合格数：" + _sumOkNum2, "累计报交合格总数：" + _sumOkNum, _arr, function (e) {
+						//console.log(e.index);
+						if (e.index == 0) {
+							mui.ajax(url + 'app/getsxjxxendbyid', {
+								data: {
+									id: _xid
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；      
+								beforeSend: function () {
+									//plus.nativeUI.showWaiting("加载中。。。");
+									mask.show(); //显示遮罩层
+								},
+								complete: function () {
+									// plus.nativeUI.closeWaiting();
+									mask.close(); //关闭遮罩层
+								},
+								success: function (data) {
+									//保存缓存信息
+									{
+										var _stationLsData = {
+											status: '0',
+											data: {
+												taskInfo: null, //任务单返回的信息
+												loginData: null, //登陆返回的信息
+												boxcsdate: null, //hold箱的开始时间
+												smtype: null, //类型 1不合格，2合格
+												productNum: 0, //累计箱数量
+												productData: {
+													okNum: 0, //
+													okData: [] //合格品历史数据
+												},
+												qualityData: {
+													nokNum: 0, //累计不合格数
+													nokData: [], //合格品历史数据
+													nowNokNum: 0, //未报交的不合格数
+													defectInfo: [], //缺陷信息
+													defectNum: 0 //缺陷总数
+												},
+												material: {
+													mdetails: [] //明细
+												},
+												ygtm: null, //员工条码
+												fsxHoldData: { //非筛选hold
+													fHoldData: []
+												}
 											}
 										}
-									});
+										setLsItem("station_" + JSON.parse(getLsItem("currentStation")), JSON.stringify(_stationLsData));
+									}
+									//打开index界面
+									mui.openWindow({
+										url: '../index.html',
+										id: 'index'
+									})
+								},
+								error: function (xhr, type, errorThrown) {
+									//console.log("===========失败");
+									mask.close(); //关闭遮罩层
+									mui.toast("连接网络失败！");
+
 								}
-							})
+							});
+						} else {
+
 						}
+					})
+				},
+				//补打箱条码
+				bdhgpXtm: function (data2) {
+					var _this = this;
+					if (getLsItem("printIp") != '192.168.2.182') {
+						setLsItem("printIp", '192.168.2.182');
+						mui.alert('切换打印机', '切换打印机', '确定', function (e) {
+							if (e.index == 0) {
+								window.location.reload(true);
+							}
+						})
+					} else {
+						//任务单号
+						var _rwdId = _this.loginData.rwdid;
+						//零件编码
+						var _ljbm = _this.loginData.ljbm;
+						//零件名称
+						var _ljname = _this.loginData.ljname;
+						//员工姓名
+						var _husername = _this.loginData.ygname;
+						var btnArray = ['确定', '取消'];
+						mui.confirm("确定补打条码？", "补打条码", btnArray, function (e) {
+							if (e.index == 0) {
+								var _data = {};
+								_this.currentStation.data.smtype = '2';
+								_data.ljname = _ljname;
+								_data.ljbm = _ljbm;
+								_data.hxtm = data2.txm;
+								_data.hgsl = data2.okNum;
+								_data.hygname = _husername;
+								windowsOkReprint(_data, function (data) {
+									for (var i = 0; i < _this.currentStation.data.productData.okData.length; i++) {
+										if (_this.currentStation.data.productData.okData[i].txm == data) {
+											_this.currentStation.data.productData.okData[i].printok = true;
+											setLsItem('station_' + JSON.parse(getLsItem('currentStation')), JSON.stringify(_this.currentStation));
+											window.parent.frames.location.reload();
+											//window.location.reload(true);
+										}
+									}
+								});
+							}
+						})
 					}
 				}
-			})
-		</script>
-	</body>
+			}
+		})
+	</script>
+</body>
 
 </html>

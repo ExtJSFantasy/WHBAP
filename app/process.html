@@ -433,7 +433,7 @@
 				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 				<div class="mui-slider-item" v-for="(item,index) in items">
 					<div class="content">
-						<div class="floor_1">
+		''				<div class="floor_1">
 							<div class="floor_1_left">
 								<div>
 									<p v-text="item.no" class="my-releasedate-font"></p>
@@ -574,7 +574,7 @@
 		<div id="tooltip" class="mui-popover">
 			<div class="mui-content" style="display: flex;height: 90%;">
 				<div class="mui-content" id="refreshData" style="flex:9;height: 100%;">
-					<div class="mui-content mui-scroll-wrapper" style="height: 100%;position: relative;">
+					<div id="xdsscroll" class="mui-content mui-scroll-wrapper" style="height: 100%;position: relative;">
 						<div class="mui-scroll">
 							<p style="margin: 2px 2px 2px 2px;font-size:1.5rem !important;line-height:1.6rem" v-text="contentDetails"></p>
 						</div>
@@ -795,6 +795,7 @@
 				open1: function (data, index) {
 					var _this = this;
 					if (data != '' && data != null) {
+						mui("#xdsscroll").scroll().scrollTo(0,0,0);
 						_this.contentDetails = data;
 						mui('#tooltip').popover('toggle', document.getElementById("one" + index));
 					}
@@ -804,6 +805,7 @@
 					var _this = this;
 
 					if (data != '' && data != null) {
+						mui("#xdsscroll").scroll().scrollTo(0,0,0);
 						_this.contentDetails = data;
 						mui('#tooltip').popover('toggle', document.getElementById("two" + index));
 					}
@@ -812,6 +814,7 @@
 					var _this = this;
 
 					if (data != '' && data != null) {
+						mui("#xdsscroll").scroll().scrollTo(0,0,0);
 						_this.contentDetails = data;
 						mui('#tooltip').popover('toggle', document.getElementById("three" + index));
 					}
@@ -820,6 +823,7 @@
 					var _this = this
 					//一个\ 用\转义
 					if (data != '' && data != null && data != '\\') {
+						mui("#xdsscroll").scroll().scrollTo(0,0,0);
 						_this.contentDetails = data;
 						mui('#tooltip').popover('toggle', document.getElementById("four" + index));
 					}

@@ -636,7 +636,7 @@
 			</div>
 			<div class="mui-content" style="display: flex;height: 90%;">
 				<div class="mui-content" id="refreshData" style="flex:9;height: 100%;">
-					<div class="mui-content mui-scroll-wrapper" style="height: 100%;position: relative;">
+					<div class="mui-content mui-scroll-wrapper" id="xdsscroll" style="height: 100%;position: relative;">
 						<div class="mui-scroll">
 							<!--<div class="mui-text-center" v-show="isData">没有数据</div>-->
 							<ul class="mui-table-view mui-grid-view">
@@ -844,6 +844,7 @@
 				open1: function (data, index) {
 					var _this = this;
 					if (data != '' && data != null) {
+						mui("#xdsscroll").scroll().scrollTo(0,0,0);
 						_this.contentDetails = data;
 						mui('#tooltip').popover('toggle', document.getElementById("one" + index));
 					}
@@ -853,6 +854,7 @@
 					var _this = this;
 
 					if (data != '' && data != null) {
+						mui("#xdsscroll").scroll().scrollTo(0,0,0);
 						_this.contentDetails = data;
 						mui('#tooltip').popover('toggle', document.getElementById("two" + index));
 					}
@@ -861,6 +863,7 @@
 					var _this = this;
 
 					if (data != '' && data != null) {
+						mui("#xdsscroll").scroll().scrollTo(0,0,0);
 						_this.contentDetails = data;
 						mui('#tooltip').popover('toggle', document.getElementById("three" + index));
 					}
@@ -869,6 +872,7 @@
 					var _this = this
 					//一个\ 用\转义
 					if (data != '' && data != null && data != '\\') {
+						mui("#xdsscroll").scroll().scrollTo(0,0,0);
 						_this.contentDetails = data;
 						mui('#tooltip').popover('toggle', document.getElementById("four" + index));
 					}
