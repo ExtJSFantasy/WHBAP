@@ -621,7 +621,7 @@
 				//不合格品提交
 				ncpSub2: function () {
 					//mui("#myprogressbar").progressbar().setProgress(50);
-					console.log(getLsItem("printIp"));
+					//console.log(getLsItem("printIp"));
 					var _this = this;
 					//判断是否是不合格品打印机
 					if (getLsItem("printIp") != '192.168.2.183') {
@@ -648,6 +648,7 @@
 								return;
 							}
 						}
+						var _uuid = guid();
 						/*if(_this.loginData.ljsl == 0){
 							mui.toast("该箱")
 						}*/
@@ -722,7 +723,8 @@
 												zzxid: 0, //周转箱id
 												holdmx: JSON.stringify(c), //hold明细--json数组格式（qxid，qxname，qxs）
 												gztid: _gztid, //工作台id
-												ygid: _ygid
+												ygid: _ygid,
+												uuid:_uuid
 											},
 											dataType: 'json', //服务器返回json格式数据
 											type: 'post', //HTTP请求类型
@@ -730,10 +732,12 @@
 											//headers:{'Content-Type':'application/json'},	
 											beforeSend: function () {
 												//plus.nativeUI.showWaiting("加载中。。。");
+												_this.isShow = true;
 												mask.show(); //显示遮罩层
 											},
 											complete: function () {
 												//plus.nativeUI.closeWaiting();
+												_this.isShow = false;
 												mask.close(); //关闭遮罩层
 											},
 											success: function (data) {
@@ -809,6 +813,7 @@
 												//_this.dis = false;
 												//异常处理；
 												//mui.toast("提交不合格品失败！");
+												_this.isShow = false;
 												mask.close(); //关闭遮罩层
 												mAjax(urlxds + "verifyXTM", {
 													uuid: _uuid,
@@ -884,7 +889,7 @@
 									error: function (xhr, type, errorThrown) {
 										_this.dis = false;
 										//异常处理；
-										mui.toast("获取箱条码失败！");
+										mui.toast("获取箱条码失败,请再次提交！");
 										mask.close(); //关闭遮罩层
 									}
 								});
