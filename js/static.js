@@ -3,9 +3,6 @@
 var urlxds ="http://192.168.2.50:8080/WHSERVER/gfx/";
 var url = "http://192.168.2.50:8080/WMS_GFX/";
 var vacurl="http://192.168.2.50:8080/vackb/service/";
-// var urlxds ="http://192.168.31.238:8080/gfx/";
-// var url = "http://192.168.31.238:8080/WMS_GFX/";
-// var vacurl="http://192.168.31.238:8080/vackb/service/";
 var imgurl="http://192.168.2.50:3000";
 //合格品
 var _reportData2 = {};
