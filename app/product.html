@@ -637,9 +637,11 @@
 														})
 														_this.dis = false;
 														} else {
+															_this.dis = false;
 															mui.toast("网络错误！！！");
 														}
 													} else if (status.success == 0) {
+														_this.dis = false;
 														mui.toast(status.message)
 													}
 												})
