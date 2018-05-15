@@ -346,9 +346,9 @@
 				//点击每一项的打印
 				outPrint: function (data) {
 					//console.log(data);
-					if (getLsItem("printIp") != '192.168.2.195') {
+					if (getLsItem("printIp") != '192.168.2.181') {
 						//mui.toast()
-						setLsItem("printIp", '192.168.2.195');
+						setLsItem("printIp", '192.168.2.181');
 						mui.alert('切换打印机', '切换打印机', '确定', function (e) {
 							if (e.index == 0) {
 								window.location.reload(true);
@@ -370,9 +370,9 @@
 				},
 				//打印成功再次打条码
 				outPrintAgain: function (data) {
-					if (getLsItem("printIp") != '192.168.2.195') {
+					if (getLsItem("printIp") != '192.168.2.181') {
 						//mui.toast()
-						setLsItem("printIp", '192.168.2.195');
+						setLsItem("printIp", '192.168.2.181');
 						mui.alert('切换打印机', '切换打印机', '确定', function (e) {
 							if (e.index == 0) {
 								window.location.reload(true);
@@ -387,9 +387,9 @@
 				},
 				//补打条码
 				outPrintLatePlay: function (data) {
-					if (getLsItem("printIp") != '192.168.2.195') {
+					if (getLsItem("printIp") != '192.168.2.181') {
 						//mui.toast()
-						setLsItem("printIp", '192.168.2.195');
+						setLsItem("printIp", '192.168.2.181');
 						mui.alert('切换打印机', '切换打印机', '确定', function (e) {
 							if (e.index == 0) {
 								window.location.reload(true);

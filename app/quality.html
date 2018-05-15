@@ -624,9 +624,9 @@
 					//console.log(getLsItem("printIp"));
 					var _this = this;
 					//判断是否是不合格品打印机
-					if (getLsItem("printIp") != '192.168.2.183') {
+					if (getLsItem("printIp") != '192.168.2.181') {
 						//mui.toast()
-						setLsItem("printIp", '192.168.2.183');
+						setLsItem("printIp", '192.168.2.181');
 						mui.alert('切换打印机', '切换打印机', '确定', function (e) {
 							if (e.index == 0) {
 								window.location.reload(true);
@@ -904,9 +904,9 @@
 				bdhgpXtm: function (index, data) {
 					var _this = this;
 					//判断是否是不合格品打印机
-					if (getLsItem("printIp") != '192.168.2.183') {
+					if (getLsItem("printIp") != '192.168.2.181') {
 						//mui.toast()
-						setLsItem("printIp", '192.168.2.183');
+						setLsItem("printIp", '192.168.2.181');
 						mui.alert('切换打印机', '切换打印机', '确定', function (e) {
 							if (e.index == 0) {
 								window.location.reload(true);

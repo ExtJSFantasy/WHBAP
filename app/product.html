@@ -436,8 +436,8 @@
 					if(_this.nowlsxsl < 1){
 						mui.toast("该箱已提交完毕！！！");
 						return
-					}else if (getLsItem("printIp") != '192.168.2.182') {
-						setLsItem("printIp", '192.168.2.182');
+					}else if (getLsItem("printIp") != '192.168.2.180') {
+						setLsItem("printIp", '192.168.2.180');
 						mui.alert('切换打印机', '切换打印机', '确定', function (e) {
 							if (e.index == 0) {
 								window.location.reload(true);
@@ -596,7 +596,7 @@
 												_this.isShow = false;
 												mAjax(urlxds + "verifyXTM", {
 													uuid: _uuid,
-													type:'hpg'
+													type:'hgp'
 												}, function (status) {
 													if (status.success == 1) {
 														if (status.data.length > 0) {
@@ -797,8 +797,8 @@
 				//补打箱条码
 				bdhgpXtm: function (data2) {
 					var _this = this;
-					if (getLsItem("printIp") != '192.168.2.182') {
-						setLsItem("printIp", '192.168.2.182');
+					if (getLsItem("printIp") != '192.168.2.180') {
+						setLsItem("printIp", '192.168.2.180');
 						mui.alert('切换打印机', '切换打印机', '确定', function (e) {
 							if (e.index == 0) {
 								window.location.reload(true);
