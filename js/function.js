@@ -306,6 +306,12 @@ function FormatDateYMD(strtime) {
 	var date = new Date(strtime);
 	return date.getFullYear() + "-" + ((date.getMonth() < 10 ? ("0" + (date.getMonth() + 1)) : (date.getMonth() + 1))) + "-" + (date.getDate() < 10 ? ("0" + date.getDate()) : date.getDate());
 }
+
+//2017/07/01
+function FormatDateYMDNew(strtime) {
+	var date = new Date(strtime);
+	return date.getFullYear() + "/" + ((date.getMonth() < 10 ? ("0" + (date.getMonth() + 1)) : (date.getMonth() + 1))) + "/" + (date.getDate() < 10 ? ("0" + date.getDate()) : date.getDate());
+}
 //自动检查更新
 /*
  * 
@@ -1164,7 +1170,7 @@ function windowsPrinterScreening(data, callback){
 	var _obj8 = {};
 	_obj8.type = "str";
 	_obj8.size = 255;
-	_obj8.Name = "pclass";
+	_obj8.Name = "pdate";
 	_obj8.required = false;
 
 	var _obj9 = {};
@@ -1203,7 +1209,7 @@ function windowsPrinterScreening(data, callback){
 	_obj6.pusername = data.realname;
 	_obj6.defect1 = data.holdyy;
 	_obj6.defect2 = '';
-	_obj6.pclass = "早班";
+	_obj6.pdate = FormatDateYMDNew(new Date());
 	_obj6.pbcode = data.txm;
 	_obj.Data.push(_obj6);
 	_reportData3.Tables.push(_obj);
@@ -1272,7 +1278,7 @@ function windowsPrinter(callback) {
 	var _obj8 = {};
 	_obj8.type = "str";
 	_obj8.size = 255;
-	_obj8.Name = "pclass";
+	_obj8.Name = "pdate";
 	_obj8.required = false;
 
 	var _obj9 = {};
@@ -1295,7 +1301,7 @@ function windowsPrinter(callback) {
 	_obj6.pplace = "NGCI";
 	_obj6.pcount = _hljsl;
 	_obj6.pusername = _sxname;
-	_obj6.pclass = "早班";
+	_obj6.pdate = FormatDateYMDNew(new Date());
 	_obj6.pbcode = hxtm;
 	_obj.Data.push(_obj6);
 	_reportData2.Tables.push(_obj);
@@ -1350,7 +1356,7 @@ function windowsOkReprint(data, callback) {
 	var _obj8 = {};
 	_obj8.type = "str";
 	_obj8.size = 255;
-	_obj8.Name = "pclass";
+	_obj8.Name = "pdate";
 	_obj8.required = false;
 
 	var _obj9 = {};
@@ -1375,7 +1381,7 @@ function windowsOkReprint(data, callback) {
 	_obj6.pplace = "NGCI";
 	_obj6.pcount = data.hgsl;
 	_obj6.pusername = data.hygname;
-	_obj6.pclass = "早班";
+	_obj6.pdate = FormatDateYMDNew(new Date());
 	_obj6.pbcode = data.hxtm;
 	_obj.Data.push(_obj6);
 	_reportData2.Tables.push(_obj);
@@ -1460,7 +1466,7 @@ function windowsPrinterNOK(callback) {
 	var _obj8 = {};
 	_obj8.type = "str";
 	_obj8.size = 255;
-	_obj8.Name = "pclass";
+	_obj8.Name = "pdate";
 	_obj8.required = false;
 
 	var _obj9 = {};
@@ -1498,7 +1504,7 @@ function windowsPrinterNOK(callback) {
 	_obj6.pusername = _sxname;
 	_obj6.defect1 = _details1;
 	_obj6.defect2 = _details2;
-	_obj6.pclass = "早班";
+	_obj6.pdate = FormatDateYMDNew(new Date());
 	_obj6.pbcode = bxtm;
 	_obj.Data.push(_obj6);
 	_reportData3.Tables.push(_obj);
@@ -1571,7 +1577,7 @@ function windowsNOkReprint(data,callback) {
 	var _obj8 = {};
 	_obj8.type = "str";
 	_obj8.size = 255;
-	_obj8.Name = "pclass";
+	_obj8.Name = "pdate";
 	_obj8.required = false;
 
 	var _obj9 = {};
@@ -1610,7 +1616,7 @@ function windowsNOkReprint(data,callback) {
 	_obj6.pusername = data.bygname;
 	_obj6.defect1 = _details1;
 	_obj6.defect2 = _details2;
-	_obj6.pclass = "早班";
+	_obj6.pdate = FormatDateYMDNew(new Date());
 	_obj6.pbcode = data.bxtm;
 	_obj.Data.push(_obj6);
 	_reportData3.Tables.push(_obj);
